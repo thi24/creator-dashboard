@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  benevolo.creator.dashboard:
+    build: .
+    container_name: benevolo.creator.dashboard
+    image: ghcr.io/thi24/benevolo.creator.dashboard:${GITHUB_RUN_ID}
+    environment:
+      - TZ=Europe/Berlin
+    networks:
+      - backend
+      - nginx-proxy-manager
+
+networks:
+  backend:
+    external: true
+  nginx-proxy-manager:
+    external: true
