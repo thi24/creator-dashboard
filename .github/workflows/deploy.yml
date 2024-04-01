@@ -2,9 +2,9 @@ name: Deploy creater Dashboard
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main", "feature/CI" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   build:
