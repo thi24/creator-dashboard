@@ -42,18 +42,18 @@ jobs:
           token:  ${{ secrets.GITOPS }}
 
     - name: Setup git config
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "<>"
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "<>"
 
     - name: Update docker image version
-        run: |
-          wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O /usr/bin/yq &&\
-          chmod +x /usr/bin/yq
-          NEW_VERSION=${${GITHUB_RUN_ID}}
-          yq e ".services.benevolo.creator.dashboard.image = \"ghcr.io/thi24/benevolo.creator.dashboard:$NEW_VERSION\"" -i docker-compose.yml
+      run: |
+        wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O /usr/bin/yq &&\
+        chmod +x /usr/bin/yq
+        NEW_VERSION=${${GITHUB_RUN_ID}}
+        yq e ".services.benevolo.creator.dashboard.image = \"ghcr.io/thi24/benevolo.creator.dashboard:$NEW_VERSION\"" -i docker-compose.yml
     
     - name: Commit and push changes
-        run: |
-          git commit -a -m "updated by GitHub Actions"
-          git push
+      run: |
+        git commit -a -m "updated by GitHub Actions"
+        git push
