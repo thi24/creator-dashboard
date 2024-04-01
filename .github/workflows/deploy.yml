@@ -48,9 +48,9 @@ jobs:
 
     - name: Update docker image version
       run: |
-        wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O /usr/bin/yq &&\
-        chmod +x /usr/bin/yq
-        NEW_VERSION=${${GITHUB_RUN_ID}}
+        wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY} -O &&\
+        chmod +x yq
+        NEW_VERSION=${GITHUB_RUN_ID}
         yq e ".services.benevolo.creator.dashboard.image = \"ghcr.io/thi24/benevolo.creator.dashboard:$NEW_VERSION\"" -i docker-compose.yml
     
     - name: Commit and push changes
