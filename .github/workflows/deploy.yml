@@ -40,5 +40,3 @@ jobs:
         stack-name: 'benevolo-creater-dashboard'
         stack-definition: 'docker-compose.yml'
         image: ghcr.io/thi24/benevolo.creator.dashboard:${GITHUB_RUN_ID}
-        prune-stack: true
-        pull-image: true
