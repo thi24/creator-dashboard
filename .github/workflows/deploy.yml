@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Log in to the Container registry
       uses: docker/login-action@v3
@@ -31,6 +31,14 @@ jobs:
         docker compose build
         docker compose push
 
-    - name: Deploy to Portainer
-      run : |
-        echo "Deploying to Portainer"
+    - name: Deploy stack to Portainer
+        uses: carlrygart/portainer-stack-deploy@v1
+        with:
+          portainer-host: https://portainer.benevolo.de
+          username: ${{ secrets.PORTAINER_USERNAME }}
+          password: ${{ secrets.PORTAINER_PASSWORD }}
+          stack-name: 'benevolo-creater-dashboard'
+          stack-definition: 'docker-compose.yml'
+          image: ghcr.io/thi24/benevolo.creator.dashboard:${GITHUB_RUN_ID}
+          prune-stack: true
+          pull-image: true
