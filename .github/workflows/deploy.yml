@@ -32,13 +32,13 @@ jobs:
         docker compose push
 
     - name: Deploy stack to Portainer
-        uses: carlrygart/portainer-stack-deploy@v1
-        with:
-          portainer-host: https://portainer.benevolo.de
-          username: ${{ secrets.PORTAINER_USERNAME }}
-          password: ${{ secrets.PORTAINER_PASSWORD }}
-          stack-name: 'benevolo-creater-dashboard'
-          stack-definition: 'docker-compose.yml'
-          image: ghcr.io/thi24/benevolo.creator.dashboard:${GITHUB_RUN_ID}
-          prune-stack: true
-          pull-image: true
+      uses: carlrygart/portainer-stack-deploy@v1
+      with:
+        portainer-host: https://portainer.benevolo.de
+        username: ${{ secrets.PORTAINER_USERNAME }}
+        password: ${{ secrets.PORTAINER_PASSWORD }}
+        stack-name: 'benevolo-creater-dashboard'
+        stack-definition: 'docker-compose.yml'
+        image: ghcr.io/thi24/benevolo.creator.dashboard:${GITHUB_RUN_ID}
+        prune-stack: true
+        pull-image: true
