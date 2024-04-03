@@ -20,6 +20,7 @@ body {
 #__nuxt {
     min-height: 100vh;
     display: grid;
+    grid-template-rows: auto 1fr auto;
 }
 
 
@@ -34,3 +35,10 @@ body {
     border-radius: 5px;
     border: none;
 }
+
+
+.narrow {
+    width: min(100%, 1140px);
+    margin: 0 auto;
+}
+
