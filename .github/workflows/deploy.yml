@@ -15,6 +15,7 @@ jobs:
       GITHUB_CLIENT_SECRET: ${{ secrets.OAUTH_GITHUB_CLIENT_SECRET }}
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       AUTH_ORIGIN: https://benevolo.de
+      BASE_URL: https://benevolo.de
 
     steps:
     - name: Checkout
@@ -27,15 +28,15 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.OWNER_PASSWORD }}
 
-    - name: Set env variables for dev environment
-      if: github.ref == 'refs/heads/develop'
-      run: |
-        echo "BASE_URL=https://dev.benevolo.de" >> $GITHUB_ENV
+#    - name: Set env variables for dev environment
+#      if: github.ref == 'refs/heads/develop'
+#      run: |
+#        echo "BASE_URL=https://dev.benevolo.de" >> $GITHUB_ENV
     
-    - name: Set env variables for prod environment
-      if: github.ref == 'refs/heads/main'
-      run: |
-        echo "BASE_URL=https://benevolo.de" >> $GITHUB_ENV
+#    - name: Set env variables for prod environment
+#      if: github.ref == 'refs/heads/main'
+#      run: |
+#        echo "BASE_URL=https://benevolo.de" >> $GITHUB_ENV
 
     - name: Build and push dev Docker image
       if: github.ref == 'refs/heads/develop'
