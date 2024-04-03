@@ -21,9 +21,9 @@ function getEvents(): Event[] {
     event.description = "Bekiffen sie sich grenzenlos. Aber lassen sie sich nicht vom SEK (Söder Einsatzkomando) erwischen.";
     results.push(event);
     const event2 = new Event();
-    event2.name = "Heroin Injection Party am Nordbahnhof";
-    event2.thumbnail = "https://image.stern.de/7837062/t/sh/v4/w1440/r1.7778/-/bahnhofsviertel.jpg";
-    event2.description = "Genieße den goldenen Schuss Panzerschokolade. Reisen sie bequem mit dem Zug an.";
+    event2.name = "Ü80 Seniorenparty";
+    event2.thumbnail = "https://img.luzernerzeitung.ch/2018/4/11/2b210e9f-2912-48b2-a392-8b5f87e9f79a.jpeg?width=640&height=360&fit=bound&quality=75&auto=webp&crop=640,360,x0,y32&wmark=none";
+    event2.description = "Verbringen sie einen entspannten Abend mit Horst und Gertlinde. Inklusive Bingo und Kreuzworträtsel.";
     results.push(event2);
     return results;
 }
