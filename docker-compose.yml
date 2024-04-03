@@ -1,7 +1,12 @@
 version: '3.8'
 services:
   benevolo.creator.dashboard:
-    build: .
+    build: 
+      context: .
+      dockerfile: dockerfile
+      args:
+        - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+        - AUTH_ORIGIN=${AUTH_ORIGIN}
     container_name: benevolo.creator.dashboard
     image: ghcr.io/thi24/benevolo.creator.dashboard:${GITHUB_RUN_ID}
     environment:

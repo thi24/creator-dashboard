@@ -3,5 +3,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: [
     '@/assets/style.css'
-  ]
+  ],
+  modules: ['@sidebase/nuxt-auth'],
+    auth: {
+        provider: {
+            type: 'authjs'
+        }
+    }
 })

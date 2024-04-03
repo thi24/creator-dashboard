@@ -1,15 +1,33 @@
-FROM node:20.2
+FROM node:18-alpine3.17 as build
+
+RUN apk update && apk upgrade
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package* ./
 
-COPY . .
+RUN  npm install
 
-RUN npm install
+COPY . ./
 
-RUN npx nuxi generate
+RUN npx nuxt build
 
-WORKDIR /app/.output/public
+FROM node:18-alpine3.17
+ARG GITHUB_CLIENT_SECRET
+ARG AUTH_ORIGIN
+ENV GITHUB_CLIENT_SECRET $GITHUB_CLIENT_SECRET
+ENV AUTH_ORIGIN $AUTH_ORIGIN
 
-CMD ["npx", "serve"]
+RUN apk update && apk upgrade && apk add dumb-init && adduser -D nuxtuser 
+
+USER nuxtuser
+
+WORKDIR /app
+
+COPY --chown=nuxtuser:nuxtuser --from=build /app/.output ./
+
+EXPOSE 8080
+
+ENV HOST=0.0.0.0 PORT=8080 NODE_ENV=production
+
+CMD ["dumb-init","node","/app/server/index.mjs"]

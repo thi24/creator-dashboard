@@ -21,3 +21,16 @@ body {
     min-height: 100vh;
     display: grid;
 }
+
+
+.button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 1.4rem;
+    background-color: #9c89b8;
+    color: white;
+    border-radius: 5px;
+    border: none;
+}
