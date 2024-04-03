@@ -1,7 +1,12 @@
+import { Address } from "./Address";
+
 export class Event {
 
-    name = "" as string;
+    id = "" as string;
+    eventName = "" as string;
     startsAt = new Date() as Date;
     endsAt = new Date() as Date;
+    address = new Address("", "", "", "");
+    description = "" as string;
 
 }
