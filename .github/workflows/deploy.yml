@@ -13,6 +13,7 @@ jobs:
       DATABASE_PROD_USERNAME: ${{ secrets.DATABASE_PROD_USERNAME }}
       DATABASE_PROD_PASSWORD: ${{ secrets.DATABASE_PROD_PASSWORD }}
       GITHUB_CLIENT_SECRET: ${{ secrets.OAUTH_GITHUB_CLIENT_SECRET }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       AUTH_ORIGIN: https://benevolo.de
 
     steps:

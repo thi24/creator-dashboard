@@ -7,6 +7,7 @@ services:
       args:
         - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
         - AUTH_ORIGIN=${AUTH_ORIGIN}
+        - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
     container_name: benevolo.creator.dashboard
     image: ghcr.io/thi24/benevolo.creator.dashboard:${GITHUB_RUN_ID}
     environment:
