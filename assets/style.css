@@ -6,6 +6,7 @@
     margin: 0px;
     text-decoration: none;
     color: black;
+    box-sizing: border-box;
 }
 
 html {
@@ -21,6 +22,7 @@ html, body {
 body {
     background-color: #eeeeee;
 }
+
 
 #__nuxt {
     min-height: 100vh;
@@ -40,4 +42,19 @@ body {
 
 .page__heading {
     margin-bottom: 1rem;
+}
+
+input {
+    border-radius: 0.2rem;
+    border-style: none;
+    border: grey 1px solid;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+
+.col-2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
 }
