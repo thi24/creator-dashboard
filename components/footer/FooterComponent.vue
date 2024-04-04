@@ -15,5 +15,6 @@
 <style scoped>
 .footer {
     background-color: white;
+    border-top: 1px solid #eaeaea;
 }
 </style>

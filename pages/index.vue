@@ -1,5 +1,7 @@
 <template>
-    
+    <div>
+
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -9,7 +11,6 @@ async function testing() {
     const headers = useRequestHeaders(['cookie']) as HeadersInit
     const { data: token } = await useFetch('/api/token', { headers })
     console.log(token)
-
 }
 
 

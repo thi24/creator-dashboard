@@ -1,6 +1,6 @@
 <template>
     <h1>Veranstaltungen</h1>
-    <p v-for="event in events">{{ event.name }}, {{ event.startsAt }} - {{ event.endsAt }}</p>
+    <p v-for="event in events">{{ event.eventName }}, {{ event.startsAt }} - {{ event.endsAt }}</p>
 </template>
 
 <script setup lang="ts">

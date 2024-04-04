@@ -8,6 +8,11 @@
     color: black;
 }
 
+html {
+    --primary-color: #f28482;
+    --secondary-color: #9c89b8;
+}
+
 html, body {
     width: 100vw;
     height: 100vh;
@@ -29,3 +34,10 @@ body {
     margin: 0 auto;
 }
 
+.page {
+    padding: 2rem 1rem;
+}
+
+.page__heading {
+    margin-bottom: 1rem;
+}
