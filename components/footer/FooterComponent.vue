@@ -16,5 +16,6 @@
 .footer {
     background-color: white;
     border-top: 1px solid #eaeaea;
+    padding: 0.5rem 1rem 0.5rem 1rem;
 }
 </style>

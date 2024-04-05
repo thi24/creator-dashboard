@@ -56,8 +56,8 @@
     color: #000000;
     font-size: 1.1rem;
     font-weight: 500;
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 .header-link:hover {
     border-bottom: 2px solid #f28482;
