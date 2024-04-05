@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   css: [
     '@/assets/style.css'
   ],
-  modules: ['@sidebase/nuxt-auth'],
+  modules: ['@sidebase/nuxt-auth', '@pinia/nuxt'],
   auth: {
     provider: {
       type: 'authjs'

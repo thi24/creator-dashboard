@@ -1,18 +1,13 @@
 <template>
-    <LoadingPage :loading="event == null" heading="Eventname">
+    <LoadingPage :loading="loading" heading="Eventname">
         <p>Page Content</p>
-        <div>
-            <p>{{ event?.eventName }}</p>
-        </div>
     </LoadingPage>
 </template>
 
 <script setup lang="ts">
 import LoadingPage from '~/components/LoadingPage.vue';
-import { useEventStore } from '#imports';
 
 const loading = ref(true);
-const event = ref(computed(() => useEventStore().getEvent()));
 
 onMounted(() => {
     setTimeout(() => {

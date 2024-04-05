@@ -19,6 +19,7 @@ const events: Ref<Event[]> = ref(getEvents());
 function getEvents(): Event[] {
     const results: Event[] = [];
     const event = new Event();
+    event.id = '01575dfb-eb8c-43bd-9182-376d2a7c5f1f';
     event.eventName = "Hippi Parade Smoke Weed 420";
     event.thumbnail = "https://c8.alamy.com/compde/w095m6/marihuana-raucher-leuchten-bei-420-an-der-jahrlichen-420-marihuana-party-in-der-hippie-hill-im-golden-gate-park-in-san-francisco-am-20-april-2018-obwohl-2018-das-erste-jahr-ist-der-rechtlichen-cannibis-in-kalifornien-die-partei-hat-schon-seit-vielen-jahren-foto-von-terry-schmittupi-w095m6.jpg";
     event.description = "Bekiffen Sie sich grenzenlos. Aber lassen Sie sich nicht vom SEK (Söder Einsatzkomando) erwischen.";

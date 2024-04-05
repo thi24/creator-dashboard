@@ -11,6 +11,15 @@
     </div>
 </template>
 
+<script setup lang="ts">
+import { useEventStore } from '~/stores/EventStore';
+
+onMounted(() => {
+    let eventId = useRoute().params.id as string;
+    useEventStore().init(eventId);
+});
+</script>
+
 <style scoped>
 .account-layout {
     display: grid;

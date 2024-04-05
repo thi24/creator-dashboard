@@ -4,7 +4,7 @@
         <div class="event__body">
             <h3 class="event__heading">{{ event.eventName }}</h3>
             <p class="event__description">{{ event.description }}</p>
-            <UiButton class="event__view" @click="() => useRouter().push('/event-dashboard')">Ansehen</UiButton>
+            <UiButton class="event__view" @click="() => useRouter().push('/event-dashboard/' + event.id)">Ansehen</UiButton>
         </div>
     </div>
 </template>
