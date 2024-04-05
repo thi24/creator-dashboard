@@ -1,7 +1,6 @@
 <template>
     <div class="loading-page">
         <div v-if="!loading">
-            <h1 class="heading">{{ heading }}</h1>
             <slot></slot>
         </div>
         <div class="center-center" v-if="loading">
@@ -14,8 +13,7 @@
 import LoadingIcon from './LoadingIcon.vue';
 
 defineProps<{
-    loading: boolean,
-    heading: string
+    loading: boolean
 }>();
 </script>
 
@@ -25,12 +23,16 @@ defineProps<{
     display: grid;
     grid-template-rows: 1fr;
 }
-.loading-page .heading {
-    margin-bottom: 1rem;
-}
+
 .center-center {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+</style>
+
+<style>
+.loading-page .heading {
+    margin-bottom: 1rem;
 }
 </style>

@@ -13,6 +13,7 @@ export const useEventStore = defineStore('events', {
     },
     actions: {
         init(id: string) {
+            this.event = undefined;
             getEventById(id, (event: Event) => {
                 this.event = event;
             }, () => {});

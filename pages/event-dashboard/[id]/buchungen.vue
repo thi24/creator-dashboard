@@ -1,6 +1,8 @@
 <template>
-    <LoadingPage :loading="loading" heading="Buchungen">
-        <p>Page Content</p>
+    <LoadingPage :loading="!event">
+        <div v-if="event">
+            <h1 class="heading">Buchungen: {{ event.eventName }}</h1>
+        </div>
     </LoadingPage>
 </template>
 
@@ -8,6 +10,7 @@
 import LoadingPage from '~/components/LoadingPage.vue';
 
 const loading = ref(true);
+const event = ref(computed(() => useEventStore().getEvent()));
 
 onMounted(() => {
     setTimeout(() => {

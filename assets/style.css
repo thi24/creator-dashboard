@@ -58,3 +58,10 @@ input {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
 }
+
+.center-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}

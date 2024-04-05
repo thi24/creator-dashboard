@@ -10,7 +10,10 @@
                     <NuxtLink class="header-link" to="/veranstaltungen">Veranstaltungen</NuxtLink>
                     <NuxtLink class="header-link" to="/veranstaltung-anlegen">Event erstellen</NuxtLink>
                 </div>
-                <NuxtLink class="header-link" to="/profil">Profil</NuxtLink>
+                <div class="center-center">
+                    <NuxtLink class="header-link" to="/profil">Profil</NuxtLink>
+                    <UiButton icon="logout">Log Out</UiButton>
+                </div>
             </div>
         </div>
     </header>
@@ -48,6 +51,7 @@
 }
 .left-nav-bar {
     display: flex;
+    align-items: center;
     gap: 1rem;
 }
 

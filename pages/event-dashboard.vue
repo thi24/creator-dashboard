@@ -1,9 +1,9 @@
 <template>
     <div class="account-layout">
         <nav class="nav-bar">
-            <NuxtLink to="/event-dashboard">Veranstaltung</NuxtLink>
-            <NuxtLink to="/event-dashboard/tickets">Tickets</NuxtLink>
-            <NuxtLink to="/event-dashboard/buchungen">Buchungen</NuxtLink>
+            <NuxtLink :to="'/event-dashboard/' + eventId" :class="{ active: useRoute().fullPath.startsWith('') }">Veranstaltung</NuxtLink>
+            <NuxtLink :to="'/event-dashboard/' + eventId + '/tickets'">Tickets</NuxtLink>
+            <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'">Buchungen</NuxtLink>
         </nav>
         <div>
             <NuxtPage></NuxtPage>
@@ -14,8 +14,10 @@
 <script setup lang="ts">
 import { useEventStore } from '~/stores/EventStore';
 
+const event = ref(computed(() => useEventStore().getEvent()));
+const eventId = useRoute().params.id as string;
+
 onMounted(() => {
-    let eventId = useRoute().params.id as string;
     useEventStore().init(eventId);
 });
 </script>
@@ -39,7 +41,7 @@ onMounted(() => {
 .nav-bar > * {
     padding: 0.5rem 0.75rem;
 }
-.nav-bar > *.router-link-exact-active {
+.nav-bar > *.router-link-active {
     background-color: var(--primary-color);
     color: white;
     border-radius: 10rem;
