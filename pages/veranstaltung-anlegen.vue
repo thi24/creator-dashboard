@@ -2,7 +2,7 @@
 <div class="page">  
  <div class="narrow">
     <h1 class="heading">Veranstaltung anlegen</h1>
-      <div class="form">
+      <div class="form tile">
         <div class="event-info">
             <UiInput label="Eventname">
                 <input type="text" id="eventname" v-model="event.eventName">
@@ -36,7 +36,7 @@
             </UiInput>
         </div>
      </div>
-     <UiButton @click="save" icon="add_circle" :reverse="true" class="save-btn">Erstellen</UiButton>
+     <UiButton @click="save" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">Erstellen</UiButton>
     </div>
  </div>
  
@@ -49,18 +49,21 @@ import { saveEvent } from '@/requests/event'
 import UiButton from '@/components/ui/UiButton.vue'
 import UiInput from '~/components/ui/UiInput.vue';
 
+const loading: Ref<boolean> = ref(false);
 const event: Ref<Event> = ref(new Event());
 
 function save() {
     let onSuccess = () => {
         console.log("Gespeichert");
+        loading.value = false;
     }
 
     let onError = () => {
         console.log("Fehler")
+        loading.value = false;
     }
-
-    saveEvent(event.value, onSuccess, onError)
+    loading.value = true;
+    saveEvent(event.value, onSuccess, onError);
 }
 </script>
 
@@ -94,7 +97,7 @@ function save() {
 }
 
 #description {
-    resize: horizontal;
+    resize: vertical;
 }
 
 .save-btn {

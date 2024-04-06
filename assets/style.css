@@ -44,14 +44,21 @@ body {
     margin-bottom: 1rem;
 }
 
-input {
+input, textarea, select {
     border-radius: 0.2rem;
     border-style: none;
-    border: grey 1px solid;
+    border: grey 2px solid;
     width: 100%;
     font-size: 1rem;
     padding: 0.5rem;
+    outline: none;
+    background-color: rgba(248, 248, 248, 0.744);
 }
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--primary-color);
+}
+
 
 .col-2{
     display: grid;
@@ -64,4 +71,10 @@ input {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+}
+
+.tile{
+    background-color: white;
+    border-radius: 0.25rem;
+    padding: 1rem;
 }

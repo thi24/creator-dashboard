@@ -1,13 +1,18 @@
 <template>
-    <button class="button" :class="{ reverse: reverse }"><UiIcon v-if="icon">{{ icon }}</UiIcon><slot></slot></button>
+    <button class="button" :class="{ reverse: reverse, loading: loading }"><UiIcon v-if="icon && !loading">{{ icon }}</UiIcon><LoadingIcon v-if="loading"></LoadingIcon><slot></slot></button>
 </template>
 
 <script setup lang="ts">
 import UiIcon from './UiIcon.vue';
+import LoadingIcon from '~/components/LoadingIcon.vue';
 
 defineProps({
     icon: String,
-    reverse: Boolean
+    reverse: Boolean,
+    loading: {
+        type: Boolean,
+        default: false,
+    }
 })
 </script>
 
@@ -31,5 +36,8 @@ defineProps({
 }
 .reverse {
     flex-direction: row-reverse;
+}
+.loading{
+    background-color: grey;
 }
 </style>
