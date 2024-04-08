@@ -1,16 +1,9 @@
-<template>
-    <HeaderComponent></HeaderComponent>
-        <NuxtPage></NuxtPage>
-    <FooterComponent></FooterComponent>
-</template>
 
-<script lang="ts" setup>
 
-const login = ref(false);
-
-onMounted(async () => {
-    login.value = await checkLogin()
-})
+export async function getAndParseToken() {
+    const headers = useRequestHeaders(['cookie']) as HeadersInit
+    const { data: token } = await useFetch('/api/token', { headers })
+}
 
 async function checkLogin() {
     const headers = useRequestHeaders(['cookie']) as HeadersInit
@@ -22,5 +15,3 @@ async function checkLogin() {
         return false
     }
 }
-
-</script>
