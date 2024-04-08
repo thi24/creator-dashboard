@@ -32,5 +32,12 @@ defineProps({
 }
 .button * {
     color: white;
+    font-size: 1.1rem;
+}
+.reverse {
+    flex-direction: row-reverse;
+}
+.loading{
+    background-color: grey;
 }
 </style>
