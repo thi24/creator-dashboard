@@ -10,7 +10,7 @@
             <p>{{ ticket.customer.name }}</p>
         </div>
         <div class="ticket-status">
-            <TicketStatusComponent :status="ticket.state"></TicketStatusComponent>
+            <TicketStatusComponent :status="ticket.status"></TicketStatusComponent>
         </div>
     </div>
 </template>
@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import { Ticket } from '~/classes/Ticket';
 import TicketStatusComponent from './TicketStatusComponent.vue';
+import type { TicketStatus } from '~/classes/TicketStatus';
 
 defineProps<{
     ticket: Ticket

@@ -4,14 +4,14 @@ import type { TicketStatus } from "./TicketStatus";
 export class Ticket {
 
     id = undefined as string | undefined;
-    state = undefined as TicketStatus | undefined;
+    status = undefined as TicketStatus | undefined;
     price = undefined as number | undefined;
     taxRate = undefined as number | undefined;
     customer = undefined as Customer | undefined;
 
-    constructor(id?: string, state?: TicketStatus, price?: number, taxRate?: number, customer?: Customer) {
+    constructor(id?: string, status?: TicketStatus, price?: number, taxRate?: number, customer?: Customer) {
         this.id = id;
-        this.state = state;
+        this.status = status;
         this.price = price;
         this.taxRate = taxRate;
         this.customer = customer;
