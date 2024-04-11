@@ -1,8 +1,8 @@
 <template>
-    <p class="ticket-label" v-if="status != null":class="{ pending: status === TicketStatus.PENDING,
-        valid: status === TicketStatus.VALID,
-        redeemed: status === TicketStatus.REDEEMED,
-        cancelled: status === TicketStatus.CANCELLED
+    <p class="ticket-label" v-if="status != null":class="{ pending: status.toString() === TicketStatus[TicketStatus.PENDING],
+        valid: status.toString() === TicketStatus[TicketStatus.VALID],
+        redeemed: status.toString() === TicketStatus[TicketStatus.REDEEMED],
+        cancelled: status.toString() === TicketStatus[TicketStatus.CANCELLED]
      }">{{ getLabel(status) }}</p>
 </template>
 
@@ -14,16 +14,16 @@ defineProps<{
 }>();
 
 function getLabel(status: TicketStatus) {
-    if(status === TicketStatus.PENDING) {
+    if(status.toString() === TicketStatus[TicketStatus.PENDING]) {
         return "Ausstehend";
     }
-    if(status === TicketStatus.VALID) {
+    if(status.toString() === TicketStatus[TicketStatus.VALID]) {
         return "Gültig";
     }
-    if(status === TicketStatus.REDEEMED) {
+    if(status.toString() === TicketStatus[TicketStatus.REDEEMED]) {
         return "Entwertet";
     }
-    if(status === TicketStatus.CANCELLED) {
+    if(status.toString() ===TicketStatus[TicketStatus.CANCELLED]) {
         return "Storniert";
     }
     return undefined;

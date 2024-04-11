@@ -2,7 +2,7 @@ import axios from "axios";
 import { Event } from "~/classes/Event";
 
 function getBaseURL() {
-    return useRuntimeConfig().public.baseURL + "/api/event-service";
+    return useRuntimeConfig().public.baseURL + ":8080/api/event-service";
 }
 
 export function getAllEvents(onSuccess: (events: Event[]) => void, onError: () => void) {
