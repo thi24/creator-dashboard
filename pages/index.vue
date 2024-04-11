@@ -18,18 +18,18 @@
 </template>
 
 <script lang="ts" setup>
-
-const { status, data, signIn, signOut, refresh } = useAuth()
+const { signIn, signOut, session, status, cookies, getProviders } = useAuth()
 
 async function login()  {
-    await signIn('github')
+    await signIn('keycloak')
 }
 
 async function testing() {
     console.log('testing')
     const headers = useRequestHeaders(['cookie']) as HeadersInit
     const { data: token } = await useFetch('/api/token', { headers })
-    console.log(token)
+    console.log(token.value.token)
+    useUserStore().setToken(token.value.token)
 }
 
 
