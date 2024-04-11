@@ -3,7 +3,7 @@
         <div class="login-container">
             <h1>Benevolo Login</h1>
             <div class="social-logins">
-                <UiButton class="button social-button" @click="login">Login with GitHub
+                <UiButton class="button social-button" @click="login">Login
                     <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32"
                         data-view-component="true" id="github-icon">
                         <path
@@ -22,7 +22,7 @@
 const { status, data, signIn, signOut, refresh } = useAuth()
 
 async function login()  {
-    await signIn('azure_ad')
+    await signIn('github')
 }
 
 async function testing() {

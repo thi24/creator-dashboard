@@ -12,8 +12,9 @@ jobs:
       DATABASE_DEV_PASSWORD: ${{ secrets.DATABASE_DEV_PASSWORD }}
       DATABASE_PROD_USERNAME: ${{ secrets.DATABASE_PROD_USERNAME }}
       DATABASE_PROD_PASSWORD: ${{ secrets.DATABASE_PROD_PASSWORD }}
-      GITHUB_CLIENT_ID: ${{ secrets.OAUTH_GITHUB_CLIENT_ID }}
-      GITHUB_CLIENT_SECRET: ${{ secrets.OAUTH_GITHUB_CLIENT_SECRET }}
+      KEYCLOAK_ID: ${{ secrets.KEYCLOAK_ID }}
+      KEYCLOAK_SECRET: ${{ secrets.KEYCLOAK_SECRET }}
+      KEYCLOAK_ISSUER: https://auth.benevolo.de/realms/benevolo
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       AUTH_ORIGIN: https://benevolo.de
       BASE_URL: https://benevolo.de
@@ -29,15 +30,15 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.OWNER_PASSWORD }}
 
-#    - name: Set env variables for dev environment
-#      if: github.ref == 'refs/heads/develop'
-#      run: |
-#        echo "BASE_URL=https://dev.benevolo.de" >> $GITHUB_ENV
+    - name: Set env variables for dev environment
+      if: github.ref == 'refs/heads/develop'
+      run: |
+        echo "BASE_URL=https://dev.benevolo.de" >> $GITHUB_ENV
     
-#    - name: Set env variables for prod environment
-#      if: github.ref == 'refs/heads/main'
-#      run: |
-#        echo "BASE_URL=https://benevolo.de" >> $GITHUB_ENV
+    - name: Set env variables for prod environment
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "BASE_URL=https://benevolo.de" >> $GITHUB_ENV
 
     - name: Build and push dev Docker image
       if: github.ref == 'refs/heads/develop'

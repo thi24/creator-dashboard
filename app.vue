@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 
 const login = ref(false);
-
+/*
 onMounted(async () => {
     login.value = await checkLogin()
 })
@@ -22,5 +22,5 @@ async function checkLogin() {
         return false
     }
 }
-
+*/
 </script>
