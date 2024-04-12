@@ -12,7 +12,7 @@
                 </div>
                 <div class="center-center">
                     <NuxtLink class="header-link" to="/profil">Profil</NuxtLink>
-                    <UiButton icon="logout">Log Out</UiButton>
+                    <UiButton icon="logout" @click="logout()">Log Out</UiButton>
                 </div>
             </div>
         </div>
@@ -23,6 +23,9 @@
 
 <script lang="ts" setup>
 
+function logout() {
+    navigateTo("https://auth.benevolo.de/realms/benevolo/protocol/openid-connect/logout?post_logout_redirect_uri=" + useRuntimeConfig().public.authOriginURL +  "/logout&client_id=benevolo", { external: true})
+}
 
 </script>
 

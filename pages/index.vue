@@ -11,27 +11,14 @@
                         </path>
                     </svg>
                 </UiButton>
-                <button @click="testing">testing</button>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-const { signIn, signOut, session, status, cookies, getProviders } = useAuth()
-
-async function login()  {
-    await signIn('keycloak')
-}
-
-async function testing() {
-    console.log('testing')
-    const headers = useRequestHeaders(['cookie']) as HeadersInit
-    const { data: token } = await useFetch('/api/token', { headers })
-    console.log(token.value.token)
-    useUserStore().setToken(token.value.token)
-}
-
+import { useUserStore } from '~/stores/UserStore';
+import { login } from '~/utils/authentication';
 
 </script>
 

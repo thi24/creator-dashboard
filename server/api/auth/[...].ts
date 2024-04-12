@@ -1,41 +1,47 @@
-import GithubProvider from "@auth/core/providers/github"
-import KeycloakProvider from "@auth/core/providers/keycloak"
-import type { AuthConfig } from "@auth/core/types"
-import { NuxtAuthHandler } from "#auth"
+import { OAuth2RequestError } from "arctic";
+import { Keycloak, type KeycloakTokens } from "arctic";
+import { useUserStore } from "~/stores/UserStore";
 
-// The #auth virtual import comes from this module. You can use it on the client
-// and server side, however not every export is universal. For example do not
-// use sign-in and sign-out on the server side.
+export default eventHandler(async (event) => {
+    const query = getQuery(event);
+    const code: string = query.code as string;
+    const state = query.state;
 
-const runtimeConfig = useRuntimeConfig()
+    const storedState = getCookie(event, "state");
+    const storedCodeVerifier = getCookie(event, "code_verifier");
 
-// Refer to Auth.js docs for more details
-export const authOptions: AuthConfig = {
-  secret: runtimeConfig.authJs.secret,
-  providers: [
-    KeycloakProvider({
-      clientId: process.env.KEYCLOAK_ID,
-      clientSecret: process.env.KEYCLOAK_SECRET,
-      issuer: process.env.KEYCLOAK_ISSUER,
-    })
-  ],
-  callbacks: {
-    async jwt({ token, account }) {
-      // Persist the OAuth access_token to the token right after signin
-      if (account) {
-        token.accessToken = account.access_token
-      }
-      return token
-    },
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
-      (session as any).accessToken = token.accessToken
-      return session
+    if (!code || !storedState || !storedCodeVerifier || state !== storedState) {
+        // 400
+        throw new Error("Invalid request");
     }
-  }
-}
 
+    const realmURL = process.env.KEYCLOAK_ISSUER
+    const clientId = process.env.KEYCLOAK_ID
+    const clientSecret = process.env.KEYCLOAK_SECRET
+    const redirectURI = process.env.AUTH_URL // Add the appropriate redirect URI
+    if (!realmURL || !clientId || !clientSecret || !redirectURI) { return }
+    const keycloak = new Keycloak(realmURL, clientId, clientSecret, redirectURI);
 
-export default NuxtAuthHandler(authOptions, runtimeConfig)
-// If you don't want to pass the full runtime config,
-//  you can pass something like this: { public: { authJs: { baseUrl: "" } } }
+    try {
+        const tokens: KeycloakTokens = await keycloak.validateAuthorizationCode(code, storedCodeVerifier) ;
+        // store token as cookie
+        setCookie(event, "token", tokens.accessToken, {
+            secure: true, // set to false in localhost
+            path: "/",
+            httpOnly: false,
+            maxAge: 60 * 10 // 10 min
+        });
+        // return { token: tokens.accessToken}
+    } catch (e) {
+        if (e instanceof OAuth2RequestError) {
+            const { request, message, description } = e;
+            // return { request: request, message: message, description: description}
+        }
+        // return { message: "Unknown error" }
+    }
+    if(process.env.AUTH_ORIGIN === undefined) {
+        return { message: "AUTH_ORIGIN is not defined" }
+    }
+    sendRedirect(event, (process.env.AUTH_ORIGIN));
+    
+});
