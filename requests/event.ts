@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Event } from "~/classes/Event";
 
 function getBaseURL() {
     return useRuntimeConfig().public.eventService.baseURL;
@@ -42,7 +43,7 @@ export function getEventById(id: string, onSuccess: (event: Event) => void, onEr
 
 export function saveEvent(event: Event, onSuccess: () => void, onError: () => void) {
     let baseURL = getBaseURL();
-    axios.post(baseURL + "/events", event) {
+    axios.post(baseURL + "/events", event, {
         headers: {
             Authorization: `Bearer ${getToken()}`
         }
