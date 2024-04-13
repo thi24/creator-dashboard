@@ -1,4 +1,5 @@
 <template>
+<LoadingPage :loading="!event" :heading="'Tickets'">
 <div class="narrow">
     <h1 class="heading">Tickets</h1>
         <div class="form tile">
@@ -11,6 +12,7 @@
         </div>
 </div>
 <SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
+</LoadingPage>
 </template>
 
 <script setup lang="ts">
@@ -21,7 +23,6 @@ import { TicketType } from '~/classes/TicketType';
 import { getAllTicketTypes } from '~/requests/tickettype';
 import PopupTemplate from '~/components/popups/PopupTemplate.vue';
 import SaveTicketTypePopup from '~/components/popups/SaveTicketTypePopup.vue';
-
 
 const loading = ref(true);
 const event = ref(computed(() => useEventStore().getEvent()));
