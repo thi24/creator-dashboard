@@ -7,7 +7,12 @@ export default defineNuxtConfig({
   modules: ['@pinia/nuxt'],
   runtimeConfig: {
     public: {
-      baseURL: process.env.BASE_URL,
+      eventService: {
+        baseURL: process.env.EVENT_SERVICE_BASE_URL
+      },
+      ticketService: {
+        baseURL: process.env.TICKET_SERVICE_BASE_URL
+      },
       authOriginURL: process.env.AUTH_ORIGIN
     }
   },

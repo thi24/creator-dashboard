@@ -20,7 +20,8 @@ const event = ref(computed(() => useEventStore().getEvent()));
 const tickets: Ref<Ticket[] | undefined> = ref(undefined);
 
 onMounted(() => {
-    getTickets((_tickets: Ticket[]) => {
+    const eventId: string = useRoute().params.id as string;
+    getTickets(eventId, (_tickets: Ticket[]) => {
         tickets.value = _tickets;
     }, () => {});
 })
