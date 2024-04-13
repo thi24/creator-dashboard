@@ -2,7 +2,7 @@ import axios from "axios";
 import { Event } from "~/classes/Event";
 
 function getBaseURL() {
-    return useRuntimeConfig().public.baseURL + ":8080/api/event-service";
+    return useRuntimeConfig().public.eventService.baseURL;
 }
 
 export function getAllEvents(onSuccess: (events: Event[]) => void, onError: () => void) {
@@ -30,7 +30,7 @@ export function getEventById(id: string, onSuccess: (event: Event) => void, onEr
 
 export function saveEvent(event: Event, onSuccess: () => void, onError: () => void) {
     let baseURL = getBaseURL();
-    axios.post(baseURL+"/api/event-service/events", event)
+    axios.post(baseURL + "/events", event)
     .then(() => {
         onSuccess();
     })
