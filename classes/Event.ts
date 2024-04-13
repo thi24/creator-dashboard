@@ -1,4 +1,5 @@
 import { Address } from "./Address";
+import { TicketType } from "./TicketType";
 
 export class Event {
   
@@ -9,5 +10,6 @@ export class Event {
     endsAt = new Date() as Date;
     address = new Address("", "", "", "");
     description = "" as string;
+    ticketTypes = undefined as TicketType[] | undefined;
 
 }
