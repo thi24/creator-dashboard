@@ -2,7 +2,7 @@ import axios from "axios";
 import { Event } from "~/classes/Event";
 
 function getBaseURL() {
-    return useRuntimeConfig().public.eventService.baseURL;
+    return useRuntimeConfig().public.eventService.baseUrl;
 }
 
 function getToken() {
