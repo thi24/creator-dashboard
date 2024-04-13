@@ -78,3 +78,8 @@ input:focus, textarea:focus, select:focus {
     border-radius: 0.25rem;
     padding: 1rem;
 }
+
+.save-btn {
+    margin: 0 auto;
+    margin-top: 1rem;
+}

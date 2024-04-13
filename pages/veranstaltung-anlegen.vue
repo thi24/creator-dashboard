@@ -100,9 +100,4 @@ function save() {
     resize: vertical;
 }
 
-.save-btn {
-    margin: 0 auto;
-    margin-top: 1rem;
-}
-
 </style>

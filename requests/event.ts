@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Event } from "~/classes/Event";
+import type { TicketType } from "~/classes/TicketType";
 
 function getBaseURL() {
     return useRuntimeConfig().public.baseURL + "/api/event-service";
