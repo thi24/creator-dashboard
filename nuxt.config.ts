@@ -4,12 +4,7 @@ export default defineNuxtConfig({
   css: [
     '@/assets/style.css'
   ],
-  modules: ['@sidebase/nuxt-auth', '@pinia/nuxt'],
-  auth: {
-    provider: {
-      type: 'authjs'
-    }
-  },
+  modules: ['@pinia/nuxt'],
   runtimeConfig: {
     public: {
       eventService: {
@@ -17,7 +12,8 @@ export default defineNuxtConfig({
       },
       ticketService: {
         baseURL: process.env.TICKET_SERVICE_BASE_URL
-      }
+      },
+      authOriginURL: process.env.AUTH_ORIGIN
     }
   },
   app: {
