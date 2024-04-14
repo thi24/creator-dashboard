@@ -3,7 +3,7 @@ import { Event } from "~/classes/Event";
 import type { TicketType } from "~/classes/TicketType";
 
 function getBaseURL() {
-    return process.env.EVENT_SERVICE_BASE_URL;
+    return useRuntimeConfig().public.eventService.baseURL;
 }
 
 function getToken() {

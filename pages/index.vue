@@ -1,7 +1,5 @@
 <template>
        <div class="page">
-        <p>{{ useRuntimeConfig().public.eventService.baseURL }}</p>
-        <p>{{ useRuntimeConfig().public.ticketService.baseURL }}</p>
         <div class="login-container">
             <h1>Benevolo Login</h1>
             <div class="social-logins">
