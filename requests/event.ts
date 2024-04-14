@@ -3,7 +3,7 @@ import { Event } from "~/classes/Event";
 import type { TicketType } from "~/classes/TicketType";
 
 function getBaseURL() {
-    return useRuntimeConfig().public.eventService.baseUrl;
+    return useRuntimeConfig().public.eventService.baseURL;
 }
 
 function getToken() {
