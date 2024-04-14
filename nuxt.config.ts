@@ -8,10 +8,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       eventService: {
-        baseURL: process.env.EVENT_SERVICE_BASE_URL
+        baseURL: process.env.NUXT_PUBLIC_EVENT_SERVICE_BASE_URL
       },
       ticketService: {
-        baseURL: process.env.TICKET_SERVICE_BASE_URL
+        baseURL: process.env.NUXT_PUBLIC_TICKET_SERVICE_BASE_URL
       },
       authOriginURL: process.env.AUTH_ORIGIN
     }

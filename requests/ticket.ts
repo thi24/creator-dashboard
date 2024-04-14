@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Ticket } from "~/classes/Ticket";
 
 function getBaseURL() {
-    return useRuntimeConfig().public.ticketService.baseURL;
+    return process.env.TICKET_SERVICE_BASE_URL;
 }
 
 export function getTickets(eventId: string, onSuccess: (tickets: Ticket[]) => void, onError: () => void) {

@@ -17,8 +17,8 @@ jobs:
       KEYCLOAK_ISSUER: https://auth.benevolo.de/realms/benevolo
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       AUTH_ORIGIN: https://benevolo.de
-      TICKET_SERVICE_BASE_URL: https://benevolo.de/api/ticket-service
-      EVENT_SERVICE_BASE_URL: https://benevolo.de/api/event-service
+      NUXT_PUBLIC_TICKET_SERVICE_BASE_URL: https://benevolo.de/api/ticket-service
+      NUXT_PUBLIC_EVENT_SERVICE_BASE_URL: https://benevolo.de/api/event-service
 
     steps:
     - name: Checkout
@@ -34,15 +34,15 @@ jobs:
     - name: Set env variables for dev environment
       if: github.ref == 'refs/heads/develop'
       run: |
-        echo "TICKET_SERVICE_BASE_URL=https://dev.benevolo.de/api/ticket-service" >> $GITHUB_ENV
-        echo "EVENT_SERVICE_BASE_URL=https://dev.benevolo.de/api/event-service" >> $GITHUB_ENV
+        echo "NUXT_PUBLIC_TICKET_SERVICE_BASE_URL=https://dev.benevolo.de/api/ticket-service" >> $GITHUB_ENV
+        echo "NUXT_PUBLIC_EVENT_SERVICE_BASE_URL=https://dev.benevolo.de/api/event-service" >> $GITHUB_ENV
         echo "AUTH_ORIGIN=https://dev.benevolo.de" >> $GITHUB_ENV
     
     - name: Set env variables for prod environment
       if: github.ref == 'refs/heads/main'
       run: |
-        echo "TICKET_SERVICE_BASE_URL=https://benevolo.de/api/ticket-service" >> $GITHUB_ENV
-        echo "EVENT_SERVICE_BASE_URL=https://benevolo.de/api/event-service" >> $GITHUB_ENV
+        echo "NUXT_PUBLIC_TICKET_SERVICE_BASE_URL=https://benevolo.de/api/ticket-service" >> $GITHUB_ENV
+        echo "NUXT_PUBLIC_EVENT_SERVICE_BASE_URL=https://benevolo.de/api/event-service" >> $GITHUB_ENV
         echo "AUTH_ORIGIN=https://benevolo.de" >> $GITHUB_ENV
 
     - name: Build and push dev Docker image
