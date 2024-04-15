@@ -2,7 +2,7 @@ import axios from "axios";
 import type { TicketType } from "~/classes/TicketType";
 
 function getBaseURL() {
-    return useRuntimeConfig().public.baseURL + "/api/event-service";
+    return useRuntimeConfig().public.eventService.baseURL;
 }
 
 
@@ -19,7 +19,7 @@ export function getAllTicketTypes(id: string, onSuccess: (TicketType: TicketType
 
 export function saveTicketType(TicketType: TicketType, onSuccess: () => void, onError: () => void) {
     let baseURL = getBaseURL();
-    axios.post(baseURL+"/api/event-service/ticket-types", TicketType)
+    axios.post(baseURL + "/ticket-types", TicketType)
     .then(() => {
         onSuccess();
     })

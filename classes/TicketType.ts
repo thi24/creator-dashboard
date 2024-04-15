@@ -8,5 +8,5 @@ export class TicketType {
     capacity = undefined as number | undefined;
     active = undefined as boolean | undefined;
     taxRate = undefined as number | undefined;
-    eventid = "" as string;
+    eventId = "" as string;
 }

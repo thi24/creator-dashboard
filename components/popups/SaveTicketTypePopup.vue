@@ -47,7 +47,7 @@ function saveTicket(ticketType: TicketType) {
         loading.value = false;
     }
     loading.value = true;
-    ticketType.eventid = eventId;
+    ticketType.eventId = eventId;
     saveTicketType(ticketType, onSuccess, onError);
 }
 
