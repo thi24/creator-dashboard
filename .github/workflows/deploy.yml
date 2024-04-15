@@ -2,19 +2,20 @@ name: Deploy creater Dashboard
 
 on:
   push:
-    branches: [ "main", "feature/CI" ]
+    branches: [ "main", "develop" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DATABASE_DEV_USERNAME: ${{ secrets.DATABASE_DEV_USERNAME }}
-      DATABASE_DEV_PASSWORD: ${{ secrets.DATABASE_DEV_PASSWORD }}
-      DATABASE_PROD_USERNAME: ${{ secrets.DATABASE_PROD_USERNAME }}
-      DATABASE_PROD_PASSWORD: ${{ secrets.DATABASE_PROD_PASSWORD }}
-      GITHUB_CLIENT_SECRET: ${{ secrets.OAUTH_GITHUB_CLIENT_SECRET }}
+      KEYCLOAK_ID: ${{ secrets.KEYCLOAK_ID }}
+      KEYCLOAK_SECRET: ${{ secrets.KEYCLOAK_SECRET }}
+      KEYCLOAK_ISSUER: https://auth.benevolo.de/realms/benevolo
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       AUTH_ORIGIN: https://benevolo.de
+      AUTH_URL: https://benevolo.de/api/auth/keycloak
+      TICKET_SERVICE_BASE_URL: https://benevolo.de/api/ticket-service
+      EVENT_SERVICE_BASE_URL: https://benevolo.de/api/event-service
 
     steps:
     - name: Checkout
@@ -27,15 +28,38 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.OWNER_PASSWORD }}
 
-    - name: Build and push Docker image
+    - name: Set env variables for dev environment
+      if: github.ref == 'refs/heads/develop'
+      run: |
+        echo "TICKET_SERVICE_BASE_URL=https://dev.benevolo.de/api/ticket-service" >> $GITHUB_ENV
+        echo "EVENT_SERVICE_BASE_URL=https://dev.benevolo.de/api/event-service" >> $GITHUB_ENV
+        echo "AUTH_ORIGIN=https://dev.benevolo.de" >> $GITHUB_ENV
+        echo "AUTH_URL=https://dev.benevolo.de/api/auth/keycloak" >> $GITHUB_ENV
+
+    - name: Set env variables for prod environment
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "TICKET_SERVICE_BASE_URL=https://benevolo.de/api/ticket-service" >> $GITHUB_ENV
+        echo "EVENT_SERVICE_BASE_URL=https://benevolo.de/api/event-service" >> $GITHUB_ENV
+        echo "AUTH_ORIGIN=https://benevolo.de" >> $GITHUB_ENV
+        echo "AUTH_URL=https://benevolo.de/api/auth/keycloak" >> $GITHUB_ENV
+
+    - name: Build and push dev Docker image
+      if: github.ref == 'refs/heads/develop'
+      run: |
+        docker compose -f docker-compose-dev.yml build
+        docker compose -f docker-compose-dev.yml push
+
+    - name: Build and push prod Docker image
+      if: github.ref == 'refs/heads/main'
       run: |
         docker compose build
         docker compose push
 
-  deploy:
+  deploymain:
     runs-on: ubuntu-latest
     needs: build
-
+    if: github.ref == 'refs/heads/main'
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -55,6 +79,35 @@ jobs:
         chmod +x yq
         NEW_VERSION=${GITHUB_RUN_ID}
         yq e '.services["benevolo.creator.dashboard"].image = "ghcr.io/thi24/benevolo.creator.dashboard:'"$NEW_VERSION"'"' -i docker-compose.yml
+    
+    - name: Commit and push changes
+      run: |
+        git commit -a -m "updated by GitHub Actions"
+        git push
+
+  deploydev:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+          repository: 'thi24/gitops-dev'
+          ref: 'main'
+          token:  ${{ secrets.GITOPS }}
+
+    - name: Setup git config
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "<>"
+
+    - name: Update docker image version
+      run: |
+        wget https://github.com/mikefarah/yq/releases/download/v4.42.1/yq_linux_amd64 -O yq &&\
+        chmod +x yq
+        NEW_VERSION=${GITHUB_RUN_ID}
+        yq e '.services["dev.benevolo.creator.dashboard"].image = "ghcr.io/thi24/dev.benevolo.creator.dashboard:'"$NEW_VERSION"'"' -i docker-compose.yml
     
     - name: Commit and push changes
       run: |

@@ -1,7 +1,15 @@
-export class Event {
+import { Address } from "./Address";
+import { TicketType } from "./TicketType";
 
-    name = "" as string;
+export class Event {
+  
+    id = "" as string;
+    eventName = "" as string;
+    thumbnail = "" as string;
     startsAt = new Date() as Date;
     endsAt = new Date() as Date;
+    address = new Address("", "", "", "");
+    description = "" as string;
+    ticketTypes = undefined as TicketType[] | undefined;
 
 }
