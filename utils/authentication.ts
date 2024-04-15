@@ -2,8 +2,10 @@ import type { AxiosResponse } from "axios";
 import axios from "axios";
 
 export async function login() {
+    console.log(useRuntimeConfig().keycloakId)
     axios.get<{redirectUrl: string}>("/api/login")
     .then((response: AxiosResponse) => {
+        console.log(response.data.redirectUrl);
         navigateTo(response.data.redirectUrl, { external: true });
     })
     .catch(() => {

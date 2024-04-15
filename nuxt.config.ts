@@ -14,7 +14,12 @@ export default defineNuxtConfig({
         baseURL: process.env.TICKET_SERVICE_BASE_URL
       },
       authOriginURL: process.env.AUTH_ORIGIN
-    }
+    },
+    keycloakId: process.env.KEYCLOAK_ID,
+    keycloakSecret: process.env.KEYCLOAK_SECRET,
+    keycloakIssuer: process.env.KEYCLOAK_ISSUER,
+    authUrl: process.env.AUTH_URL
+
   },
   app: {
     head: {

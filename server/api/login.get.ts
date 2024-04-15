@@ -2,10 +2,10 @@ import { Keycloak, type KeycloakTokens } from "arctic";
 import { generateCodeVerifier, generateState } from "arctic";
 
 export default eventHandler(async (event) => {
-    const realmURL = process.env.KEYCLOAK_ISSUER
-    const clientId = process.env.KEYCLOAK_ID
-    const clientSecret = process.env.KEYCLOAK_SECRET
-    const redirectURI = process.env.AUTH_URL // Add the appropriate redirect URI
+    const realmURL = useRuntimeConfig().keycloakIssuer
+    const clientId = useRuntimeConfig().keycloakId
+    const clientSecret = useRuntimeConfig().keycloakSecret
+    const redirectURI = useRuntimeConfig().authUrl // Add the appropriate redirect URI
     if (!realmURL || !clientId || !clientSecret || !redirectURI) { return }
     const keycloak = new Keycloak(realmURL, clientId, clientSecret, redirectURI);
     const state = generateState();

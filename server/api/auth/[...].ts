@@ -15,10 +15,10 @@ export default eventHandler(async (event) => {
         throw new Error("Invalid request");
     }
 
-    const realmURL = process.env.KEYCLOAK_ISSUER
-    const clientId = process.env.KEYCLOAK_ID
-    const clientSecret = process.env.KEYCLOAK_SECRET
-    const redirectURI = process.env.AUTH_URL // Add the appropriate redirect URI
+    const realmURL = useRuntimeConfig().keycloakIssuer
+    const clientId = useRuntimeConfig().keycloakId
+    const clientSecret = useRuntimeConfig().keycloakSecret
+    const redirectURI = useRuntimeConfig().authUrl // Add the appropriate redirect URI
     if (!realmURL || !clientId || !clientSecret || !redirectURI) { return }
     const keycloak = new Keycloak(realmURL, clientId, clientSecret, redirectURI);
 
@@ -39,9 +39,9 @@ export default eventHandler(async (event) => {
         }
         // return { message: "Unknown error" }
     }
-    if(process.env.AUTH_ORIGIN === undefined) {
+    if(useRuntimeConfig().public.authOriginURL === undefined) {
         return { message: "AUTH_ORIGIN is not defined" }
     }
-    sendRedirect(event, (process.env.AUTH_ORIGIN));
+    sendRedirect(event, useRuntimeConfig().public.authOriginURL);
     
 });
