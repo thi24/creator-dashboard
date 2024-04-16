@@ -3,8 +3,12 @@
 <div class="narrow">
     <h1 class="heading">Tickets</h1>
         <div class="form tile">
-            <div class="ticket" v-if="event && event.ticketTypes != null"> 
-                <p>Ticketname:</p>
+            <div class="ticket" v-for="ticketType in ticketTypes"> 
+                <p>Ticketname: {{ ticketType.name }}</p>
+                <p> Ticketanzahl: {{ ticketType.capacity }}</p>
+                <p>Verkauf von: {{ ticketType.validFrom }}</p>
+                <p>Verkauf bis: {{ ticketType.validTo }}</p>
+                <p>Preis: {{ ticketType.price }}</p>
             </div>
             <div class="empty-ticket-container" @click="saveTicketPopup.open()">
                 <p>Neuen Tickettypen anlegen</p>
