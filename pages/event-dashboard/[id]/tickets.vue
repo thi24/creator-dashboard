@@ -56,6 +56,7 @@ onMounted(() => {
 .form {
     display: grid;
     grid-auto-rows: 1fr;
+    overflow: hidden;
 }
 .empty-ticket-container {
 justify-content: center;

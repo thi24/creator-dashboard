@@ -1,5 +1,5 @@
 <template>
-    <div class="ticket ticket-hover">
+    <div class="ticket">
         <div class="tickettype-status"> </div>
         <div class="tickettype-info">
             <h3>Ticketname: {{ ticketType.name }}</h3>
@@ -26,16 +26,14 @@ display: flex;
 display: grid;
 grid-template-columns: min-content 1fr;
 cursor: pointer;
-border-bottom: grey 0.5px solid;
-padding-left: 1rem;
+border-bottom: lightgray 1px solid;
+padding-left: 0.25rem;
 }
 
 .ticket:hover{
     background-color: rgba(243, 242, 242, 0.744);
-}
-
-.ticket-hover:hover{
-    border-left: var(--primary-color) 0.5rem solid;
+    border-left: var(--primary-color) 0.25rem solid;
+    padding-left: 0rem;
 }
 
 .tickettype-info{
