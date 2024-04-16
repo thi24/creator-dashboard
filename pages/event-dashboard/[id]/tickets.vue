@@ -1,7 +1,7 @@
 <template>
-    <LoadingPage :loading="!event" :heading="'Tickets'">
+    <LoadingPage :loading="!event || !ticketTypes" :heading="'Tickettypen'">
         <div class="narrow">
-            <h1 class="heading">Tickets</h1>
+            <h1 class="heading">Tickettypen: {{ event?.eventName }}</h1>
             <div class="form tile">
                 <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType"></TicketTypeComponent>
                 <div class="empty-ticket-container" @click="saveTicketPopup.open()">
