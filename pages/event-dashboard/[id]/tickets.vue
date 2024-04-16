@@ -23,7 +23,7 @@ import PopupTemplate from '~/components/popups/PopupTemplate.vue';
 import SaveTicketTypePopup from '~/components/popups/SaveTicketTypePopup.vue';
 import TicketTypeComponent from '~/components/veranstaltungen/TicketTypeComponent.vue';
 
-const loading = ref(true);
+const loading = ref(false);
 const event = ref(computed(() => useEventStore().getEvent()));
 const ticketType: Ref<TicketType> = ref(new TicketType());
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
