@@ -20,7 +20,7 @@
                 <input type="datetime-local" id="end-date" v-model="ticketType.validTo">
             </UiInput>
         </div>
-    <UiButton @click="saveTicket(ticketType)" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">Erstellen</UiButton>
+    <UiButton @click="saveTicket(ticketType),close()" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">Erstellen</UiButton>
     </PopupTemplate>
 </template>
 

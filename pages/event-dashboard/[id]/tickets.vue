@@ -1,22 +1,16 @@
 <template>
-<LoadingPage :loading="!event" :heading="'Tickets'">
-<div class="narrow">
-    <h1 class="heading">Tickets</h1>
-        <div class="form tile">
-            <div class="ticket" v-for="ticketType in ticketTypes"> 
-                <p>Ticketname: {{ ticketType.name }}</p>
-                <p> Ticketanzahl: {{ ticketType.capacity }}</p>
-                <p>Verkauf von: {{ ticketType.validFrom }}</p>
-                <p>Verkauf bis: {{ ticketType.validTo }}</p>
-                <p>Preis: {{ ticketType.price }}</p>
-            </div>
-            <div class="empty-ticket-container" @click="saveTicketPopup.open()">
-                <p>Neuen Tickettypen anlegen</p>
+    <LoadingPage :loading="!event" :heading="'Tickets'">
+        <div class="narrow">
+            <h1 class="heading">Tickets</h1>
+            <div class="form tile">
+                <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType"></TicketTypeComponent>
+                <div class="empty-ticket-container" @click="saveTicketPopup.open()">
+                    <h3>Neuen Tickettypen anlegen</h3>
+                </div>
             </div>
         </div>
-</div>
-<SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
-</LoadingPage>
+        <SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
+    </LoadingPage>
 </template>
 
 <script setup lang="ts">
@@ -27,6 +21,7 @@ import { TicketType } from '~/classes/TicketType';
 import { getAllTicketTypes } from '~/requests/tickettype';
 import PopupTemplate from '~/components/popups/PopupTemplate.vue';
 import SaveTicketTypePopup from '~/components/popups/SaveTicketTypePopup.vue';
+import TicketTypeComponent from '~/components/veranstaltungen/TicketTypeComponent.vue';
 
 const loading = ref(true);
 const event = ref(computed(() => useEventStore().getEvent()));
@@ -54,14 +49,15 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+.tile {
+    padding: 0;
+}
 .form {
-    gap: 1rem;
     display: grid;
     grid-auto-rows: 1fr;
 }
 .empty-ticket-container {
-border: 0.1rem grey dashed;
-border-radius: 1rem;
 justify-content: center;
 align-items: center;
 display: flex;
@@ -72,19 +68,5 @@ cursor: pointer;
 .empty-ticket-container:hover {
     background-color: rgba(243, 242, 242, 0.744);
     transition: 0.3s; 
-}
-
-.ticket{
-display: flex;
-border: 0.1rem grey solid;
-border-radius: 1rem;
-display: grid;
-padding: 0.5rem;
-cursor: pointer;
-}
-
-.ticket:hover{
-    background-color: rgba(243, 242, 242, 0.744);
-    transition: 0.3s;
 }
 </style>

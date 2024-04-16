@@ -38,6 +38,7 @@ defineExpose({
 <style scoped>
 .overlay{
     background-color: rgba(0, 0, 0, 0.313);
+    backdrop-filter: blur(0.1rem);
     position: fixed;
     top: 0;
     bottom: 0;
