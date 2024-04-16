@@ -11,7 +11,7 @@ function getToken() {
 }
 
 export function getTickets(eventId: string, onSuccess: (tickets: Ticket[]) => void, onError: () => void) {
-    axios.get<Ticket[]>(getBaseURL() + '/tickets/' + eventId, {
+    axios.get<Ticket[]>(getBaseURL() + '/events/' + eventId + '/tickets', {
         headers: {
             Authorization: `Bearer ${getToken()}`
         }
