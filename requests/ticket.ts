@@ -10,14 +10,15 @@ function getToken() {
     return token.value
 }
 
-export function getTickets(eventId: string, onSuccess: (tickets: Ticket[]) => void, onError: () => void) {
-    axios.get<Ticket[]>(getBaseURL() + '/events/' + eventId + '/tickets', {
+export function getTickets(eventId: string, page: number, onSuccess: (tickets: Ticket[], pageSize: number) => void, onError: () => void) {
+    const pageSize = 10;
+    axios.get<Ticket[]>(getBaseURL() + '/events/' + eventId + '/tickets/' + page + "/" + pageSize, {
         headers: {
             Authorization: `Bearer ${getToken()}`
         }
     })
     .then((response) => {
-        onSuccess(response.data);
+        onSuccess(response.data, response.headers["x-page-size"]);
     })
     .catch(() => {
         onError();

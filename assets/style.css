@@ -36,6 +36,12 @@ body {
     margin: 0 auto;
 }
 
+.content {
+    display: grid;
+    gap: 1rem;
+    align-content: flex-start;
+}
+
 .page {
     padding: 2rem 1rem;
 }

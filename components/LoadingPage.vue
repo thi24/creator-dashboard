@@ -35,4 +35,8 @@ defineProps<{
 .loading-page .heading {
     margin-bottom: 1rem;
 }
+.content.center {
+    justify-self: center;
+    display: inline;
+}
 </style>
