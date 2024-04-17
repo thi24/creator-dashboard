@@ -19,9 +19,10 @@
             <UiInput label="Verkauf Ende">
                 <input type="datetime-local" id="end-date" required v-model="ticketType.validTo">
             </UiInput>
-            
+
         </div>
-    <UiButton @click="saveTicket(),close()" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">Erstellen</UiButton>
+        <UiButton @click="saveTicket(), close()" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">
+            Erstellen</UiButton>
     </PopupTemplate>
 </template>
 
@@ -37,20 +38,20 @@ const loading: Ref<boolean> = ref(false);
 const popupTemplate = ref()
 const eventId = useRoute().params.id as string;
 
-const price = computed({  
+const price = computed({
     get(): string {
-        if(ticketType.value.price != null) {
-            return (ticketType.value.price/100).toString()
+        if (ticketType.value.price != null) {
+            return (ticketType.value.price / 100).toString()
         };
         return ("").toString();
     },
     set(v: string) {
-        ticketType.value.price = Number(v)*100;
+        ticketType.value.price = Number(v) * 100;
     }
 });
 
 function saveTicket() {
-    
+
     let onSuccess = () => {
         console.log("Gespeichert");
         loading.value = false;
@@ -80,7 +81,7 @@ defineExpose({
 </script>
 
 <style>
-.tickettype-container{
+.tickettype-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: 0.5rem;
@@ -90,13 +91,12 @@ defineExpose({
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    appearance: textfield;
 }
-
 </style>

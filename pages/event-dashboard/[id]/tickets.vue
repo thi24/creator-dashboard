@@ -22,7 +22,6 @@ import TicketTypeComponent from '~/components/veranstaltungen/TicketTypeComponen
 
 const loading = ref(false);
 const event = ref(computed(() => useEventStore().getEvent()));
-const ticketType: Ref<TicketType> = ref(new TicketType());
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
 const saveTicketPopup = ref();
 
@@ -40,31 +39,32 @@ onMounted(() => {
         loading.value = false;
     }
     loading.value = true;
-    getAllTicketTypes(eventId , onSuccess, onError);
+    getAllTicketTypes(eventId, onSuccess, onError);
 })
 
 </script>
 
 <style scoped>
-
 .tile {
     padding: 0;
 }
+
 .form {
     display: grid;
     grid-auto-rows: 1fr;
     overflow: hidden;
 }
+
 .empty-ticket-container {
-justify-content: center;
-align-items: center;
-display: flex;
-padding: 1rem;
-cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 1rem;
+    cursor: pointer;
 }
 
 .empty-ticket-container:hover {
     background-color: rgba(243, 242, 242, 0.744);
-    transition: 0.3s; 
+    transition: 0.3s;
 }
 </style>

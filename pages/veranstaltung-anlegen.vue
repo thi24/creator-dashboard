@@ -1,45 +1,46 @@
 <template>
-<div class="page">  
- <div class="narrow">
-    <h1 class="heading">Veranstaltung anlegen</h1>
-      <div class="form tile">
-        <div class="event-info">
-            <UiInput label="Eventname">
-                <input type="text" id="eventname" v-model="event.eventName">
-            </UiInput>
-            <div class="col-2">
-                <UiInput label="Start des Events">
-                    <input type="datetime-local" id="start-date" v-model="event.startsAt">
-                </UiInput>
-                <UiInput label="Ende des Events">
-                    <input type="datetime-local" id="end-date" v-model="event.endsAt">
-                </UiInput>
+    <div class="page">
+        <div class="narrow">
+            <h1 class="heading">Veranstaltung anlegen</h1>
+            <div class="form tile">
+                <div class="event-info">
+                    <UiInput label="Eventname">
+                        <input type="text" id="eventname" v-model="event.eventName">
+                    </UiInput>
+                    <div class="col-2">
+                        <UiInput label="Start des Events">
+                            <input type="datetime-local" id="start-date" v-model="event.startsAt">
+                        </UiInput>
+                        <UiInput label="Ende des Events">
+                            <input type="datetime-local" id="end-date" v-model="event.endsAt">
+                        </UiInput>
+                    </div>
+                    <UiInput label="Straße">
+                        <input type="text" id="street" v-model="event.address.street">
+                    </UiInput>
+                    <div class="city-wrapper">
+                        <UiInput label="PLZ">
+                            <input type="text" id="zip" v-model="event.address.zip">
+                        </UiInput>
+                        <UiInput label="Stadt">
+                            <input type="text" id="city" v-model="event.address.city">
+                        </UiInput>
+                    </div>
+                    <UiInput label="Land">
+                        <input type="text" id="state" v-model="event.address.state">
+                    </UiInput>
+                </div>
+                <div>
+                    <UiInput class="description-input" label="Beschreibung">
+                        <textarea id="description" v-model="event.description"></textarea>
+                    </UiInput>
+                </div>
             </div>
-            <UiInput label="Straße">
-                <input type="text" id="street" v-model="event.address.street">
-            </UiInput>
-            <div class="city-wrapper">
-                <UiInput label="PLZ">
-                    <input type="text" id="zip" v-model="event.address.zip">
-                </UiInput>
-                <UiInput label="Stadt">
-                    <input type="text" id="city" v-model="event.address.city">
-                </UiInput>
-            </div>
-            <UiInput label="Land">
-                <input type="text" id="state" v-model="event.address.state">
-            </UiInput>
+            <UiButton @click="save" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">Erstellen
+            </UiButton>
         </div>
-        <div>
-            <UiInput class="description-input" label="Beschreibung">
-                <textarea id="description" v-model="event.description"></textarea>
-            </UiInput>
-        </div>
-     </div>
-     <UiButton @click="save" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">Erstellen</UiButton>
     </div>
- </div>
- 
+
 </template>
 
 
@@ -72,7 +73,8 @@ function save() {
 .heading {
     margin-bottom: 1rem;
 }
-.form  {
+
+.form {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 1rem;
@@ -85,7 +87,7 @@ function save() {
 }
 
 .event-info {
-    display:flex;
+    display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
@@ -99,5 +101,4 @@ function save() {
 #description {
     resize: vertical;
 }
-
 </style>
