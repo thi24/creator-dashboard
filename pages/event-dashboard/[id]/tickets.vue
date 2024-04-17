@@ -15,11 +15,8 @@
 
 <script setup lang="ts">
 import LoadingPage from '~/components/LoadingPage.vue';
-import UiButton from '~/components/ui/UiButton.vue';
-import { Event } from '@/classes/Event';
 import { TicketType } from '~/classes/TicketType';
 import { getAllTicketTypes } from '~/requests/tickettype';
-import PopupTemplate from '~/components/popups/PopupTemplate.vue';
 import SaveTicketTypePopup from '~/components/popups/SaveTicketTypePopup.vue';
 import TicketTypeComponent from '~/components/veranstaltungen/TicketTypeComponent.vue';
 

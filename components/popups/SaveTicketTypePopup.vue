@@ -2,25 +2,26 @@
     <PopupTemplate ref="popupTemplate" heading="Ticketklasse anlegen">
         <div class="tickettype-container">
             <UiInput label="Ticketname">
-                <input type="text" id="Name" v-model="ticketType.name">
+                <input type="text" id="Name" required v-model="ticketType.name">
             </UiInput>
             <UiInput label="Ticketanzahl">
-                <input type="number" id="eventname" v-model="ticketType.capacity">
+                <input type="number" id="eventname" required v-model="ticketType.capacity">
             </UiInput>
             <UiInput label="Preis">
-                <input type="number" id="eventname" v-model="ticketType.price">
+                <input type="number" id="eventname" required v-model="price">
             </UiInput>
             <UiInput label="Steuerschlüssel">
-                <input type="number" id="eventname" v-model="ticketType.taxRate">
+                <input type="number" id="eventname" required v-model="ticketType.taxRate">
             </UiInput>
             <UiInput label="Verkauf Start">
-                <input type="datetime-local" id="start-date" v-model="ticketType.validFrom">
+                <input type="datetime-local" id="start-date" required v-model="ticketType.validFrom">
             </UiInput>
             <UiInput label="Verkauf Ende">
-                <input type="datetime-local" id="end-date" v-model="ticketType.validTo">
+                <input type="datetime-local" id="end-date" required v-model="ticketType.validTo">
             </UiInput>
+            
         </div>
-    <UiButton @click="saveTicket(ticketType),close()" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">Erstellen</UiButton>
+    <UiButton @click="saveTicket(),close()" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">Erstellen</UiButton>
     </PopupTemplate>
 </template>
 
@@ -36,7 +37,20 @@ const loading: Ref<boolean> = ref(false);
 const popupTemplate = ref()
 const eventId = useRoute().params.id as string;
 
-function saveTicket(ticketType: TicketType) {
+const price = computed({  
+    get(): string {
+        if(ticketType.value.price != null) {
+            return (ticketType.value.price/100).toString()
+        };
+        return ("").toString();
+    },
+    set(v: string) {
+        ticketType.value.price = Number(v)*100;
+    }
+});
+
+function saveTicket() {
+    
     let onSuccess = () => {
         console.log("Gespeichert");
         loading.value = false;
@@ -47,8 +61,8 @@ function saveTicket(ticketType: TicketType) {
         loading.value = false;
     }
     loading.value = true;
-    ticketType.eventId = eventId;
-    saveTicketType(ticketType, onSuccess, onError);
+    ticketType.value.eventId = eventId;
+    saveTicketType(ticketType.value, onSuccess, onError);
 }
 
 function close() {
@@ -72,4 +86,17 @@ defineExpose({
     row-gap: 0.5rem;
     column-gap: 1rem;
 }
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 </style>

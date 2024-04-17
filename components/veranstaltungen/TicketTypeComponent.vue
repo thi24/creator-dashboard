@@ -2,10 +2,10 @@
     <div class="ticket">
         <div class="tickettype-status"> </div>
         <div class="tickettype-info">
-            <h3>Ticketname: {{ ticketType.name }}</h3>
+            <h3>Ticketname: {{ _ticketType.ticketType.name }}</h3>
             <div class="tickettype-details">
-                <p>Verkauf Zeitraum: {{ ticketType.validFrom }} - {{ ticketType.validTo }}</p>
-                <p>Preis: {{ ticketType.price }} €</p>
+                <p>Verkauf Zeitraum: {{ _ticketType.ticketType.validFrom }} - {{ _ticketType.ticketType.validTo }}</p>
+                <p>Preis: {{ price }} €</p>
             </div>
         </div>
     </div>
@@ -14,10 +14,22 @@
 <script setup lang="ts">
 import { TicketType } from '~/classes/TicketType';
 
-defineProps<{
+const _ticketType = defineProps<{
     ticketType: TicketType
 }>()
 
+
+const price = computed({  
+    get(): string {
+        if(_ticketType.ticketType.price != null) {
+            return (_ticketType.ticketType.price/100).toString()
+        };
+        return ("").toString();
+    },
+    set(v: string) {
+        _ticketType.ticketType.price = Number(v)/100;
+    }
+});
 </script>
 
 <style scoped>
