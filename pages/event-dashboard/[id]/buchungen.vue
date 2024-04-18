@@ -53,7 +53,7 @@ function loadByPage(page: number) {
 .ticket-page {
     height: 100%;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr;
     align-items: flex-start;
 }
 .ticket-container {
