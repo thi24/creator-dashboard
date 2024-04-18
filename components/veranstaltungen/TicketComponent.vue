@@ -1,10 +1,12 @@
 <template>
     <div class="ticket" v-if="ticket.customer">
-        <div class="ticket-id">
-            <p>{{ ticket.id }}</p>
+        <div class="ticket__id">
+            <p v-if="ticket.ticketType">{{ ticket.ticketType.name }}</p>
+            <p class="grayed-out">{{ ticket.id }}</p>
         </div>
-        <div>
+        <div class="ticket__property">
             <p>{{ ticket.customer.email }}</p>
+            <p class="grayed-out">{{ ticket.customer.stripeId }}</p>
         </div>
         <div>
             <p>{{ ticket.customer.name }}</p>
@@ -30,16 +32,21 @@ defineProps<{
     display: contents;
 }
 .ticket > * {
-    border-bottom: 1px solid lightgray;
-    height: 2.5rem;
-    padding: 0rem 0.75rem;
+    padding: 0.25rem 0.75rem;
+    gap: 0.25rem;
     display: flex;
     align-items: center;
 }
-.ticket .ticket-id {
+.ticket:not(:last-of-type) > * {
+    border-bottom: 1px solid lightgray;
+}
+.ticket__id, .ticket__property {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     padding-left: 1rem;
 }
-.ticket:hover .ticket-id {
+.ticket:hover .ticket__id {
     border-left: 0.25rem solid var(--primary-color);
     padding-left: 0.75rem;
 }
@@ -49,5 +56,9 @@ defineProps<{
 .ticket-status {
     display: flex;
     justify-content: flex-end;
+}
+.grayed-out {
+    color: #525252;
+    font-size: 0.85rem;
 }
 </style>

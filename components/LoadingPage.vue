@@ -23,16 +23,14 @@ defineProps<{
     display: grid;
     grid-template-rows: 1fr;
 }
-
-.center-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 </style>
 
 <style>
 .loading-page .heading {
     margin-bottom: 1rem;
+}
+.content.center {
+    justify-self: center;
+    display: inline;
 }
 </style>
