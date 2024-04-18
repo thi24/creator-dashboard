@@ -57,8 +57,4 @@ defineProps<{
     display: flex;
     justify-content: flex-end;
 }
-.grayed-out {
-    color: #525252;
-    font-size: 0.85rem;
-}
 </style>

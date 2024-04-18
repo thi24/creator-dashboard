@@ -8,7 +8,7 @@
                 <div class="t" v-if="pageSize">
                     <div class="scroll-container">
                         <div class="tile ticket-container">
-                            <TicketComponent v-for="ticket in tickets" :ticket="ticket"></TicketComponent>
+                            <TicketComponent v-for="ticket in tickets" :ticket="ticket" @click="() => viewTicketPopup.open(ticket)"></TicketComponent>
                         </div>
                     </div>
                     <PaginationComponent :count="pageSize" :current="pageIndex" @set="(payload: number) => setPageIndex(payload)"></PaginationComponent>
@@ -16,6 +16,7 @@
             </LoadingPage>
         </div>
     </LoadingPage>
+    <ViewTicketPopup ref="viewTicketPopup"></ViewTicketPopup>
 </template>
 
 <script setup lang="ts">
@@ -24,11 +25,14 @@ import LoadingPage from '~/components/LoadingPage.vue';
 import TicketComponent from '~/components/veranstaltungen/TicketComponent.vue';
 import { getTickets } from '~/requests/ticket';
 import PaginationComponent from '~/components/PaginationComponent.vue';
+import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
 
 const event = ref(computed(() => useEventStore().getEvent()));
 const tickets: Ref<Ticket[] | undefined> = ref(undefined);
 const pageSize: Ref<number | undefined> = ref(undefined);
 const pageIndex: Ref<number> = ref(0);
+
+const viewTicketPopup = ref();
 
 onMounted(() => {
     loadByPage(0);
