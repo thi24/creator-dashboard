@@ -12,6 +12,7 @@
 html {
     --primary-color: #f28482;
     --secondary-color: #9c89b8;
+    --body-background-color: #eeeeee;
 }
 
 html, body {
@@ -20,7 +21,7 @@ html, body {
 }
 
 body {
-    background-color: #eeeeee;
+    background-color: var(--body-background-color);
 }
 
 
@@ -84,6 +85,9 @@ input:focus, textarea:focus, select:focus {
     border-radius: 0.25rem;
     padding: 1rem;
 }
+.tile.inverse {
+    background-color: var(--body-background-color);
+}
 
 .save-btn {
     margin: 0 auto;
@@ -92,4 +96,9 @@ input:focus, textarea:focus, select:focus {
 
 .hide {
     visibility: hidden;
+}
+
+.grayed-out {
+    color: #525252;
+    font-size: 0.85rem;
 }

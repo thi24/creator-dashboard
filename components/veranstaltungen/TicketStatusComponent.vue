@@ -38,8 +38,6 @@ function getLabel(status: TicketStatus) {
     width: 6rem;
     display: flex;
     justify-content: center;
-}
-.ticket-status * {
     color: white;
 }
 .pending {
