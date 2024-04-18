@@ -2,16 +2,17 @@
     <LoadingPage :loading="!event">
         <div class="content ticket-page" v-if="event">
             <div v-if="event">
-                <h1>Buchungen: {{ event.eventName }}</h1>
+                <h2>Buchungen</h2>
+                <p> {{ event.eventName }}</p>
             </div>
             <LoadingPage :loading="!tickets">
                 <div class="t" v-if="pageSize">
-                    <div class="scroll-container">
                         <div class="tile ticket-container">
-                            <TicketComponent v-for="ticket in tickets" :ticket="ticket" @click="() => viewTicketPopup.open(ticket)"></TicketComponent>
+                            <TicketComponent v-for="ticket in tickets" :ticket="ticket"
+                                @click="() => viewTicketPopup.open(ticket)"></TicketComponent>
                         </div>
-                    </div>
-                    <PaginationComponent :count="pageSize" :current="pageIndex" @set="(payload: number) => setPageIndex(payload)"></PaginationComponent>
+                    <PaginationComponent :count="pageSize" :current="pageIndex"
+                        @set="(payload: number) => setPageIndex(payload)"></PaginationComponent>
                 </div>
             </LoadingPage>
         </div>
@@ -49,7 +50,7 @@ function loadByPage(page: number) {
     getTickets(eventId, page, (_tickets: Ticket[], _pageSize: number) => {
         tickets.value = _tickets;
         pageSize.value = _pageSize;
-    }, () => {});
+    }, () => { });
 }
 </script>
 
@@ -60,26 +61,22 @@ function loadByPage(page: number) {
     grid-template-rows: auto 1fr;
     align-items: flex-start;
 }
+
 .ticket-container {
     padding: 0px;
     display: grid;
     grid-template-columns: auto auto auto 1fr;
     border-radius: 0.5rem;
-    overflow: hidden;
     align-items: stretch;
-    position: absolute;
     width: 100%;
+    cursor: pointer;
 }
+
 .t {
     height: 100%;
     gap: 1rem;
     display: grid;
     grid-template-rows: 1fr auto;
 }
-.scroll-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: scroll;
-}
+
 </style>

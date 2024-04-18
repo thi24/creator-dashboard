@@ -5,13 +5,14 @@
             <NuxtLink :to="'/event-dashboard/' + eventId + '/tickets'">Tickets</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'">Buchungen</NuxtLink>
         </nav>
-        <div>
-            <NuxtPage></NuxtPage>
-        </div>
+        <ScrollingComponent>
+                <NuxtPage></NuxtPage>
+        </ScrollingComponent>
     </div>
 </template>
 
 <script setup lang="ts">
+import ScrollingComponent from '~/components/util/ScrollingComponent.vue';
 import { useEventStore } from '~/stores/EventStore';
 
 const event = ref(computed(() => useEventStore().getEvent()));
@@ -29,7 +30,7 @@ onMounted(() => {
     align-self: stretch;
 }
 .account-layout > * {
-    padding: 2rem;
+    padding: 1rem 2rem 1rem 2rem;
 }
 .nav-bar {
     background-color: white;
@@ -45,5 +46,16 @@ onMounted(() => {
     background-color: var(--primary-color);
     color: white;
     border-radius: 10rem;
+}
+.scroll-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+.scrolling-div {
+    padding: 1rem;
+    height: 100%;
+    position: absolute;
 }
 </style>
