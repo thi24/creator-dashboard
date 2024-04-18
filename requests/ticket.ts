@@ -11,7 +11,7 @@ function getToken() {
 }
 
 export function getTickets(eventId: string, page: number, onSuccess: (tickets: Ticket[], pageSize: number) => void, onError: () => void) {
-    const pageSize = 10;
+    const pageSize = 15;
     axios.get<Ticket[]>(getBaseURL() + '/events/' + eventId + '/tickets/' + page + "/" + pageSize, {
         headers: {
             Authorization: `Bearer ${getToken()}`

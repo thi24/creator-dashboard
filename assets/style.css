@@ -89,3 +89,7 @@ input:focus, textarea:focus, select:focus {
     margin: 0 auto;
     margin-top: 1rem;
 }
+
+.hide {
+    visibility: hidden;
+}

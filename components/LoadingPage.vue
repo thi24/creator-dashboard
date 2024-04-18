@@ -23,12 +23,6 @@ defineProps<{
     display: grid;
     grid-template-rows: 1fr;
 }
-
-.center-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 </style>
 
 <style>

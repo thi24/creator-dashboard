@@ -1,13 +1,13 @@
 <template>
     <div class="center-center">
         <div class="paging center-center tile">
-            <div class="paging__element center-center" @click="() => before()">
+            <div class="paging__element center-center" :class="{ hide: current === 0 }" @click="() => before()">
                 <UiIcon>navigate_before</UiIcon>
             </div>
             <div v-for="index in getRange(count)" class="paging__element center-center" :class="{ current: current === index }" @click="() => set(index)">
-                <p>{{ index }}</p>
+                <p>{{ index + 1 }}</p>
             </div>
-            <div class="paging__element center-center" @click="() => next()">
+            <div class="paging__element center-center" :class="{ hide: current === count - 1 }" @click="() => next()">
                 <UiIcon>navigate_next</UiIcon>
             </div>
         </div>
@@ -16,37 +16,31 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-    count: number
+    count: number,
+    current: number
 }>();
 const emits = defineEmits<{
     ( e: 'set', payload: number): void
 }>();
 
-const current = ref(1);
-
 function next() {
-    if(current.value < props.count) {
-        set(1);
-    }
+    set(props.current + 1);
 }
 
 function before() {
-    if(current.value > 1) {
-        set(-1);
-    }
+    set(props.current - 1);
 }
 
 function set(value: number) {
-    if(value > 0 && value <= props.count) {
-        current.value = value;
-        emits('set', value - 1);
+    if(value >= 0 && value < props.count) {
+        emits('set', value);
     }
 }
 
 function getRange(count: number) {
     const result: number[] = [];
     for(let i = 0; i < count; i++) {
-        result.push(i + 1);
+        result.push(i);
     }
     return result;
 }

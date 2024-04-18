@@ -1,15 +1,19 @@
 <template>
     <LoadingPage :loading="!event">
-        <div class="content ticket-page" v-if="event && pageSize">
+        <div class="content ticket-page" v-if="event">
             <div v-if="event">
-            <h1>Buchungen: {{ event.eventName }}</h1>
+                <h1>Buchungen: {{ event.eventName }}</h1>
             </div>
             <LoadingPage :loading="!tickets">
-                <div class="tile ticket-container">
-                    <TicketComponent v-for="ticket in tickets" :ticket="ticket"></TicketComponent>
+                <div class="t" v-if="pageSize">
+                    <div class="scroll-container">
+                        <div class="tile ticket-container">
+                            <TicketComponent v-for="ticket in tickets" :ticket="ticket"></TicketComponent>
+                        </div>
+                    </div>
+                    <PaginationComponent :count="pageSize" :current="pageIndex" @set="(payload: number) => setPageIndex(payload)"></PaginationComponent>
                 </div>
             </LoadingPage>
-            <PaginationComponent :count="pageSize" @set="(payload: number) => loadByPage(payload)"></PaginationComponent>
         </div>
     </LoadingPage>
 </template>
@@ -24,10 +28,16 @@ import PaginationComponent from '~/components/PaginationComponent.vue';
 const event = ref(computed(() => useEventStore().getEvent()));
 const tickets: Ref<Ticket[] | undefined> = ref(undefined);
 const pageSize: Ref<number | undefined> = ref(undefined);
+const pageIndex: Ref<number> = ref(0);
 
 onMounted(() => {
     loadByPage(0);
 })
+
+function setPageIndex(index: number) {
+    pageIndex.value = index;
+    loadByPage(index);
+}
 
 function loadByPage(page: number) {
     const eventId: string = useRoute().params.id as string;
@@ -53,5 +63,19 @@ function loadByPage(page: number) {
     border-radius: 0.5rem;
     overflow: hidden;
     align-items: stretch;
+    position: absolute;
+    width: 100%;
+}
+.t {
+    height: 100%;
+    gap: 1rem;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+.scroll-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
 }
 </style>
