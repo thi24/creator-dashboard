@@ -5,9 +5,9 @@
             <NuxtLink :to="'/event-dashboard/' + eventId + '/tickets'">Tickets</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'">Buchungen</NuxtLink>
         </nav>
-        <ScrollingComponent>
-                <NuxtPage></NuxtPage>
-        </ScrollingComponent>
+        <div>
+            <NuxtPage></NuxtPage>
+        </div>
     </div>
 </template>
 
@@ -29,15 +29,13 @@ onMounted(() => {
     grid-template-columns: auto 1fr;
     align-self: stretch;
 }
-.account-layout > * {
-    padding: 1rem 2rem 1rem 2rem;
-}
 .nav-bar {
     background-color: white;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     border-right: 1px solid #eaeaea;
+    padding: 1rem 2rem;
 }
 .nav-bar > * {
     padding: 0.5rem 0.75rem;

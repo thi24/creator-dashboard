@@ -1,5 +1,5 @@
 <template>
-    <LoadingPage :loading="!event || !ticketTypes" :heading="'Tickettypen'">
+    <ScrollingPage :loading="!event || !ticketTypes" :heading="'Tickettypen'">
         <div class="narrow">
             <h1 class="heading">Tickettypen: {{ event?.eventName }}</h1>
             <div class="form tile">
@@ -10,11 +10,11 @@
             </div>
         </div>
         <SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
-    </LoadingPage>
+    </ScrollingPage>
 </template>
 
 <script setup lang="ts">
-import LoadingPage from '~/components/LoadingPage.vue';
+import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import { TicketType } from '~/classes/TicketType';
 import { getAllTicketTypes } from '~/requests/tickettype';
 import SaveTicketTypePopup from '~/components/popups/SaveTicketTypePopup.vue';

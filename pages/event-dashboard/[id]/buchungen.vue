@@ -1,32 +1,32 @@
 <template>
-    <LoadingPage :loading="!event">
-        <div class="content ticket-page" v-if="event">
+    <ScrollingPage :loading="!event">
+        <div class="content ticket-page">
             <div v-if="event">
                 <h2>Buchungen</h2>
-                <p> {{ event.eventName }}</p>
+                <p>{{ event.eventName }}</p>
             </div>
-            <LoadingPage :loading="!tickets">
-                <div class="t" v-if="pageSize">
-                        <div class="tile ticket-container">
-                            <TicketComponent v-for="ticket in tickets" :ticket="ticket"
-                                @click="() => viewTicketPopup.open(ticket)"></TicketComponent>
-                        </div>
-                    <PaginationComponent :count="pageSize" :current="pageIndex"
-                        @set="(payload: number) => setPageIndex(payload)"></PaginationComponent>
+            <LoadingPage :loading="!tickets || !pageSize">
+                <div class="tickets">
+                    <div class="tile ticket-container">
+                        <TicketComponent v-for="ticket in tickets" :ticket="ticket"></TicketComponent>
+                    </div>
+                    <div class="center-center" v-if="pageSize && tickets">
+                        <PaginationComponent :count="pageSize" :current="pageIndex" @set="(pageIndex) => setPageIndex(pageIndex)"></PaginationComponent>
+                    </div>
                 </div>
             </LoadingPage>
         </div>
-    </LoadingPage>
+    </ScrollingPage>
     <ViewTicketPopup ref="viewTicketPopup"></ViewTicketPopup>
 </template>
 
 <script setup lang="ts">
 import { Ticket } from '~/classes/Ticket';
-import LoadingPage from '~/components/LoadingPage.vue';
+import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import TicketComponent from '~/components/veranstaltungen/TicketComponent.vue';
 import { getTickets } from '~/requests/ticket';
-import PaginationComponent from '~/components/PaginationComponent.vue';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
+import LoadingPage from '~/components/util/LoadingPage.vue';
 
 const event = ref(computed(() => useEventStore().getEvent()));
 const tickets: Ref<Ticket[] | undefined> = ref(undefined);
@@ -72,11 +72,12 @@ function loadByPage(page: number) {
     cursor: pointer;
 }
 
-.t {
+.tickets {
     height: 100%;
     gap: 1rem;
     display: grid;
     grid-template-rows: 1fr auto;
+    align-items: flex-start;
 }
 
 </style>

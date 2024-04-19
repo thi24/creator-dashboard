@@ -1,11 +1,11 @@
 <template>
     <div class="page">
-        <LoadingPage class="narrow" :loading="!events">
+        <ScrollingPage class="narrow" :loading="!events">
             <h1 class="page__heading">Veranstaltungen</h1>
             <div class="event-container">
                 <EventComponent v-for="event in events" :event="event"></EventComponent>
             </div>
-        </LoadingPage>
+        </ScrollingPage>
     </div>
 </template>
 
@@ -14,7 +14,7 @@
 import { Event } from '~/classes/Event';
 import EventComponent from '~/components/veranstaltungen/EventComponent.vue';
 import { getAllEvents } from '~/requests/event';
-import LoadingPage from '~/components/LoadingPage.vue';
+import ScrollingPage from '~/components/ScrollingPage.vue';
 
 const events: Ref<Event[] | undefined> = ref(undefined);
 

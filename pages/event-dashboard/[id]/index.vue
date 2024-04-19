@@ -1,5 +1,5 @@
 <template>
-    <LoadingPage :loading="!event" :heading="'Veranstaltung'">
+    <ScrollingPage :loading="!event" :heading="'Veranstaltung'">
         <div v-if="event">
             <h1 class="heading">Veranstaltung: {{ event.eventName }}</h1>
             <p>Eventname: {{ event.eventName }}</p>
@@ -8,11 +8,11 @@
             <p>Adresse: {{ event.address.street }}</p>
             <p>Stadt: {{ event.address.zip }} {{ event.address.city }}, {{ event.address.state }}</p>
         </div>
-    </LoadingPage>
+    </ScrollingPage>
 </template>
 
 <script setup lang="ts">
-import LoadingPage from '~/components/LoadingPage.vue';
+import ScrollingPage from '~/components/ScrollingPage.vue';
 
 const loading = ref(true);
 const event = ref(computed(() => useEventStore().getEvent()));

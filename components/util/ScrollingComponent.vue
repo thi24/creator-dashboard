@@ -21,6 +21,9 @@
 .scrolling-content {
     position: absolute;
     width: 100%;
-
+    padding: 1rem 2rem;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr;
 }
 </style>
