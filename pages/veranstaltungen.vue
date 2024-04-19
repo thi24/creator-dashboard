@@ -14,7 +14,7 @@
 import { Event } from '~/classes/Event';
 import EventComponent from '~/components/veranstaltungen/EventComponent.vue';
 import { getAllEvents } from '~/requests/event';
-import ScrollingPage from '~/components/ScrollingPage.vue';
+import ScrollingPage from '~/components/util/ScrollingPage.vue';
 
 const events: Ref<Event[] | undefined> = ref(undefined);
 

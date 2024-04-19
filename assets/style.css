@@ -84,6 +84,7 @@ input:focus, textarea:focus, select:focus {
     background-color: white;
     border-radius: 0.25rem;
     padding: 1rem;
+    overflow: hidden;
 }
 .tile.inverse {
     background-color: var(--body-background-color);

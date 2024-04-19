@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import ScrollingPage from '~/components/ScrollingPage.vue';
+import ScrollingPage from '~/components/util/ScrollingPage.vue';
 
 const loading = ref(true);
 const event = ref(computed(() => useEventStore().getEvent()));

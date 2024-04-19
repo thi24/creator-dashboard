@@ -8,7 +8,7 @@
             <LoadingPage :loading="!tickets || !pageSize">
                 <div class="tickets">
                     <div class="tile ticket-container">
-                        <TicketComponent v-for="ticket in tickets" :ticket="ticket"></TicketComponent>
+                        <TicketComponent v-for="ticket in tickets" :ticket="ticket" @click="() => viewTicketPopup.open(ticket)"></TicketComponent>
                     </div>
                     <div class="center-center" v-if="pageSize && tickets">
                         <PaginationComponent :count="pageSize" :current="pageIndex" @set="(pageIndex) => setPageIndex(pageIndex)"></PaginationComponent>

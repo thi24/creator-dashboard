@@ -5,15 +5,19 @@ import type { TicketType } from "./TicketType";
 export class Ticket {
 
     id = undefined as string | undefined;
+    publicId = undefined as string | undefined;
     status = undefined as TicketStatus | undefined;
+    bookedAt = undefined as Date | undefined;
     price = undefined as number | undefined;
     taxRate = undefined as number | undefined;
     customer = undefined as Customer | undefined;
     ticketType = undefined as TicketType | undefined;
 
-    constructor(id?: string, status?: TicketStatus, price?: number, taxRate?: number, customer?: Customer, ticketType?: TicketType) {
+    constructor(id?: string, publicId?: string, status?: TicketStatus, bookedAt?: Date, price?: number, taxRate?: number, customer?: Customer, ticketType?: TicketType) {
         this.id = id;
+        this.publicId = publicId;
         this.status = status;
+        this.bookedAt = bookedAt;
         this.price = price;
         this.taxRate = taxRate;
         this.customer = customer;
