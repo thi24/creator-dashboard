@@ -1,11 +1,14 @@
 <template>
-    <div class="ticket">
+    <div class="tickettype">
         <div class="tickettype-status"> </div>
         <div class="tickettype-info">
-            <h3> {{ _ticketType.ticketType.name }} </h3>
+            <h3> {{ ticketType.name }} </h3>
             <div class="tickettype-details">
-                <p>Verkauf Zeitraum: {{ _ticketType.ticketType.validFrom }} - {{ _ticketType.ticketType.validTo }}</p>
-                <p>Preis: {{ price }} €</p>
+                <p class="grayed-out">Verkaufszeitraum: {{ dayjs(ticketType.validFrom).format("DD.MM.YYYY H:mm") }} Uhr
+                    - {{
+                        dayjs(ticketType.validTo).format("DD.MM.YYYY H:mm") }} Uhr</p>
+                <p v-if="ticketType.price" class="grayed-out">Preis: {{ Math.round(ticketType.price / 100).toFixed(2)
+                    }}€</p>
             </div>
         </div>
     </div>
@@ -13,27 +16,16 @@
 
 <script setup lang="ts">
 import { TicketType } from '~/classes/TicketType';
+import dayjs from 'dayjs';
 
-const _ticketType = defineProps<{
+defineProps<{
     ticketType: TicketType
 }>()
 
-
-const price = computed({
-    get(): string {
-        if (_ticketType.ticketType.price != null) {
-            return (_ticketType.ticketType.price / 100).toString()
-        };
-        return ("").toString();
-    },
-    set(v: string) {
-        _ticketType.ticketType.price = Number(v) / 100;
-    }
-});
 </script>
 
 <style scoped>
-.ticket {
+.tickettype {
     display: flex;
     display: grid;
     grid-template-columns: min-content 1fr;
@@ -55,7 +47,7 @@ const price = computed({
     padding-right: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    gap: 1rem
+    gap: 0.5rem
 }
 
 .tickettype-details {

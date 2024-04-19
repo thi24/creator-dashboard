@@ -1,15 +1,23 @@
 <template>
-    <ScrollingPage :loading="!event || !ticketTypes" :heading="'Tickettypen'">
-        <div class="narrow">
-            <h1 class="heading">Tickettypen: {{ event?.eventName }}</h1>
-            <div class="form tile">
-                <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType"></TicketTypeComponent>
-                <div class="empty-ticket-container" @click="saveTicketPopup.open()">
-                    <h3>Neuen Tickettypen anlegen</h3>
-                </div>
+    <ScrollingPage :loading="!event">
+        <div class="content ticket-page">
+            <div v-if="event">
+                <h2>Tickettypen</h2>
+                <p>{{ event.eventName }}</p>
             </div>
+            <LoadingPage :loading="!ticketTypes">
+                <div class="narrow">
+                    <div class="form tile">
+                        <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType">
+                        </TicketTypeComponent>
+                        <div class="empty-ticket-container" @click="saveTicketPopup.open()">
+                            <h3>Neuen Tickettypen anlegen</h3>
+                        </div>
+                    </div>
+                </div>
+                <SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
+            </LoadingPage>
         </div>
-        <SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
     </ScrollingPage>
 </template>
 
@@ -19,10 +27,14 @@ import { TicketType } from '~/classes/TicketType';
 import { getAllTicketTypes } from '~/requests/tickettype';
 import SaveTicketTypePopup from '~/components/popups/SaveTicketTypePopup.vue';
 import TicketTypeComponent from '~/components/veranstaltungen/TicketTypeComponent.vue';
+import LoadingPage from '~/components/util/LoadingPage.vue';
 
 const loading = ref(false);
 const event = ref(computed(() => useEventStore().getEvent()));
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
+const pageSize: Ref<number | undefined> = ref(undefined);
+const pageIndex: Ref<number> = ref(0);
+
 const saveTicketPopup = ref();
 
 onMounted(() => {
