@@ -29,7 +29,7 @@ export default eventHandler(async (event) => {
             secure: true, // set to false in localhost
             path: "/",
             httpOnly: false,
-            maxAge: 60 * 10 // 10 min
+            maxAge: 60 * 120 // 10 min
         });
         // return { token: tokens.accessToken}
     } catch (e) {
