@@ -1,6 +1,6 @@
 <template>
     <div class="event">
-        <img class="event__image" :src="event.thumbnail" alt="">
+        <img v-if="thumbnail" class="event__image" :src="thumbnail" alt="">
         <div class="event__body">
             <h3 class="event__heading">{{ event.eventName }}</h3>
             <p class="event__description">{{ event.description }}</p>
@@ -12,8 +12,31 @@
 <script setup lang="ts">
 import UiButton from '@/components/ui/UiButton.vue'
 import type { Event } from '~/classes/Event';
+import { getImageForEvent } from '~/requests/event';
 
-defineProps<{
+const thumbnail = ref<string | undefined>(undefined);
+
+function _getImageForEvent() {
+    console.log("Getting image for event");
+    console.log(props.event.id);
+    let onSucess = (image: string) => {
+        if(image == null || image == '') {
+            onError();
+        } else {
+            thumbnail.value = "data:image/jpg;base64," + image;
+        }
+    }
+    let onError = () => {
+        thumbnail.value = "http://www.crogastudiobuilds.com/wp-content/uploads/2019/12/placeholder-16-9-26571_1080x675.jpg"
+    }
+    getImageForEvent(props.event.id, onSucess, onError);
+}
+
+onMounted(() => {
+    _getImageForEvent();
+})
+
+const props = defineProps<{
     event: Event
 }>()
 </script>

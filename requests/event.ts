@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Event } from "~/classes/Event";
-import type { TicketType } from "~/classes/TicketType";
+import { byteToBase64 } from "~/utils/util";
 
 function getBaseURL() {
     return useRuntimeConfig().public.eventService.baseURL;
@@ -51,6 +51,23 @@ export function saveEvent(event: Event, onSuccess: () => void, onError: () => vo
     })
     .then(() => {
         onSuccess();
+    })
+    .catch(() => {
+        onError();
+    });
+}
+
+export function getImageForEvent(id: string, onSuccess: (image: string) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.get(baseURL + "/events/" + id + "/image", {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        },
+        responseType: 'arraybuffer'
+    })
+    .then((response) => {
+        let base64Image = byteToBase64(response.data);
+        onSuccess(base64Image);
     })
     .catch(() => {
         onError();
