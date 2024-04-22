@@ -18,12 +18,12 @@ export function getAllEvents(onSuccess: (events: Event[]) => void, onError: () =
             Authorization: `Bearer ${getToken()}`
         }
     })
-    .then((response) => {
-        onSuccess(response.data);
-    })
-    .catch(() => {
-        onError();
-    });
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch(() => {
+            onError();
+        });
 }
 
 export function getEventById(id: string, onSuccess: (event: Event) => void, onError: () => void) {
@@ -33,28 +33,28 @@ export function getEventById(id: string, onSuccess: (event: Event) => void, onEr
             Authorization: `Bearer ${getToken()}`
         }
     })
-    .then((response) => {
-        onSuccess(response.data);
-    })
-    .catch(() => {
-        onError();
-    });
-        onError();
-    };
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch(() => {
+            onError();
+        });
+    onError();
+};
 
-export function saveEvent(event: Event, onSuccess: () => void, onError: () => void) {
+export function saveEvent(event: FormData, onSuccess: (event: Event) => void, onError: () => void) {
     let baseURL = getBaseURL();
     axios.post(baseURL + "/events", event, {
         headers: {
             Authorization: `Bearer ${getToken()}`
         }
     })
-    .then(() => {
-        onSuccess();
-    })
-    .catch(() => {
-        onError();
-    });
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch(() => {
+            onError();
+        });
 }
 
 export function getImageForEvent(id: string, onSuccess: (image: string) => void, onError: () => void) {
@@ -65,11 +65,11 @@ export function getImageForEvent(id: string, onSuccess: (image: string) => void,
         },
         responseType: 'arraybuffer'
     })
-    .then((response) => {
-        let base64Image = byteToBase64(response.data);
-        onSuccess(base64Image);
-    })
-    .catch(() => {
-        onError();
-    });
+        .then((response) => {
+            let base64Image = byteToBase64(response.data);
+            onSuccess(base64Image);
+        })
+        .catch(() => {
+            onError();
+        });
 }
