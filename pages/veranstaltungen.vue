@@ -1,9 +1,11 @@
 <template>
     <div class="page">
         <ScrollingPage class="narrow" :loading="!events">
-            <h1 class="page__heading">Veranstaltungen</h1>
-            <div class="event-container">
-                <EventComponent v-for="event in events" :event="event"></EventComponent>
+            <div class="content">
+                <h1>Veranstaltungen</h1>
+                <div class="event-container">
+                    <EventComponent v-for="event in events" :event="event"></EventComponent>
+                </div>
             </div>
         </ScrollingPage>
     </div>

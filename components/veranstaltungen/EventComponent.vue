@@ -1,6 +1,10 @@
 <template>
     <div class="event">
-        <img v-if="thumbnail" class="event__image" :src="thumbnail" alt="">
+        <div class="thumbnail-container center-center">
+            <img v-if="thumbnail" class="event__image" :src="thumbnail" alt="">
+            <LoadingComponent :loading="!thumbnail"></LoadingComponent>
+        </div>
+        
         <div class="event__body">
             <h3 class="event__heading">{{ event.eventName }}</h3>
             <p class="event__description">{{ event.description }}</p>
@@ -13,6 +17,7 @@
 import UiButton from '@/components/ui/UiButton.vue'
 import type { Event } from '~/classes/Event';
 import { getImageForEvent } from '~/requests/event';
+import LoadingComponent from '../util/LoadingComponent.vue';
 
 const thumbnail = ref<string | undefined>(undefined);
 
@@ -53,6 +58,10 @@ const props = defineProps<{
     width: 100%;
     aspect-ratio: 16/9;
     object-fit: cover;
+}
+.thumbnail-container {
+    width: 100%;
+    aspect-ratio: 16/9;
 }
 .event__body {
     padding: 0.5rem;
