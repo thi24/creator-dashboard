@@ -5,7 +5,7 @@
                 <h2>Tickettypen</h2>
                 <p>{{ event.eventName }}</p>
             </div>
-            <LoadingPage :loading="!ticketTypes">
+            <LoadingPage :loading="loading">
                 <div class="narrow">
                     <div class="form tile">
                         <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType">
@@ -38,6 +38,7 @@ const pageIndex: Ref<number> = ref(0);
 const saveTicketPopup = ref();
 
 onMounted(() => {
+    loading.value = true;
     const eventId = useRoute().params.id as string;
 
     let onSuccess = (_ticketTypes: TicketType[]) => {
@@ -50,7 +51,6 @@ onMounted(() => {
         console.log("Fehler")
         loading.value = false;
     }
-    loading.value = true;
     getAllTicketTypes(eventId, onSuccess, onError);
 })
 
