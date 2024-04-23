@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { Ticket } from "~/classes/Ticket";
 import type { TicketType } from "~/classes/TicketType";
 
 function getBaseURL() {
@@ -18,26 +19,26 @@ export function getAllTicketTypes(id: string, onSuccess: (TicketType: TicketType
             Authorization: `Bearer ${getToken()}`
         }
     })
-    .then((response) => {
-        onSuccess(response.data);
-    })
-    .catch(() => {
-        onError();
-    });
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch(() => {
+            onError();
+        });
 }
 
-export function saveTicketType(TicketType: TicketType, onSuccess: () => void, onError: () => void) {
+export function saveTicketType(TicketType: TicketType, onSuccess: (TicketType: TicketType) => void, onError: () => void) {
     let baseURL = getBaseURL();
     axios.post(baseURL + "/ticket-types", TicketType, {
         headers: {
             Authorization: `Bearer ${getToken()}`
         }
     })
-    .then(() => {
-        onSuccess();
-    })
-    .catch(() => {
-        onError();
-    });
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch(() => {
+            onError();
+        });
 }
 

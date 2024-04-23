@@ -15,7 +15,9 @@
                         </div>
                     </div>
                 </div>
-                <SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
+                <SaveTicketTypePopup ref="saveTicketPopup"
+                    @update="(payload: TicketType) => { pushTicketType(payload) }">
+                </SaveTicketTypePopup>
             </LoadingPage>
         </div>
     </ScrollingPage>
@@ -32,9 +34,6 @@ import LoadingPage from '~/components/util/LoadingPage.vue';
 const loading = ref(false);
 const event = ref(computed(() => useEventStore().getEvent()));
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
-const pageSize: Ref<number | undefined> = ref(undefined);
-const pageIndex: Ref<number> = ref(0);
-
 const saveTicketPopup = ref();
 
 onMounted(() => {
@@ -54,6 +53,11 @@ onMounted(() => {
     getAllTicketTypes(eventId, onSuccess, onError);
 })
 
+function pushTicketType(payload: TicketType) {
+    if (ticketTypes != null) {
+        ticketTypes.value?.push(payload)
+    }
+}
 </script>
 
 <style scoped>
