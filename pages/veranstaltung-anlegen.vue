@@ -68,13 +68,10 @@ const errorMessage: Ref<string> = ref("");
 
 function save() {
     // Check if all inputs are filled
-    console.log(event.value.startsAt)
-    console.log("Eventname: " + event.value.eventName)
     if (event.value.address.city == "") {
         errorMessage.value = "Bitte Stadt eingeben";
         return
     }
-
     if (event.value.address.state == "") {
         errorMessage.value = "Bitte Land eingeben";
         return
@@ -102,13 +99,11 @@ function save() {
 
 
     let onSuccess = (event: Event) => {
-        console.log("Gespeichert");
         loading.value = false;
         navigateTo("/event-dashboard/" + event.id)
     }
 
     let onError = () => {
-        console.log("Fehler")
         loading.value = false;
     }
     loading.value = true;

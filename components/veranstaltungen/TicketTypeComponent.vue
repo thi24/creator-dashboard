@@ -29,12 +29,11 @@ defineProps<{
     display: flex;
     display: grid;
     grid-template-columns: min-content 1fr;
-    cursor: pointer;
     border-bottom: lightgray 1px solid;
     padding-left: 0.25rem;
 }
 
-.ticket:hover {
+.tickettype:hover {
     background-color: rgba(243, 242, 242, 0.744);
     border-left: var(--primary-color) 0.25rem solid;
     padding-left: 0rem;
