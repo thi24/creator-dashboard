@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Event } from "~/classes/Event";
-import type { TicketType } from "~/classes/TicketType";
+import { byteToBase64 } from "~/utils/util";
 
 function getBaseURL() {
     return useRuntimeConfig().public.eventService.baseURL;
@@ -18,12 +18,12 @@ export function getAllEvents(onSuccess: (events: Event[]) => void, onError: () =
             Authorization: `Bearer ${getToken()}`
         }
     })
-    .then((response) => {
-        onSuccess(response.data);
-    })
-    .catch(() => {
-        onError();
-    });
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch(() => {
+            onError();
+        });
 }
 
 export function getEventById(id: string, onSuccess: (event: Event) => void, onError: () => void) {
@@ -33,26 +33,43 @@ export function getEventById(id: string, onSuccess: (event: Event) => void, onEr
             Authorization: `Bearer ${getToken()}`
         }
     })
-    .then((response) => {
-        onSuccess(response.data);
-    })
-    .catch(() => {
-        onError();
-    });
-        onError();
-    };
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch(() => {
+            onError();
+        });
+    onError();
+};
 
-export function saveEvent(event: Event, onSuccess: () => void, onError: () => void) {
+export function saveEvent(event: FormData, onSuccess: (event: Event) => void, onError: () => void) {
     let baseURL = getBaseURL();
     axios.post(baseURL + "/events", event, {
         headers: {
             Authorization: `Bearer ${getToken()}`
         }
     })
-    .then(() => {
-        onSuccess();
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch(() => {
+            onError();
+        });
+}
+
+export function getImageForEvent(id: string, onSuccess: (image: string) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.get(baseURL + "/events/" + id + "/image", {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        },
+        responseType: 'arraybuffer'
     })
-    .catch(() => {
-        onError();
-    });
+        .then((response) => {
+            let base64Image = byteToBase64(response.data);
+            onSuccess(base64Image);
+        })
+        .catch(() => {
+            onError();
+        });
 }

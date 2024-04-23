@@ -1,18 +1,39 @@
 <template>
-    <LoadingPage :loading="!event" :heading="'Veranstaltung'">
-        <div v-if="event">
-            <h1 class="heading">Veranstaltung: {{ event.eventName }}</h1>
-            <p>Eventname: {{ event.eventName }}</p>
-            <p>Startet am: {{ event.startsAt }}</p>
-            <p>Endet am: {{ event.endsAt }}</p>
-            <p>Adresse: {{ event.address.street }}</p>
-            <p>Stadt: {{ event.address.zip }} {{ event.address.city }}, {{ event.address.state }}</p>
+    <ScrollingPage :loading="!event">
+        <div>
+            <div v-if="event">
+                <h2>Veranstaltung</h2>
+                <p>{{ event.eventName }}</p>
+            </div>
+            <div v-if="event" class="event-container">
+                <div class="event-detail-wrapper">
+                    <p class="event-detail">Eventname:</p>
+                    <p class="event-detail"> {{ event.eventName }}</p>
+                </div>
+                <div class="event-detail-wrapper">
+                    <p class="event-detail">Startet am:</p>
+                    <p class="event-detail"> {{ dayjs(event.startsAt).format("DD.MM.YYYY") }}</p>
+                </div>
+                <div class="event-detail-wrapper">
+                    <p class="event-detail">Endet am:</p>
+                    <p class="event-detail"> {{ dayjs(event.endsAt).format("DD.MM.YYYY") }}</p>
+                </div>
+                <div class="event-detail-wrapper">
+                    <p class="event-detail">Adresse:</p>
+                    <p class="event-detail"> {{ event.address.street }}</p>
+                </div>
+                <div class="event-detail-wrapper">
+                    <p class="event-detail">Stadt:</p>
+                    <p class="event-detail"> {{ event.address.zip }} {{ event.address.city }}, {{ event.address.state }}</p>
+                </div>
+            </div>
         </div>
-    </LoadingPage>
+    </ScrollingPage>
 </template>
 
 <script setup lang="ts">
-import LoadingPage from '~/components/LoadingPage.vue';
+import ScrollingPage from '~/components/util/ScrollingPage.vue';
+import dayjs from 'dayjs';
 
 const loading = ref(true);
 const event = ref(computed(() => useEventStore().getEvent()));
@@ -25,5 +46,31 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.event-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    margin-top: 20px;
+}
 
+.event-detail-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.event-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+.event-detail {
+    font-size: 16px;
+    margin-right: 10px;
+}
 </style>

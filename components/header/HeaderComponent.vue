@@ -6,13 +6,13 @@
             </div>
             <div class="nav-bar">
                 <div class="left-nav-bar">
-                    <NuxtLink class="header-link" to="/">Home</NuxtLink>
-                    <NuxtLink class="header-link" to="/veranstaltungen">Veranstaltungen</NuxtLink>
-                    <NuxtLink class="header-link" to="/veranstaltung-anlegen">Event erstellen</NuxtLink>
+                    <NuxtLink v-if="token == null" class="header-link" to="/">Home</NuxtLink>
+                    <NuxtLink v-if="token != null" class="header-link" to="/veranstaltungen">Veranstaltungen</NuxtLink>
+                    <NuxtLink v-if="token != null" class="header-link" to="/veranstaltung-anlegen">Event erstellen</NuxtLink>
                 </div>
                 <div class="center-center">
-                    <NuxtLink class="header-link" to="/profil">Profil</NuxtLink>
-                    <UiButton icon="logout" @click="logout()">Log Out</UiButton>
+                    <NuxtLink class="header-link" to="/profil" v-if="token != null">Profil</NuxtLink>
+                    <UiButton icon="logout" @click="logout()" v-if="token != null">Log Out</UiButton>
                 </div>
             </div>
         </div>
@@ -23,10 +23,11 @@
 
 <script lang="ts" setup>
 
+const token = useCookie("token");
+
 function logout() {
     navigateTo("https://auth.benevolo.de/realms/benevolo/protocol/openid-connect/logout?post_logout_redirect_uri=" + useRuntimeConfig().public.authOriginURL +  "/logout&client_id=benevolo", { external: true})
 }
-
 </script>
 
 

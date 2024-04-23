@@ -1,6 +1,6 @@
 <template>
        <div class="page">
-        <div class="login-container">
+        <div class="login-container tile">
             <h1>Benevolo Login</h1>
             <div class="social-logins">
                 <UiButton class="button social-button" @click="login">Login
@@ -30,16 +30,15 @@ import { login } from '~/utils/authentication';
 }
 
 .login-container {
-    height: min(40%, 400px);
     align-self: center;
-    width: 28rem;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 2rem 4rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .social-logins {
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
 }
@@ -55,5 +54,6 @@ import { login } from '~/utils/authentication';
     fill: white;
     padding: 1.5rem;
     font-size: 1.2rem;
+    width: 15rem;
 }
 </style>

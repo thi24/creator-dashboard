@@ -1,40 +1,44 @@
 <template>
-<LoadingPage :loading="!event" :heading="'Tickets'">
-<div class="narrow">
-    <h1 class="heading">Tickets</h1>
-        <div class="form tile">
-            <div class="ticket" v-for="ticketType in ticketTypes"> 
-                <p>Ticketname: {{ ticketType.name }}</p>
-                <p> Ticketanzahl: {{ ticketType.capacity }}</p>
-                <p>Verkauf von: {{ ticketType.validFrom }}</p>
-                <p>Verkauf bis: {{ ticketType.validTo }}</p>
-                <p>Preis: {{ ticketType.price }}</p>
+    <ScrollingPage :loading="!event">
+        <div class="content ticket-page">
+            <div v-if="event">
+                <h2>Tickettypen</h2>
+                <p>{{ event.eventName }}</p>
             </div>
-            <div class="empty-ticket-container" @click="saveTicketPopup.open()">
-                <p>Neuen Tickettypen anlegen</p>
-            </div>
+            <LoadingPage :loading="loading">
+                <div class="narrow">
+                    <div class="form tile">
+                        <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType">
+                        </TicketTypeComponent>
+                        <div class="empty-ticket-container" @click="saveTicketPopup.open()">
+                            <h3>Neuen Tickettypen anlegen</h3>
+                        </div>
+                    </div>
+                </div>
+                <SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
+            </LoadingPage>
         </div>
-</div>
-<SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
-</LoadingPage>
+    </ScrollingPage>
 </template>
 
 <script setup lang="ts">
-import LoadingPage from '~/components/LoadingPage.vue';
-import UiButton from '~/components/ui/UiButton.vue';
-import { Event } from '@/classes/Event';
+import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import { TicketType } from '~/classes/TicketType';
 import { getAllTicketTypes } from '~/requests/tickettype';
-import PopupTemplate from '~/components/popups/PopupTemplate.vue';
 import SaveTicketTypePopup from '~/components/popups/SaveTicketTypePopup.vue';
+import TicketTypeComponent from '~/components/veranstaltungen/TicketTypeComponent.vue';
+import LoadingPage from '~/components/util/LoadingPage.vue';
 
-const loading = ref(true);
+const loading = ref(false);
 const event = ref(computed(() => useEventStore().getEvent()));
-const ticketType: Ref<TicketType> = ref(new TicketType());
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
+const pageSize: Ref<number | undefined> = ref(undefined);
+const pageIndex: Ref<number> = ref(0);
+
 const saveTicketPopup = ref();
 
 onMounted(() => {
+    loading.value = true;
     const eventId = useRoute().params.id as string;
 
     let onSuccess = (_ticketTypes: TicketType[]) => {
@@ -47,43 +51,31 @@ onMounted(() => {
         console.log("Fehler")
         loading.value = false;
     }
-    loading.value = true;
-    getAllTicketTypes(eventId , onSuccess, onError);
+    getAllTicketTypes(eventId, onSuccess, onError);
 })
 
 </script>
 
 <style scoped>
+.tile {
+    padding: 0;
+}
+
 .form {
-    gap: 1rem;
     display: grid;
     grid-auto-rows: 1fr;
+    overflow: hidden;
 }
+
 .empty-ticket-container {
-border: 0.1rem grey dashed;
-border-radius: 1rem;
-justify-content: center;
-align-items: center;
-display: flex;
-padding: 1rem;
-cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 1rem;
+    cursor: pointer;
 }
 
 .empty-ticket-container:hover {
-    background-color: rgba(243, 242, 242, 0.744);
-    transition: 0.3s; 
-}
-
-.ticket{
-display: flex;
-border: 0.1rem grey solid;
-border-radius: 1rem;
-display: grid;
-padding: 0.5rem;
-cursor: pointer;
-}
-
-.ticket:hover{
     background-color: rgba(243, 242, 242, 0.744);
     transition: 0.3s;
 }

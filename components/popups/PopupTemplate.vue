@@ -1,15 +1,15 @@
 <template>
-<div class="overlay center-center" @click="close" v-show="visible">
-    <div class="popup tile" @click.stop>
-        <div class="popup__header">
-            <h2>{{ heading }}</h2>
-            <UiButton icon="close" @click="close"></UiButton>
-        </div>
-        <div class="popup__body">
-            <slot></slot>
+    <div class="overlay center-center" @click="close" v-show="visible">
+        <div class="popup tile" @click.stop>
+            <div class="popup__header">
+                <h2>{{ heading }}</h2>
+                <UiButton icon="close" @click="close"></UiButton>
+            </div>
+            <div class="popup__body">
+                <slot></slot>
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script lang="ts" setup>
@@ -36,8 +36,9 @@ defineExpose({
 </script>
 
 <style scoped>
-.overlay{
+.overlay {
     background-color: rgba(0, 0, 0, 0.313);
+    backdrop-filter: blur(0.1rem);
     position: fixed;
     top: 0;
     bottom: 0;
@@ -45,12 +46,14 @@ defineExpose({
     right: 0;
     padding: 1rem;
 }
-.popup{
-    width: min(100%,700px);
+
+.popup {
+    width: min(100%, 700px);
 }
-.popup__header{
+
+.popup__header {
     display: flex;
-    justify-content: space-between ;
+    justify-content: space-between;
     margin-bottom: 1rem;
 }
 </style>

@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
+import ScrollingComponent from '~/components/util/ScrollingComponent.vue';
 import { useEventStore } from '~/stores/EventStore';
 
 const event = ref(computed(() => useEventStore().getEvent()));
@@ -28,15 +29,13 @@ onMounted(() => {
     grid-template-columns: auto 1fr;
     align-self: stretch;
 }
-.account-layout > * {
-    padding: 2rem;
-}
 .nav-bar {
     background-color: white;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     border-right: 1px solid #eaeaea;
+    padding: 1rem 2rem;
 }
 .nav-bar > * {
     padding: 0.5rem 0.75rem;
@@ -45,5 +44,16 @@ onMounted(() => {
     background-color: var(--primary-color);
     color: white;
     border-radius: 10rem;
+}
+.scroll-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+.scrolling-div {
+    padding: 1rem;
+    height: 100%;
+    position: absolute;
 }
 </style>
