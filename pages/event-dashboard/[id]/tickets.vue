@@ -6,13 +6,11 @@
                 <p>{{ event.eventName }}</p>
             </div>
             <LoadingPage :loading="loading">
-                <div class="narrow">
-                    <div class="form tile">
-                        <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType">
-                        </TicketTypeComponent>
-                        <div class="empty-ticket-container" @click="saveTicketPopup.open()">
-                            <h3>Neuen Tickettypen anlegen</h3>
-                        </div>
+                <div class="form tile">
+                    <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType">
+                    </TicketTypeComponent>
+                    <div class="empty-ticket-container" @click="saveTicketPopup.open()">
+                        <h3>Neuen Tickettypen anlegen</h3>
                     </div>
                 </div>
                 <SaveTicketTypePopup ref="saveTicketPopup"

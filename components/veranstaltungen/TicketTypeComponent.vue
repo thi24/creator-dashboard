@@ -2,7 +2,7 @@
     <div class="tickettype">
         <div class="tickettype-status"> </div>
         <div class="tickettype-info">
-            <h3> {{ ticketType.name }} </h3>
+            <p> {{ ticketType.name }} </p>
             <div class="tickettype-details">
                 <p class="grayed-out">Verkaufszeitraum: {{ dayjs(ticketType.validFrom).format("DD.MM.YYYY H:mm") }} Uhr
                     - {{
