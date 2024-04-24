@@ -4,16 +4,18 @@
             <NuxtLink :to="'/event-dashboard/' + eventId" :class="{ active: useRoute().fullPath.startsWith('') }">Veranstaltung</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/tickets'">Tickets</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'">Buchungen</NuxtLink>
+            <p class="entry-button" @click="() => entryComponent.show()">Einlass</p>
         </nav>
         <div>
             <NuxtPage></NuxtPage>
         </div>
     </div>
+    <EntryComponent ref="entryComponent"></EntryComponent>
 </template>
 
 <script setup lang="ts">
-import ScrollingComponent from '~/components/util/ScrollingComponent.vue';
 import { useEventStore } from '~/stores/EventStore';
+import EntryComponent from '~/components/EntryComponent.vue';
 
 const event = ref(computed(() => useEventStore().getEvent()));
 const eventId = useRoute().params.id as string;
@@ -21,6 +23,8 @@ const eventId = useRoute().params.id as string;
 onMounted(() => {
     useEventStore().init(eventId);
 });
+
+const entryComponent = ref();
 </script>
 
 <style scoped>
@@ -39,6 +43,9 @@ onMounted(() => {
 }
 .nav-bar > * {
     padding: 0.5rem 0.75rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
 }
 .nav-bar > *.router-link-active {
     background-color: var(--primary-color);
@@ -55,5 +62,10 @@ onMounted(() => {
     padding: 1rem;
     height: 100%;
     position: absolute;
+}
+.entry-button {
+    border: 3px solid black;
+    border-radius: 2.5rem;
+    cursor: pointer;
 }
 </style>
