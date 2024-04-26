@@ -10,10 +10,11 @@
                     <NuxtLink v-if="token != null" class="header-link" to="/veranstaltungen">Veranstaltungen</NuxtLink>
                     <NuxtLink v-if="token != null" class="header-link" to="/veranstaltung-anlegen">Event erstellen</NuxtLink>
                 </div>
-                <div class="center-center">
-                    <NuxtLink class="header-link" to="/profil" v-if="token != null">Profil</NuxtLink>
-                    <UiButton icon="logout" @click="logout()" v-if="token != null">Log Out</UiButton>
-                </div>
+               
+            </div>
+            <div class="center-center">
+                <NuxtLink class="header-link" to="/profil" v-if="token != null">Profil</NuxtLink>
+                <UiButton icon="logout" @click="logout()" v-if="token != null">Log Out</UiButton>
             </div>
         </div>
     </header>
@@ -42,10 +43,11 @@ function logout() {
 
 .inner-header {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
     width: 100%;
     padding: 0.5rem 1rem 0.5rem 1rem;
-    gap: 2rem;
+    column-gap: 2rem;
+    row-gap: 0.5rem;
 }
 
 .nav-bar {
@@ -70,5 +72,15 @@ function logout() {
 .header-link:hover {
     border-bottom: 2px solid #f28482;
     padding-bottom: 0px;
+}
+
+@media (max-width: 576px) { 
+    .inner-header {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+    .nav-bar {
+        flex-direction: column;
+    }
 }
 </style>

@@ -80,4 +80,9 @@ function loadByPage(page: number) {
     align-items: flex-start;
 }
 
+@media (max-width: 576px) { 
+    .ticket-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 </style>
