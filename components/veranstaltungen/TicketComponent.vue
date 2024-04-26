@@ -9,7 +9,7 @@
             <p v-if="ticket.bookedAt" class="grayed-out">{{ dayjs(ticket.bookedAt).format("DD.MM.YYYY") }}</p>
         </div>
         <div class="ticket__property" v-if="ticket.price">
-            <p>{{ Math.round(ticket.price / 100).toFixed(2) }}€</p>
+            <p>{{ (ticket.price / 100).toFixed(2) }}€</p>
             <p class="grayed-out">{{ ticket.taxRate }}%</p>
         </div>
         <div class="ticket-status">

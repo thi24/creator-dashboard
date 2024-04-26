@@ -2,7 +2,7 @@
     <div class="tickettype">
         <p class="tickettype-name"> {{ ticketType.name }} </p>
         <div class="edit-button-div">
-            <button class="edit-button" @click="() => editTicketPopup.open( {...ticketType} )">
+            <button class="edit-button" @click="() => editTicketPopup.open({ ...ticketType })">
                 <UiIcon class="edit-icon">edit_note</UiIcon> Anpassen
             </button>
         </div>
@@ -14,11 +14,11 @@
         </div>
         <div class="tickettype-details-price">
             <p v-if="ticketType.price" class="grayed-out">
-                {{ Math.round(ticketType.price / 100).toFixed(2) }}€
+                {{ (ticketType.price / 100).toFixed(2) }}€
             </p>
         </div>
     </div>
-    <EditTicketTypePopup ref="editTicketPopup" @update="updateTicketType()"/>
+    <EditTicketTypePopup ref="editTicketPopup" @update="updateTicketType()" />
 </template>
 
 <script setup lang="ts">
