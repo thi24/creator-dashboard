@@ -1,3 +1,4 @@
+import { Event } from '@/classes/Event';
 export class TicketType {
   
     id = undefined as string | undefined;
@@ -8,5 +9,5 @@ export class TicketType {
     capacity = undefined as number | undefined;
     active = undefined as boolean | undefined;
     taxRate = undefined as number | undefined;
-    eventId = "" as string;
+    event = undefined as Event | undefined;
 }

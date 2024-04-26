@@ -7,7 +7,8 @@
             </div>
             <LoadingPage :loading="loading">
                 <div class="form tile">
-                    <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType">
+                    <TicketTypeComponent @update="loadTicketTypes()"
+                        v-for="ticketType in ticketTypes" :ticketType="ticketType">
                     </TicketTypeComponent>
                     <div class="empty-ticket-container" @click="saveTicketPopup.open()">
                         <h3>Neuen Tickettypen anlegen</h3>
@@ -34,22 +35,26 @@ const event = ref(computed(() => useEventStore().getEvent()));
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
 const saveTicketPopup = ref();
 
-onMounted(() => {
+function loadTicketTypes() {
     loading.value = true;
     const eventId = useRoute().params.id as string;
 
     let onSuccess = (_ticketTypes: TicketType[]) => {
         ticketTypes.value = _ticketTypes;
-        console.log("Geladen");
         loading.value = false;
     }
 
     let onError = () => {
-        console.log("Fehler")
         loading.value = false;
     }
     getAllTicketTypes(eventId, onSuccess, onError);
+
+}
+
+onMounted(() => {
+    loadTicketTypes();
 })
+
 
 function pushTicketType(payload: TicketType) {
     if (ticketTypes != null) {

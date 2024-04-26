@@ -2,7 +2,7 @@
     <div class="account-layout">
         <nav class="nav-bar">
             <NuxtLink :to="'/event-dashboard/' + eventId" :class="{ active: useRoute().fullPath.startsWith('') }">Veranstaltung</NuxtLink>
-            <NuxtLink :to="'/event-dashboard/' + eventId + '/tickets'">Tickets</NuxtLink>
+            <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'">Tickets</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'">Buchungen</NuxtLink>
         </nav>
         <div>
@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import ScrollingComponent from '~/components/util/ScrollingComponent.vue';
 import { useEventStore } from '~/stores/EventStore';
 
 const event = ref(computed(() => useEventStore().getEvent()));

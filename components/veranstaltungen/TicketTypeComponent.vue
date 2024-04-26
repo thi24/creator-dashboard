@@ -1,56 +1,101 @@
 <template>
     <div class="tickettype">
-        <div class="tickettype-status"> </div>
-        <div class="tickettype-info">
-            <p> {{ ticketType.name }} </p>
-            <div class="tickettype-details">
-                <p class="grayed-out">Verkaufszeitraum: {{ dayjs(ticketType.validFrom).format("DD.MM.YYYY H:mm") }} Uhr
-                    - {{
-                        dayjs(ticketType.validTo).format("DD.MM.YYYY H:mm") }} Uhr</p>
-                <p v-if="ticketType.price" class="grayed-out">Preis: {{ Math.round(ticketType.price / 100).toFixed(2)
-                    }}€</p>
-            </div>
+        <p class="tickettype-name"> {{ ticketType.name }} </p>
+        <div class="edit-button-div">
+            <button class="edit-button" @click="() => editTicketPopup.open( {...ticketType} )">
+                <UiIcon class="edit-icon">edit_note</UiIcon> Anpassen
+            </button>
+        </div>
+        <div class="tickettype-details-time">
+            <p class="grayed-out">{{
+                dayjs(ticketType.validFrom).format("DD.MM.YYYY H:mm") }} Uhr -</p>
+            <p class="grayed-out">{{
+                dayjs(ticketType.validTo).format("DD.MM.YYYY H:mm") }} Uhr</p>
+        </div>
+        <div class="tickettype-details-price">
+            <p v-if="ticketType.price" class="grayed-out">
+                {{ Math.round(ticketType.price / 100).toFixed(2) }}€
+            </p>
         </div>
     </div>
+    <EditTicketTypePopup ref="editTicketPopup" @update="updateTicketType()"/>
 </template>
 
 <script setup lang="ts">
 import { TicketType } from '~/classes/TicketType';
 import dayjs from 'dayjs';
+import EditTicketTypePopup from '@/components/popups/EditTicketTypePopup.vue';
+
+const editTicketPopup = ref();
+const emits = defineEmits(['update']);
 
 defineProps<{
     ticketType: TicketType
 }>()
 
+function updateTicketType() {
+    emits('update');
+}
 </script>
 
 <style scoped>
 .tickettype {
-    display: flex;
     display: grid;
-    grid-template-columns: min-content 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr auto;
     border-bottom: lightgray 1px solid;
-    padding-left: 0.25rem;
+    padding: 0.5rem 1rem;
 }
 
 .tickettype:hover {
     background-color: rgba(243, 242, 242, 0.744);
     border-left: var(--primary-color) 0.25rem solid;
-    padding-left: 0rem;
+    padding: 0.5rem 1rem 0.5rem 0.75rem;
 }
 
-.tickettype-info {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    gap: 0.5rem
+.tickettype-name {
+    padding-bottom: 0.3rem;
+    font-size: 1.2rem;
 }
 
-.tickettype-details {
+.tickettype-details-price {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.tickettype-details-price p {
+    align-self: flex-start;
+    font-size: 1.0rem;
+}
+
+.tickettype-details-time {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-icon {
+    margin-right: 0.7rem;
+    color: white;
+}
+
+.edit-button {
     display: flex;
     justify-content: space-between;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.2rem 0.7rem;
+    color: #fff;
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: var(--secondary-color-dark);
 }
 </style>

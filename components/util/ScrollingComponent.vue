@@ -16,6 +16,11 @@
     width: 100%;
     height: 100%;
     overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.scrolling-component::-webkit-scrollbar {
+  display: none;
 }
 
 .scrolling-content {
