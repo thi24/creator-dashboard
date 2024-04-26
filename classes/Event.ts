@@ -3,7 +3,7 @@ import { TicketType } from "./TicketType";
 
 export class Event {
   
-    id = "" as string;
+    id = undefined as string | undefined;
     eventName = "" as string;
     startsAt = new Date() as Date;
     endsAt = new Date() as Date;

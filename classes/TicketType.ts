@@ -1,6 +1,6 @@
 export class TicketType {
   
-    id = "" as string;
+    id = undefined as string | undefined;
     name = "" as string;
     price = undefined as number | undefined;
     validFrom = new Date() as Date;
