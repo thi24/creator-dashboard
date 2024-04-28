@@ -35,6 +35,7 @@ import UiButton from '../ui/UiButton.vue';
 import { TicketType } from '~/classes/TicketType';
 import { saveTicketType } from '~/requests/tickettype';
 import { Event } from '~/classes/Event';
+import type { WritableComputedRef } from 'vue';
 
 const ticketType: Ref<TicketType> = ref(new TicketType());
 const loading: Ref<boolean> = ref(false);
@@ -42,15 +43,15 @@ const errorMessage: Ref<string> = ref("");
 const popupTemplate = ref()
 const eventId = useRoute().params.id as string;
 
-const price = computed({
-    get(): string {
-        if (ticketType.value.price != null) {
-            return (ticketType.value.price / 100).toString()
+const price: WritableComputedRef<number | undefined> = computed({
+    get(): number {
+        if (ticketType.value.price != undefined) {
+            return Math.round(ticketType.value.price * 100) / 10000
         };
-        return ("");
+        return 0;
     },
-    set(v: string) {
-        ticketType.value.price = Number(v) * 100;
+    set(v: number) {
+        ticketType.value.price = v * 100;
     }
 });
 
