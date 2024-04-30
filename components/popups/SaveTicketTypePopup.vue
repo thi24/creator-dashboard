@@ -34,7 +34,6 @@ import UiInput from '../ui/UiInput.vue';
 import UiButton from '../ui/UiButton.vue';
 import { TicketType } from '~/classes/TicketType';
 import { saveTicketType } from '~/requests/tickettype';
-import { Ticket } from '~/classes/Ticket';
 
 const ticketType: Ref<TicketType> = ref(new TicketType());
 const loading: Ref<boolean> = ref(false);
@@ -133,5 +132,15 @@ const emit = defineEmits<{
 
 .error-message {
     size: 1rem
+}
+
+@media (max-width: 576px) {
+
+    .tickettype-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 0.5rem;
+        column-gap: 1rem;
+    }
 }
 </style>

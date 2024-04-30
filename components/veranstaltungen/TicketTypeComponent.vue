@@ -4,7 +4,9 @@
         <div class="tickettype-info">
             <p> {{ ticketType.name }} </p>
             <div class="tickettype-details">
-                <p class="grayed-out">Verkaufszeitraum: {{ dayjs(ticketType.validFrom).format("DD.MM.YYYY H:mm") }} Uhr
+                <p class="grayed-out period">Verkaufszeitraum: {{ dayjs(ticketType.validFrom).format("DD.MM.YYYY H:mm")
+                    }}
+                    Uhr
                     - {{
                         dayjs(ticketType.validTo).format("DD.MM.YYYY H:mm") }} Uhr</p>
                 <p v-if="ticketType.price" class="grayed-out">Preis: {{ Math.round(ticketType.price / 100).toFixed(2)
@@ -52,5 +54,9 @@ defineProps<{
 .tickettype-details {
     display: flex;
     justify-content: space-between;
+}
+
+.period {
+    display: flex
 }
 </style>
