@@ -23,7 +23,7 @@ const events: Ref<Event[] | undefined> = ref(undefined);
 onMounted(() => {
     getAllEvents((_events: Event[]) => {
         events.value = _events;
-    }, () => {});
+    }, () => { });
 })
 
 function getEvents(): Event[] {
@@ -52,5 +52,13 @@ function getEvents(): Event[] {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+}
+
+@media (max-width: 576px) {
+    .event-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+    }
 }
 </style>

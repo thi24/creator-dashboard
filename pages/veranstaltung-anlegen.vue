@@ -196,4 +196,30 @@ function onFileChange(event: any) { //kein any
 .error-message {
     size: 1rem
 }
+
+
+
+@media (max-width: 576px) {
+    .form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    input,
+    textarea,
+    select {
+        font-size: 0.8rem;
+    }
+
+    .right-side {
+        display: grid;
+        grid-template-rows: 1fr;
+    }
+
+    .description-input {
+        height: 10rem;
+    }
+
+}
 </style>
