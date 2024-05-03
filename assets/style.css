@@ -23,6 +23,7 @@ body {
 }
 
 body {
+    padding-top: env(safe-area-inset-top);
     background-color: var(--body-background-color);
 }
 
