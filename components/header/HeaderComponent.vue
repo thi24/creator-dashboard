@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-        <div class="inner-header">
+        <div class="inner-header" :class="{ 'hide-header': $route.path.startsWith('/event-dashboard/') }">
             <div class="logo">
                 <h1>Benevolo</h1>
             </div>
@@ -78,9 +78,8 @@ function logout() {
 }
 
 @media (max-width: 576px) {
-    .inner-header {
-        grid-template-columns: 1fr;
-        justify-items: center;
+    .hide-header {
+        display: none;
     }
 
     .nav-bar {

@@ -15,7 +15,7 @@
             </div>
             <div class="sidebar" :class="{ 'sidebar-visible': visible }">
                 <div class="sidebar-menue">
-                    <UiButton @click="toggleSidebar()">X</UiButton>
+                    <UiButton icon="close" @click="toggleSidebar()"></UiButton>
                 </div>
                 <div class="link-list">
                     <NuxtLink :to="'/event-dashboard/' + eventId"
@@ -25,7 +25,8 @@
                     </NuxtLink>
                     <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'" @click="toggleSidebar">Buchungen
                     </NuxtLink>
-                    <p class="entry-button" @click="() => entryComponent.show()">Einlass</p>
+                    <NuxtLink @click="toggleSidebar(); entryComponent.show()">Einlass</NuxtLink>
+                    <NuxtLink :to="'../veranstaltungen'">Zurück zu allen Veranstaltungen</NuxtLink>
                 </div>
             </div>
         </nav>
@@ -153,6 +154,10 @@ function toggleSidebar() {
         flex-direction: column;
         gap: 1rem;
         padding: 1rem;
+    }
+
+    a {
+        padding: 0.5rem;
     }
 
     .toggled-nav-bar {
