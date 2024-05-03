@@ -60,5 +60,13 @@ function getEvents(): Event[] {
         grid-template-columns: repeat(1, 1fr);
         gap: 1rem;
     }
+
+    .page {
+        padding: 0;
+    }
+
+    .scrolling-content {
+        padding: 0;
+    }
 }
 </style>

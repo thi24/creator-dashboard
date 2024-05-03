@@ -123,7 +123,7 @@ function toggleSidebar() {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 2rem;
+        padding: 1rem 0.5rem;
         background-color: white;
     }
 
