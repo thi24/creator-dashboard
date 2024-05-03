@@ -8,12 +8,14 @@
                 <div class="left-nav-bar">
                     <NuxtLink v-if="token == null" class="header-link" to="/">Home</NuxtLink>
                     <NuxtLink v-if="token != null" class="header-link" to="/veranstaltungen">Veranstaltungen</NuxtLink>
-                    <NuxtLink v-if="token != null" class="header-link" to="/veranstaltung-anlegen">Event erstellen</NuxtLink>
+                    <NuxtLink v-if="token != null" class="header-link" to="/veranstaltung-anlegen">Event erstellen
+                    </NuxtLink>
                 </div>
-                <div class="center-center">
-                    <NuxtLink class="header-link" to="/profil" v-if="token != null">Profil</NuxtLink>
-                    <UiButton icon="logout" @click="logout()" v-if="token != null">Log Out</UiButton>
-                </div>
+
+            </div>
+            <div class="center-center">
+                <NuxtLink class="header-link" to="/profil" v-if="token != null">Profil</NuxtLink>
+                <UiButton icon="logout" @click="logout()" v-if="token != null">Log Out</UiButton>
             </div>
         </div>
     </header>
@@ -26,7 +28,7 @@
 const token = useCookie("token");
 
 function logout() {
-    navigateTo("https://auth.benevolo.de/realms/benevolo/protocol/openid-connect/logout?post_logout_redirect_uri=" + useRuntimeConfig().public.authOriginURL +  "/logout&client_id=benevolo", { external: true})
+    navigateTo("https://auth.benevolo.de/realms/benevolo/protocol/openid-connect/logout?post_logout_redirect_uri=" + useRuntimeConfig().public.authOriginURL + "/logout&client_id=benevolo", { external: true })
 }
 </script>
 
@@ -42,10 +44,11 @@ function logout() {
 
 .inner-header {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
     width: 100%;
     padding: 0.5rem 1rem 0.5rem 1rem;
-    gap: 2rem;
+    column-gap: 2rem;
+    row-gap: 0.5rem;
 }
 
 .nav-bar {
@@ -53,6 +56,7 @@ function logout() {
     justify-content: space-between;
     align-self: center;
 }
+
 .left-nav-bar {
     display: flex;
     align-items: center;
@@ -67,8 +71,20 @@ function logout() {
     padding-top: 2px;
     padding-bottom: 2px;
 }
+
 .header-link:hover {
     border-bottom: 2px solid #f28482;
     padding-bottom: 0px;
+}
+
+@media (max-width: 576px) {
+    .inner-header {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .nav-bar {
+        flex-direction: column;
+    }
 }
 </style>

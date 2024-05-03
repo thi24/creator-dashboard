@@ -16,7 +16,8 @@ html {
     --body-background-color: #eeeeee;
 }
 
-html, body {
+html,
+body {
     width: 100vw;
     height: 100vh;
 }
@@ -52,7 +53,9 @@ body {
     margin-bottom: 1rem;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
     border-radius: 0.2rem;
     border-style: none;
     border: grey 2px solid;
@@ -63,12 +66,14 @@ input, textarea, select {
     background-color: rgba(248, 248, 248, 0.744);
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
     border-color: var(--primary-color);
 }
 
 
-.col-2{
+.col-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
@@ -81,12 +86,13 @@ input:focus, textarea:focus, select:focus {
     gap: 1rem;
 }
 
-.tile{
+.tile {
     background-color: white;
     border-radius: 0.25rem;
     padding: 1rem;
     overflow: hidden;
 }
+
 .tile.inverse {
     background-color: var(--body-background-color);
 }

@@ -137,4 +137,14 @@ const emit = defineEmits<{
 .error-message {
     size: 1rem
 }
+
+@media (max-width: 576px) {
+
+    .tickettype-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 0.5rem;
+        column-gap: 1rem;
+    }
+}
 </style>

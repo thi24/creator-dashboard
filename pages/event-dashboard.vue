@@ -67,5 +67,16 @@ const entryComponent = ref();
     border: 3px solid black;
     border-radius: 2.5rem;
     cursor: pointer;
+
+@media (max-width: 576px) { 
+    .account-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+    .nav-bar {
+        display: inline-flex;
+        align-items: center;
+        border-bottom: 1px solid #eaeaea;
+    }
 }
 </style>

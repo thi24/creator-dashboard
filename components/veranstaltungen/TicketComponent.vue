@@ -33,15 +33,16 @@ defineProps<{
     display: contents;
 }
 
-.ticket>* {
+.ticket > * {
     padding: 0.25rem 0.75rem;
     gap: 0.25rem;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid lightgray;
 }
 
-.ticket:not(:last-of-type)>* {
-    border-bottom: 1px solid lightgray;
+.ticket:last-child {
+    border-bottom: 0px;
 }
 
 .ticket__id,
@@ -61,12 +62,30 @@ defineProps<{
     padding-left: 0.75rem;
 }
 
-.ticket:last-of-type {
+.ticket:last-of-type > * {
     border-bottom: none;
 }
 
 .ticket-status {
     display: flex;
     justify-content: flex-end;
+}
+
+@media (max-width: 576px) {
+    .ticket > * {
+        padding-left: 1rem;
+        border-bottom: none;
+    }
+    .ticket > *:nth-of-type(3), .ticket > *:nth-of-type(4) {
+        border-bottom: 1px solid lightgray;
+    }
+    .ticket:hover > .ticket > *:nth-of-type(1), .ticket:hover > *:nth-of-type(3)  {
+        border-left: 0.25rem solid var(--primary-color);
+        padding-left: 0.75rem;
+    }
+    .ticket-status {
+        display: flex;
+        justify-content: flex-start;
+    }
 }
 </style>

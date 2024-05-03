@@ -98,4 +98,8 @@ function updateTicketType() {
 .edit-button:hover {
     background-color: var(--secondary-color-dark);
 }
+
+.period {
+    display: flex
+}
 </style>

@@ -12,7 +12,7 @@ defineProps<{
 </script>
 
 <style scoped>
-.field{
+.field {
     display: flex;
     gap: 0.25rem;
     flex-direction: column;

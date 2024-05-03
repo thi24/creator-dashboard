@@ -17,9 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useUserStore } from '~/stores/UserStore';
 import { login } from '~/utils/authentication';
-
 </script>
 
 
