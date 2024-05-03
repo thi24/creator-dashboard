@@ -67,7 +67,7 @@ const entryComponent = ref();
     border: 3px solid black;
     border-radius: 2.5rem;
     cursor: pointer;
-
+}
 @media (max-width: 576px) { 
     .account-layout {
         grid-template-columns: 1fr;
