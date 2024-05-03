@@ -65,7 +65,7 @@ function loadByPage(page: number) {
 .ticket-container {
     padding: 0px;
     display: grid;
-    grid-template-columns: auto auto auto 1fr;
+    grid-template-columns: auto auto 1fr;
     border-radius: 0.5rem;
     align-items: stretch;
     width: 100%;

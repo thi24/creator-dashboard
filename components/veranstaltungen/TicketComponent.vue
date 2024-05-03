@@ -1,12 +1,8 @@
 <template>
-    <div class="ticket" v-if="ticket.customer">
+    <div class="ticket" v-if="ticket">
         <div class="ticket__id">
-            <p v-if="ticket.ticketType">{{ ticket.ticketType.name }}</p>
+            <p v-if="ticket.bookingItem && ticket.bookingItem.ticketType">{{ ticket.bookingItem.ticketType.name }}</p>
             <p class="grayed-out">{{ ticket.publicId }}</p>
-        </div>
-        <div class="ticket__property">
-            <p>{{ ticket.customer.email }}</p>
-            <p v-if="ticket.bookedAt" class="grayed-out">{{ dayjs(ticket.bookedAt).format("DD.MM.YYYY") }}</p>
         </div>
         <div class="ticket__property" v-if="ticket.price">
             <p>{{ (ticket.price / 100).toFixed(2) }}€</p>
