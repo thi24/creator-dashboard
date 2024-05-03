@@ -42,3 +42,17 @@ export function saveTicketType(TicketType: TicketType, onSuccess: (TicketType: T
         });
 }
 
+export function updateTicketType(ticketType: TicketType, onSuccess: (TicketType: TicketType) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.put(baseURL + "/ticket-types/" + ticketType.id, ticketType, {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
+    })
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch(() => {
+            onError();
+        });
+}

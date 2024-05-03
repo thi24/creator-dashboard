@@ -16,7 +16,7 @@
                 </div>
             </LoadingPage>
         </div>
-    </ScrollingPage>
+    </ScrollingPage> 
     <ViewTicketPopup ref="viewTicketPopup"></ViewTicketPopup>
 </template>
 
