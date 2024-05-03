@@ -1,9 +1,15 @@
 <template>
 <div class="entry-component" v-show="visible">
-    <video id="video" v-show="running"></video>
-    <div v-show="!running" class="result">
-        <UiIcon class="success center-center" v-if="result">done</UiIcon>
+    <div id="video-wrapper" v-show="status === ScanningStatus.SCANNING">
+        <!-- Video Element will appear here -->
+    </div>
+    <div v-if="status === ScanningStatus.SUCCESS || status === ScanningStatus.ERROR || status === ScanningStatus.DEFAULT" class="result">
+        <UiIcon class="success center-center" v-if="status === ScanningStatus.SUCCESS">done</UiIcon>
+        <UiIcon class="error center-center" v-if="status === ScanningStatus.ERROR">close</UiIcon>
         <UiButton class="scan center-center" @click="() => start()">Scan</UiButton>
+    </div>
+    <div class="result" v-if="status === ScanningStatus.LOADING">
+        <LoadingComponent :loading="true"></LoadingComponent>
     </div>
     <UiIcon class="entry-component__close" @click="() => hide()">close</UiIcon>
 </div>
@@ -11,26 +17,35 @@
 
 <script setup lang="ts">
 import QrScanner from 'qr-scanner';
+import LoadingComponent from './util/LoadingComponent.vue';
 const visible = ref(false);
 
-let scanner: QrScanner | undefined = undefined;
-const running: Ref<boolean> = ref(false);
-const result = ref(true);
+enum ScanningStatus {
+    DEFAULT,
+    SCANNING,
+    LOADING,
+    SUCCESS,
+    ERROR
+}
 
-onMounted(() => {
-    scanner = new QrScanner(
-        document.getElementById('video') as HTMLVideoElement,
-        result => onDecode(result.data),
-        { }
-    );
-});
+let scanner: QrScanner | undefined = undefined;
+const status: Ref<ScanningStatus> = ref(ScanningStatus.DEFAULT);
 
 function onDecode(content: string) {
-    console.log(content);
     stop();
+    console.log(content);
+    status.value = ScanningStatus.LOADING;
+    setTimeout(() => {
+        if(Math.random() < 0.5) {
+            status.value = ScanningStatus.SUCCESS;
+        } else {
+            status.value = ScanningStatus.ERROR;
+        }
+    }, 1000);
 }
 
 function show() {
+    status.value = ScanningStatus.DEFAULT;
     visible.value = true;
 }
 
@@ -40,16 +55,32 @@ function hide() {
 }
 
 function start() {
-    if(scanner) {
+    const videoWrapper = document.getElementById('video-wrapper');
+    if(videoWrapper) {
+        const videoElement = document.createElement('video');
+        videoElement.id = 'video';
+        videoWrapper.appendChild(videoElement);
+        scanner = new QrScanner(
+            videoElement as HTMLVideoElement,
+            result => onDecode(result.data),
+            {}
+        );
         scanner.start();
-        running.value = true;
+        status.value = ScanningStatus.SCANNING;
+        setTimeout(() => {
+            onDecode("decode mock");
+        }, 5000);
     }
 }
 
 function stop() {
     if(scanner) {
         scanner.stop();
-        running.value = false;
+        ScanningStatus.LOADING;
+        const videoWrapper = document.getElementById('video-wrapper');
+        if(videoWrapper) {
+            videoWrapper.replaceChildren();
+        }
     }
 }
 
@@ -58,12 +89,21 @@ defineExpose({
 });
 </script>
 
-<style scoped>
+<style>
 #video {
-    position: absolute;
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
+</style>
+
+<style scoped>
+#video-wrapper, .result {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
 .entry-component {
     position: fixed;
     top: 0;
@@ -81,6 +121,10 @@ defineExpose({
     top: 1rem;
     right: 1rem;
     z-index: 10;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
 }
 .result {
     height: 100%;
@@ -96,13 +140,21 @@ defineExpose({
     border-radius: 2rem;
     font-size: 3rem;
 }
-.success {
-    background-color: #44d72a;
-    border: 1rem solid #a9ff4cee;
+.success, .error {
     color: white;
     height: 8rem;
     width: 8rem;
     font-size: 4.5rem;
     border-radius: 4rem;
+}
+
+.success {
+    background-color: #44d72a;
+    border: 1rem solid #a9ff4cee;
+}
+
+.error {
+    background-color: #bd1104;
+    border: 1rem solid #d45906ee;
 }
 </style>
