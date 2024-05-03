@@ -82,6 +82,11 @@ function logout() {
         display: none;
     }
 
+    .inner-header {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
     .nav-bar {
         flex-direction: column;
     }
