@@ -22,3 +22,11 @@ async function checkLogin() {
         return false
     }
 }
+
+export function requireToken(): string {
+    const token = useCookie('token')
+    if(token.value != null) {
+        return token.value
+    }
+    throw new Error();
+}
