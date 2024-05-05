@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import QrScanner from 'qr-scanner';
 import LoadingComponent from './util/LoadingComponent.vue';
+import { redeemTicket } from '~/requests/ticket';
 const visible = ref(false);
 
 enum ScanningStatus {
@@ -35,13 +36,11 @@ function onDecode(content: string) {
     stop();
     console.log(content);
     status.value = ScanningStatus.LOADING;
-    setTimeout(() => {
-        if(Math.random() < 0.5) {
-            status.value = ScanningStatus.SUCCESS;
-        } else {
-            status.value = ScanningStatus.ERROR;
-        }
-    }, 1000);
+    redeemTicket(content, () => {
+        status.value = ScanningStatus.SUCCESS;
+    }, () => {
+        status.value = ScanningStatus.ERROR;
+    });
 }
 
 function show() {
@@ -67,9 +66,6 @@ function start() {
         );
         scanner.start();
         status.value = ScanningStatus.SCANNING;
-        setTimeout(() => {
-            onDecode("decode mock");
-        }, 5000);
     }
 }
 
