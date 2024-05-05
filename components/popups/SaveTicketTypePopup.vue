@@ -116,7 +116,7 @@ const emit = defineEmits<{
 }>()
 </script>
 
-<style>
+<style scoped>
 .tickettype-container {
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -169,9 +169,10 @@ function onFileChange(event: any) { //kein any
 .preview-image-wrapper {
     max-width: 100%;
     overflow: hidden;
-    border: grey 2px solid;
+    border: #cdcdcd 1px solid;
     padding: 5px;
     position: relative;
+    background-color: rgb(249 249 249 / 74%);
 }
 
 .preview-image {

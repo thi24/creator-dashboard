@@ -1,5 +1,5 @@
 <template>
-    <PopupTemplate ref="popupTemplate" heading="Ticketklasse anlegen">
+    <PopupTemplate ref="popupTemplate" heading="Ticketklasse ändern">
         <div class="tickettype-container">
             <UiInput label="Ticketname">
                 <input type="text" id="Name" required v-model="ticketType.name">
@@ -23,7 +23,8 @@
         <div v-if="errorMessage" class="error-wrapper">
             <p class="error-message">{{ errorMessage }}</p>
         </div>
-        <UiButton @click="_updateTicketType()" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">Anpassen
+        <UiButton @click="_updateTicketType()" icon="add_circle" :reverse="true" :loading="loading" class="save-btn">
+            Anpassen
         </UiButton>
     </PopupTemplate>
 </template>
@@ -111,7 +112,7 @@ defineExpose({
 
 </script>
 
-<style>
+<style scoped>
 .tickettype-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -131,5 +132,15 @@ defineExpose({
 
 .error-message {
     size: 1rem
+}
+
+@media (max-width: 576px) {
+
+    .tickettype-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 0.5rem;
+        column-gap: 1rem;
+    }
 }
 </style>

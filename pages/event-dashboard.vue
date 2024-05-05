@@ -26,7 +26,7 @@
                     <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'" @click="toggleSidebar">Buchungen
                     </NuxtLink>
                     <NuxtLink @click="toggleSidebar(); entryComponent.show()">Einlass</NuxtLink>
-                    <NuxtLink :to="'../veranstaltungen'">Zurück zu allen Veranstaltungen</NuxtLink>
+                    <NuxtLink :to="'../../veranstaltungen'">Zurück zu allen Veranstaltungen</NuxtLink>
                 </div>
             </div>
         </nav>
