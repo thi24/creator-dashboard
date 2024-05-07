@@ -1,14 +1,14 @@
 <template>
     <PopupTemplate ref="popupTemplate" heading="Ticket">
         <div class="content">
-            <div class="col-2" v-if="ticket && ticket.ticketType && ticket.customer">
+            <div class="col-2 ticket-property-container" v-if="ticket && ticket">
                 <div class="tile inverse ticket-property">
                     <p>Ticket ID</p>
                     <p class="grayed-out">{{ ticket.id }}</p>
                 </div>
                 <div class="tile inverse ticket-property">
                     <p>Ticketart</p>
-                    <p class="grayed-out">{{ ticket.ticketType.name }}</p>
+                    <p class="grayed-out">Ticketart</p>
                 </div>
                 <div class="tile inverse ticket-property">
                     <p>Verkaufspreis</p>
@@ -20,11 +20,11 @@
                 </div>
                 <div class="tile inverse ticket-property">
                     <p>Kunde</p>
-                    <p class="grayed-out">{{ ticket.customer.email }}</p>
+                    <p class="grayed-out">Kundenname</p>
                 </div>
                 <div class="tile inverse ticket-property">
                     <p>Kunde ID</p>
-                    <p class="grayed-out">{{ ticket.customer.stripeId }}</p>
+                    <p class="grayed-out">Kunden Id</p>
                 </div>
                 <div class="tile inverse ticket-property">
                     <p>Ticket Status</p>
@@ -68,5 +68,11 @@ defineExpose({
     flex-direction: column;
     padding: 0.5rem;
     gap: 0.25rem;
+}
+
+@media (max-width: 576px) {
+    .ticket-property-container {
+        grid-template-columns: 1fr;
+    }
 }
 </style>

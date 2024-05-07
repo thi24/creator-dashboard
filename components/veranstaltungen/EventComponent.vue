@@ -4,11 +4,12 @@
             <img v-if="thumbnail" class="event__image" :src="thumbnail" alt="">
             <LoadingComponent :loading="!thumbnail"></LoadingComponent>
         </div>
-        
+
         <div class="event__body">
             <h3 class="event__heading">{{ event.eventName }}</h3>
             <p class="event__description">{{ event.description }}</p>
-            <UiButton class="event__view" @click="() => useRouter().push('/event-dashboard/' + event.id)" icon="navigate_next" :reverse="true">Ansehen</UiButton>
+            <UiButton class="event__view" @click="() => useRouter().push('/event-dashboard/' + event.id)"
+                icon="navigate_next" :reverse="true">Ansehen</UiButton>
         </div>
     </div>
 </template>
@@ -25,7 +26,7 @@ function _getImageForEvent() {
     console.log("Getting image for event");
     console.log(props.event.id);
     let onSucess = (image: string) => {
-        if(image == null || image == '') {
+        if (image == null || image == '') {
             onError();
         } else {
             thumbnail.value = "data:image/jpg;base64," + image;
@@ -54,15 +55,18 @@ const props = defineProps<{
     display: grid;
     grid-template-rows: auto 1fr;
 }
+
 .event__image {
     width: 100%;
     aspect-ratio: 16/9;
     object-fit: cover;
 }
+
 .thumbnail-container {
     width: 100%;
     aspect-ratio: 16/9;
 }
+
 .event__body {
     padding: 0.5rem;
     display: flex;
@@ -71,7 +75,15 @@ const props = defineProps<{
     justify-content: space-between;
     gap: 0.25rem;
 }
+
 .event__view {
     align-self: center;
+}
+
+.event__description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 </style>

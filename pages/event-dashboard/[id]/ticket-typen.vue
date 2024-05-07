@@ -6,16 +6,17 @@
                 <p>{{ event.eventName }}</p>
             </div>
             <LoadingPage :loading="loading">
-                <div class="narrow">
-                    <div class="form tile">
-                        <TicketTypeComponent v-for="ticketType in ticketTypes" :ticketType="ticketType">
-                        </TicketTypeComponent>
-                        <div class="empty-ticket-container" @click="saveTicketPopup.open()">
-                            <h3>Neuen Tickettypen anlegen</h3>
-                        </div>
+                <div class="form tile">
+                    <TicketTypeComponent @update="loadTicketTypes()"
+                        v-for="ticketType in ticketTypes" :ticketType="ticketType">
+                    </TicketTypeComponent>
+                    <div class="empty-ticket-container" @click="saveTicketPopup.open()">
+                        <h3>Neuen Tickettypen anlegen</h3>
                     </div>
                 </div>
-                <SaveTicketTypePopup ref="saveTicketPopup"></SaveTicketTypePopup>
+                <SaveTicketTypePopup ref="saveTicketPopup"
+                    @update="(payload: TicketType) => { pushTicketType(payload) }">
+                </SaveTicketTypePopup>
             </LoadingPage>
         </div>
     </ScrollingPage>
@@ -32,28 +33,34 @@ import LoadingPage from '~/components/util/LoadingPage.vue';
 const loading = ref(false);
 const event = ref(computed(() => useEventStore().getEvent()));
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
-const pageSize: Ref<number | undefined> = ref(undefined);
-const pageIndex: Ref<number> = ref(0);
-
 const saveTicketPopup = ref();
 
-onMounted(() => {
+function loadTicketTypes() {
     loading.value = true;
     const eventId = useRoute().params.id as string;
 
     let onSuccess = (_ticketTypes: TicketType[]) => {
         ticketTypes.value = _ticketTypes;
-        console.log("Geladen");
         loading.value = false;
     }
 
     let onError = () => {
-        console.log("Fehler")
         loading.value = false;
     }
     getAllTicketTypes(eventId, onSuccess, onError);
+
+}
+
+onMounted(() => {
+    loadTicketTypes();
 })
 
+
+function pushTicketType(payload: TicketType) {
+    if (ticketTypes != null) {
+        ticketTypes.value?.push(payload)
+    }
+}
 </script>
 
 <style scoped>

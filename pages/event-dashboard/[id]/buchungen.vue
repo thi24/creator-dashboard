@@ -16,7 +16,7 @@
                 </div>
             </LoadingPage>
         </div>
-    </ScrollingPage>
+    </ScrollingPage> 
     <ViewTicketPopup ref="viewTicketPopup"></ViewTicketPopup>
 </template>
 
@@ -65,7 +65,7 @@ function loadByPage(page: number) {
 .ticket-container {
     padding: 0px;
     display: grid;
-    grid-template-columns: auto auto auto 1fr;
+    grid-template-columns: auto auto 1fr;
     border-radius: 0.5rem;
     align-items: stretch;
     width: 100%;
@@ -80,4 +80,9 @@ function loadByPage(page: number) {
     align-items: flex-start;
 }
 
+@media (max-width: 576px) { 
+    .ticket-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 </style>

@@ -68,13 +68,10 @@ const errorMessage: Ref<string> = ref("");
 
 function save() {
     // Check if all inputs are filled
-    console.log(event.value.startsAt)
-    console.log("Eventname: " + event.value.eventName)
     if (event.value.address.city == "") {
         errorMessage.value = "Bitte Stadt eingeben";
         return
     }
-
     if (event.value.address.state == "") {
         errorMessage.value = "Bitte Land eingeben";
         return
@@ -102,13 +99,11 @@ function save() {
 
 
     let onSuccess = (event: Event) => {
-        console.log("Gespeichert");
         loading.value = false;
         navigateTo("/event-dashboard/" + event.id)
     }
 
     let onError = () => {
-        console.log("Fehler")
         loading.value = false;
     }
     loading.value = true;
@@ -174,9 +169,10 @@ function onFileChange(event: any) { //kein any
 .preview-image-wrapper {
     max-width: 100%;
     overflow: hidden;
-    border: grey 2px solid;
+    border: #cdcdcd 1px solid;
     padding: 5px;
     position: relative;
+    background-color: rgb(249 249 249 / 74%);
 }
 
 .preview-image {
@@ -200,5 +196,31 @@ function onFileChange(event: any) { //kein any
 
 .error-message {
     size: 1rem
+}
+
+
+
+@media (max-width: 576px) {
+    .form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    input,
+    textarea,
+    select {
+        font-size: 0.8rem;
+    }
+
+    .right-side {
+        display: grid;
+        grid-template-rows: 1fr;
+    }
+
+    .description-input {
+        height: 10rem;
+    }
+
 }
 </style>

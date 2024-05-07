@@ -1,3 +1,4 @@
+import type { BookingItem } from "./BookingItem";
 import type { Customer } from "./Customer";
 import type { TicketStatus } from "./TicketStatus";
 import type { TicketType } from "./TicketType";
@@ -11,9 +12,9 @@ export class Ticket {
     price = undefined as number | undefined;
     taxRate = undefined as number | undefined;
     customer = undefined as Customer | undefined;
-    ticketType = undefined as TicketType | undefined;
+    bookingItem = undefined as BookingItem | undefined;
 
-    constructor(id?: string, publicId?: string, status?: TicketStatus, bookedAt?: Date, price?: number, taxRate?: number, customer?: Customer, ticketType?: TicketType) {
+    constructor(id?: string, publicId?: string, status?: TicketStatus, bookedAt?: Date, price?: number, taxRate?: number, customer?: Customer, bookingItem?: BookingItem) {
         this.id = id;
         this.publicId = publicId;
         this.status = status;
@@ -21,7 +22,7 @@ export class Ticket {
         this.price = price;
         this.taxRate = taxRate;
         this.customer = customer;
-        this.ticketType = ticketType;
+        this.bookingItem = bookingItem;
     }
 
 }
