@@ -1,11 +1,14 @@
 <template>
-    <div>
-        <button @click="createChartJson()">Daily</button>
-        <button>Monthly</button>
-        <div>
-            <input type="date" />
-            <input type="date" />
-        </div>
+    <div class="selector-div">
+            <div class="daily-monthly-div">
+                <button class="daily-monthly-button" @click="changeChartMonthly(false)">Daily</button>
+                <button class="daily-monthly-button" @click="changeChartMonthly(true)">Monthly</button>
+            </div>
+
+            <div class="select-time-div">
+                <input v-model="dateFrom" type="date" />
+                <input v-model="dateTo" type="date" />
+            </div>
     </div>
     <div class="chartDiv" ref="chartdiv">
         <h1 v-if="chartError">Daten konnten nicht geladen werden, bitte versuchen sie es später erneuet</h1>
@@ -39,6 +42,13 @@ let incomingDataFormatViews: GraphData[] = [];
 let incomingDataFormatOrders: GraphData[] = [];
 let incomingDataFormatTickets: GraphData[] = [];
 
+watch(() => dateFrom, () => {
+    getChartData();
+});
+
+watch(() => dateTo, () => {
+    getChartData();
+});
 
 const props = defineProps<{
     event: Event
@@ -54,6 +64,11 @@ var data = [{
 onMounted(() => {
     getChartData();
 });
+
+function changeChartMonthly(value: boolean) {
+    monthlytimeframe.value = value;
+    getChartData();
+}
 
 async function getChartData() {
     let onError = () => {
@@ -160,7 +175,7 @@ function createChartJson() {
             }
         }
     } else {
-        
+
         for (let i = 0; i < incomingDataFormatViews.length; i++) {
             console.log("Date: " + incomingDataFormatViews[i].occurringDate);
             let dateformat = new Date(incomingDataFormatViews[i].occurringDate).toLocaleDateString();
@@ -347,5 +362,34 @@ function createChart() {
 .chartDiv {
     width: 100%;
     height: 500px;
+}
+
+.selector-div {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 2rem;
+
+}
+.daily-monthly-div {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.daily-monthly-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    background-color: white;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: 0.3s;
+    width: 7rem;
+}
+
+.select-time-div {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }
 </style>
