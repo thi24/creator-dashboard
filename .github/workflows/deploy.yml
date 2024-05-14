@@ -16,6 +16,7 @@ jobs:
       AUTH_URL: https://benevolo.de/api/auth/keycloak
       TICKET_SERVICE_BASE_URL: https://benevolo.de/api/ticket-service
       EVENT_SERVICE_BASE_URL: https://benevolo.de/api/event-service
+      ANALYTICS_SERVICE_BASE_URL: https://benevolo.de/api/analytics-service
 
     steps:
     - name: Checkout
@@ -35,6 +36,7 @@ jobs:
         echo "EVENT_SERVICE_BASE_URL=https://dev.benevolo.de/api/event-service" >> $GITHUB_ENV
         echo "AUTH_ORIGIN=https://dev.benevolo.de" >> $GITHUB_ENV
         echo "AUTH_URL=https://dev.benevolo.de/api/auth/keycloak" >> $GITHUB_ENV
+        echo "ANALYTICS_SERVICE_BASE_URL=https://dev.benevolo.de/api/analytics-service" >> $GITHUB_ENV
 
     - name: Set env variables for prod environment
       if: github.ref == 'refs/heads/main'
@@ -43,6 +45,7 @@ jobs:
         echo "EVENT_SERVICE_BASE_URL=https://benevolo.de/api/event-service" >> $GITHUB_ENV
         echo "AUTH_ORIGIN=https://benevolo.de" >> $GITHUB_ENV
         echo "AUTH_URL=https://benevolo.de/api/auth/keycloak" >> $GITHUB_ENV
+        echo "ANALYTICS_SERVICE_BASE_URL=https://benevolo.de/api/analytics-service" >> $GITHUB_ENV
 
     - name: Build and push dev Docker image
       if: github.ref == 'refs/heads/develop'

@@ -1,0 +1,351 @@
+<template>
+    <div>
+        <button @click="createChartJson()">Daily</button>
+        <button>Monthly</button>
+        <div>
+            <input type="date" />
+            <input type="date" />
+        </div>
+    </div>
+    <div class="chartDiv" ref="chartdiv">
+        <h1 v-if="chartError">Daten konnten nicht geladen werden, bitte versuchen sie es später erneuet</h1>
+    </div>
+</template>
+
+
+<script lang="ts" setup>
+import * as am5 from '@amcharts/amcharts5';
+import * as am5xy from '@amcharts/amcharts5/xy';
+import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+
+import { Event } from '~/classes/Event';
+import { getBookings } from '@/requests/analytics';
+import { getSoldTickets } from '~/requests/analytics';
+import { getPageViews } from '@/requests/analytics';
+import { GraphData } from '~/classes/AnalyticsGraphData';
+
+const chartError = ref(false);
+const chartdiv = ref();
+const monthlytimeframe = ref(false);
+let root = null;
+
+// Create Dates
+const dateFrom = new Date();
+dateFrom.setDate(dateFrom.getDate() - 7);
+const dateTo = new Date();
+
+// GraphData
+let incomingDataFormatViews: GraphData[] = [];
+let incomingDataFormatOrders: GraphData[] = [];
+let incomingDataFormatTickets: GraphData[] = [];
+
+
+const props = defineProps<{
+    event: Event
+}>()
+
+
+// Define ChartJson format:
+var data = [{
+
+}]
+
+
+onMounted(() => {
+    getChartData();
+});
+
+async function getChartData() {
+    let onError = () => {
+        console.log("Could not fetch data.");
+    }
+
+    // PageViews
+    let pageViewsPromise = new Promise<void>((resolve, reject) => {
+        if (props.event.id == null) {
+            return;
+        }
+        getPageViews(props.event.id, dateFrom, dateTo, (data: GraphData[]) => {
+            incomingDataFormatViews = data;
+            resolve();
+        }, () => {
+            onError();
+            reject();
+        });
+    });
+
+    // Orders
+    let ordersPromise = new Promise<void>((resolve, reject) => {
+        if (props.event.id == null) {
+            return;
+        }
+        getBookings(props.event.id, dateFrom, dateTo, (data: GraphData[]) => {
+
+            incomingDataFormatOrders = data;
+            resolve();
+        }, () => {
+            onError();
+            reject();
+        });
+    });
+
+    // Tickets
+    let ticketsPromise = new Promise<void>((resolve, reject) => {
+        if (props.event.id == null) {
+            return;
+        }
+        getSoldTickets(props.event.id, dateFrom, dateTo, (data: GraphData[]) => {
+            incomingDataFormatTickets = data;
+            resolve();
+        }, () => {
+            onError();
+            reject();
+        });
+    });
+
+    try {
+        await Promise.all([pageViewsPromise, ordersPromise, ticketsPromise]);
+        createChartJson();
+        createChart();
+        console.log(data);
+    } catch (error) {
+        console.error(error);
+        chartError.value = true;
+    }
+}
+
+function createChartJson() {
+    data = [];
+    console.log("Monthly: " + monthlytimeframe.value);
+    if (monthlytimeframe.value == true) {
+        let currentMonth = 0;
+        // Aggregate daily data to monthly data
+        let views = 0;
+        let orders = 0;
+        let tickets = 0;
+        let date = new Date(incomingDataFormatViews[0].occurringDate);
+        console.log("Date: " + date);
+        console.log("DateAsString: " + incomingDataFormatViews[0].occurringDate);
+        let i = 0;
+        while (i < incomingDataFormatViews.length) {
+            currentMonth = date.getMonth();
+            while (date.getMonth() == currentMonth) {
+                date = new Date(incomingDataFormatViews[i].occurringDate);
+                console.log("Date: " + date);
+                console.log("DateAsString: " + incomingDataFormatViews[i].occurringDate);
+                if (date.getMonth() != currentMonth) {
+                    data.push({
+                        "date": getMonthByNumber(currentMonth),
+                        "views": views,
+                        "orders": orders,
+                        "tickets": tickets
+                    })
+                    views = 0;
+                    orders = 0;
+                    tickets = 0;
+                }
+                views += incomingDataFormatViews[i].value;
+                orders += incomingDataFormatOrders[i].value;
+                tickets += incomingDataFormatTickets[i].value;
+                if (i >= incomingDataFormatViews.length - 1) {
+                    data.push({
+                        "date": getMonthByNumber(date.getMonth()),
+                        "views": views,
+                        "orders": orders,
+                        "tickets": tickets
+                    })
+                    return;
+                }
+                i++;
+            }
+        }
+    } else {
+        
+        for (let i = 0; i < incomingDataFormatViews.length; i++) {
+            console.log("Date: " + incomingDataFormatViews[i].occurringDate);
+            let dateformat = new Date(incomingDataFormatViews[i].occurringDate).toLocaleDateString();
+            data.push({
+                "date": dateformat.slice(0, dateformat.lastIndexOf("/")),
+                "views": incomingDataFormatViews[i].value,
+                "orders": incomingDataFormatOrders[i].value,
+                "tickets": incomingDataFormatTickets[i].value
+            }
+            )
+        }
+    }
+
+}
+
+function getMonthByNumber(month: number) {
+    switch (month) {
+        case 0:
+            return "Januar";
+        case 1:
+            return "Februar";
+        case 2:
+            return "März";
+        case 3:
+            return "April";
+        case 4:
+            return "Mai";
+        case 5:
+            return "Juni";
+        case 6:
+            return "Juli";
+        case 7:
+            return "August";
+        case 8:
+            return "September";
+        case 9:
+            return "Oktober";
+        case 10:
+            return "November";
+        case 11:
+            return "Dezember";
+    }
+    return "Error";
+}
+
+function createChart() {
+    root = am5.Root.new(chartdiv.value);
+
+    root.setThemes([am5themes_Animated.new(root)]);
+
+    let chart = root.container.children.push(
+        am5xy.XYChart.new(root, {
+            panY: false,
+            layout: root.verticalLayout,
+            panX: true,
+
+            wheelX: "panX",
+            wheelY: "zoomX",
+            paddingLeft: 0,
+        })
+    );
+    let yAxis = chart.yAxes.push(
+        am5xy.ValueAxis.new(root, {
+            min: 0,
+            renderer: am5xy.AxisRendererY.new(root, {
+                strokeOpacity: 0.1
+            })
+        })
+    );
+
+    let xRenderer = am5xy.AxisRendererX.new(root, {
+        minGridDistance: 70,
+        minorGridEnabled: true
+    });
+
+    // Create X-axis
+    let xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+        categoryField: "date",
+        renderer: xRenderer,
+        tooltip: am5.Tooltip.new(root, {
+            themeTags: ["axis"],
+            animationDuration: 200
+        })
+    }));
+
+    xRenderer.grid.template.setAll({
+        location: 1
+    })
+    if (monthlytimeframe.value == false) {
+        xRenderer.labels.template.setAll({
+
+            fontSize: 15,
+        })
+    }
+
+
+    xAxis.data.setAll(data);
+
+    // Create series
+    let series0 = chart.series.push(am5xy.ColumnSeries.new(root, {
+        name: "Seitenaufrufe",
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: "views",
+        categoryXField: "date",
+        clustered: false,
+        tooltip: am5.Tooltip.new(root, {
+            labelText: "Seitenaufrufe: {valueY}"
+        })
+    }));
+
+    series0.columns.template.setAll({
+        width: am5.percent(80),
+        tooltipY: 25,
+        strokeOpacity: 0
+    });
+
+
+
+
+    series0.data.setAll(data);
+
+
+    let series1 = chart.series.push(am5xy.ColumnSeries.new(root, {
+        name: "Bestellungen",
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: "orders",
+        categoryXField: "date",
+        clustered: false,
+        tooltip: am5.Tooltip.new(root, {
+            labelText: "Bestellungen: {valueY}"
+        })
+    }));
+
+    series1.columns.template.setAll({
+        width: am5.percent(50),
+        tooltipY: 20,
+        strokeOpacity: 0
+    });
+
+    series1.data.setAll(data);
+
+    let series2 = chart.series.push(am5xy.ColumnSeries.new(root, {
+        name: "Tickets",
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: "tickets",
+        categoryXField: "date",
+        clustered: false,
+        tooltip: am5.Tooltip.new(root, {
+            labelText: "Tickets: {valueY}"
+        })
+    }));
+
+    series2.columns.template.setAll({
+        width: am5.percent(15),
+        tooltipY: 0,
+        strokeOpacity: 0
+    });
+
+    series2.data.setAll(data);
+
+
+    // Add legend
+    let legend = chart.children.push(am5.Legend.new(root, {}));
+    legend.data.setAll(chart.series.values);
+
+    // Add cursor
+    //chart.set("cursor", am5xy.XYCursor.new(root, {}));
+    let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
+    chart.appear(1000, 100);
+    series0.appear();
+    series1.appear();
+
+}
+
+</script>
+
+
+
+
+<style scoped>
+.chartDiv {
+    width: 100%;
+    height: 500px;
+}
+</style>
