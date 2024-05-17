@@ -10,11 +10,9 @@ function getTicketServiceBaseURL() {
     return useRuntimeConfig().public.ticketService.baseURL;
 }
 
-export async function getPageViews(eventId: string, dateFrom: Date, dateTo: Date, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
+export async function getPageViews(eventId: string, dateFrom: string, dateTo: string, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
     let baseURL = getAnalyticsBaseURL();
-    let dateFromIso = dateFrom.toISOString().substring(0, 10);
-    let dateToIso = dateTo.toISOString().substring(0, 10);
-    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/event-views/" + dateFromIso + "/" + dateToIso, {
+    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/event-views/" + dateFrom + "/" + dateTo, {
         headers: {
             Authorization: `Bearer ${requireToken()}`,
         }
@@ -28,11 +26,9 @@ export async function getPageViews(eventId: string, dateFrom: Date, dateTo: Date
 }
 
 
-export async function getSoldTickets(eventId: string, dateFrom: Date, dateTo: Date, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
+export async function getSoldTickets(eventId: string, dateFrom: string, dateTo: string, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
     let baseURL = getTicketServiceBaseURL();
-    let dateFromIso = dateFrom.toISOString().substring(0, 10);
-    let dateToIso = dateTo.toISOString().substring(0, 10);
-    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/ticketstatsbyday/" + dateFromIso + "/" + dateToIso, {
+    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/ticketstatsbyday/" + dateFrom + "/" + dateTo, {
         headers: {
             Authorization: `Bearer ${requireToken()}`,
         }
@@ -46,11 +42,9 @@ export async function getSoldTickets(eventId: string, dateFrom: Date, dateTo: Da
 }
 
 
-export async function getBookings(eventId: string, dateFrom: Date, dateTo: Date, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
+export async function getBookings(eventId: string, dateFrom: string, dateTo: string, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
     let baseURL = getTicketServiceBaseURL();
-    let dateFromIso = dateFrom.toISOString().substring(0, 10);
-    let dateToIso = dateTo.toISOString().substring(0, 10);
-    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/bookingstatsbyday/" + dateFromIso + "/" + dateToIso, {
+    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/bookingstatsbyday/" + dateFrom + "/" + dateTo, {
         headers: {
             Authorization: `Bearer ${requireToken()}`,
         }
