@@ -60,11 +60,24 @@ var data = [{
 
 
 onMounted(() => {
+    setButtonSelected();
     getChartData();
 });
 
+
+function setButtonSelected() {
+    if (monthlytimeframe.value == true) {
+        document.getElementsByClassName("daily-monthly-button")[0].classList.remove("selected");
+        document.getElementsByClassName("daily-monthly-button")[1].classList.add("selected");
+    } else {
+        document.getElementsByClassName("daily-monthly-button")[1].classList.remove("selected");
+        document.getElementsByClassName("daily-monthly-button")[0].classList.add("selected");
+    }
+}
+
 function changeChartMonthly(value: boolean) {
     monthlytimeframe.value = value;
+    setButtonSelected();
     getChartData();
 }
 
@@ -230,10 +243,11 @@ function createChart() {
         am5xy.XYChart.new(root, {
             panY: false,
             layout: root.verticalLayout,
-            panX: true,
+            panX: false,
 
-            wheelX: "panX",
-            wheelY: "zoomX",
+            wheelX: "none",
+            wheelY: "none",
+            pinchZoomX: false,
             paddingLeft: 0,
         })
     );
@@ -398,5 +412,10 @@ function updateData() {
     display: flex;
     justify-content: center;
     gap: 1rem;
+}
+
+.selected {
+    background-color: var(--primary-color);
+    color: white;
 }
 </style>
