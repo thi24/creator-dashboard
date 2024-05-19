@@ -1,5 +1,10 @@
 <template>
     <div class="tickettype">
+        <div class="status">
+            <p v-if="ticketType.active && isValidDate" :class="{ active: ticketType.active }">VVK aktiv</p>
+            <p v-else class="inactive">VVK inaktiv</p>
+        </div>
+        <span></span>
         <p class="tickettype-name"> {{ ticketType.name }} </p>
         <div class="edit-button-div">
             <button class="edit-button" @click="() => editTicketPopup.open({ ...ticketType })">
@@ -29,7 +34,14 @@ import EditTicketTypePopup from '@/components/popups/EditTicketTypePopup.vue';
 const editTicketPopup = ref();
 const emits = defineEmits(['update']);
 
-defineProps<{
+const isValidDate = computed(() => {
+    const now = new Date();
+    const validFrom = new Date(currentTicket.ticketType.validFrom);
+    const validTo = new Date(currentTicket.ticketType.validTo);
+    return now >= validFrom && now <= validTo;
+});
+
+const currentTicket = defineProps<{
     ticketType: TicketType
 }>()
 
@@ -101,5 +113,30 @@ function updateTicketType() {
 
 .period {
     display: flex
+}
+
+.active,
+.inactive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 1rem;
+    padding: 0.2rem 0.5rem;
+    width: 100px;
+}
+
+.active {
+    background-color: #08d20f;
+}
+
+.inactive {
+    background-color: rgb(221, 218, 218);
+}
+
+.status {
+    display: flex;
+    justify-content: flex-start;
 }
 </style>
