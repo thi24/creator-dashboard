@@ -1,8 +1,9 @@
 <template>
     <div class="tickettype">
         <div class="status">
-            <p v-if="ticketType.active && isValidDate" :class="{ active: ticketType.active }">VVK aktiv</p>
-            <p v-else class="inactive">VVK inaktiv</p>
+            <p v-if="ticketType.active && isValidDate" :class="{ active: ticketType.active }">VVK ongoing</p>
+            <p v-else-if="!isValidDate" class="inactive">Außerhalb des Verkaufszeitraums</p>
+            <p v-else class="inactive">VVK manuell gestoppt</p>
         </div>
         <span></span>
         <p class="tickettype-name"> {{ ticketType.name }} </p>
@@ -38,7 +39,7 @@ const isValidDate = computed(() => {
     const now = new Date();
     const validFrom = new Date(currentTicket.ticketType.validFrom);
     const validTo = new Date(currentTicket.ticketType.validTo);
-    return now >= validFrom && now <= validTo;
+    return now >= validFrom && now < validTo;
 });
 
 const currentTicket = defineProps<{
@@ -124,7 +125,6 @@ function updateTicketType() {
     font-weight: 500;
     border-radius: 1rem;
     padding: 0.2rem 0.5rem;
-    width: 100px;
 }
 
 .active {
