@@ -92,7 +92,7 @@ function createChart() {
 
     let xRenderer = am5xy.AxisRendererX.new(root, {
         minGridDistance: 20,
-        minorGridEnabled: true
+        minorGridEnabled: true,
     });
 
     // Create X-axis
@@ -105,6 +105,15 @@ function createChart() {
         location: 1
     })
 
+    // only executed if on mobile
+    if (window.innerWidth < 600) {
+        xRenderer.labels.template.setAll({
+            rotation: -90,
+            centerY: am5.p50,
+            centerX: am5.p100,
+            paddingRight: 15
+        });
+    }
 
     // Create series with example data of hourly incoming people
     series = chart.series.push(am5xy.ColumnSeries.new(root, {
