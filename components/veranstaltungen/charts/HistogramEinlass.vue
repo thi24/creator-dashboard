@@ -1,4 +1,7 @@
 <template>
+    <div class="select-time-div">
+        <input v-model="selectedDate" type="date" @input="getChartData()" />
+    </div>
     <div class="chartDiv" ref="chartdiv">
         <h1 v-if="chartError">Daten konnten nicht geladen werden, bitte versuchen sie es später erneuet</h1>
     </div>
@@ -10,20 +13,56 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 
+import { getTicketValidationsPerDay } from '~/requests/analytics';
+import { TicketValidation } from '~/classes/TicketValidation';
+import { Event } from '~/classes/Event';
+
 const chartError = ref(false) as Ref<boolean>;
 const chartdiv = ref() as Ref<HTMLDivElement>;
+
+const selectedDate = ref(new Date().toISOString().substring(0, 10)) as Ref<string>;
 
 let root = null as am5.Root | null;
 let chart = null as am5xy.XYChart | null;
 let series = null as am5xy.ColumnSeries | null;
+let xAxis = null as am5xy.CategoryAxis<am5xy.AxisRenderer> | null;
 
 const props = defineProps<{
     event: Event;
 }>();
 
 onMounted(() => {
+    getChartData();
     createChart();
 });
+
+function getChartData() {
+    if (!props.event.id) return;
+    // Get data from API
+    let onSuccess = (_data: TicketValidation[]) => {
+        chartError.value = false;
+        data = _data.map((validation) => {
+            return {
+                time: validation.validationTime.split(":")[0] + " Uhr",
+                value: validation.count
+            }
+        });
+        if (chart == null) {
+            createChart();
+        } else {
+            updateData();
+        }
+    }
+    let onError = () => {
+        chartError.value = true;
+    }
+    getTicketValidationsPerDay(props.event.id, selectedDate.value, onSuccess, onError);
+}
+
+function updateData() {
+    xAxis?.data.setAll(data);
+    series?.data.setAll(data);
+}
 
 function createChart() {
     root = am5.Root.new(chartdiv.value);
@@ -35,7 +74,6 @@ function createChart() {
             panY: false,
             layout: root.verticalLayout,
             panX: false,
-
             wheelX: "none",
             wheelY: "none",
             pinchZoomX: false,
@@ -53,17 +91,14 @@ function createChart() {
     );
 
     let xRenderer = am5xy.AxisRendererX.new(root, {
-        minGridDistance: 70,
+        minGridDistance: 20,
         minorGridEnabled: true
     });
 
     // Create X-axis
-    let xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+    xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
         categoryField: "time",
         renderer: xRenderer,
-        tooltip: am5.Tooltip.new(root, {
-            labelText: "Besucher: {valueY}"
-        })
     }));
 
     xRenderer.grid.template.setAll({
@@ -93,7 +128,7 @@ function createChart() {
 
     let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
 
-    
+
 
 }
 

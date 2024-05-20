@@ -131,6 +131,7 @@ async function getChartData() {
 
     try {
         await Promise.all([pageViewsPromise, ordersPromise, ticketsPromise]);
+        chartError.value = false;
         createChartJson();
         if (chart == null) {
             createChart();
@@ -138,7 +139,6 @@ async function getChartData() {
             updateData();
         }
     } catch (error) {
-        console.error(error);
         chartError.value = true;
     }
 }
