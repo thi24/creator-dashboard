@@ -94,10 +94,9 @@ function createChart() {
 
     chart = root.container.children.push(am5percent.PieChart.new(root, {
         layout: root.verticalLayout,
-        radius: am5.percent(75),
-        centerX: am5.percent(15),
-        innerRadius: am5.percent(50),
-
+        radius: am5.percent(45),
+        centerX: am5.percent(0),
+        innerRadius: am5.percent(30),
 
     }));
 
@@ -107,15 +106,20 @@ function createChart() {
         categoryField: "category",
     }));
 
+    series.labels.template.setAll({
+        maxWidth: 100,
+        oversizedBehavior: "wrap",
+    });
+
     series.data.setAll([
-        { value: redeemedTickets.value, category: "Erschienen" },
-        { value: validTickets.value, category: "Nicht Erschienen" }
+        { value: redeemedTickets.value, category: "Show" },
+        { value: validTickets.value, category: "No-Show" }
     ]);
 
     legend = chart.children.push(am5.Legend.new(root, {
-        x: am5.percent(85),
-        y: am5.percent(10),
-        layout: root.verticalLayout,
+        x: am5.percent(0),
+        y: am5.percent(90),
+        layout: root.horizontalLayout,
     }));
     legend.valueLabels.template.adapters.add("text", (text, target) => {
         return "{value.formatNumber('#.0a)}";
@@ -147,5 +151,29 @@ function updateData() {
 .chartDiv {
     width: 100%;
     height: 500px;
+}
+
+
+@media screen and (max-width: 600px) {
+    .chartDiv {
+        height: 450px;
+    }
+    .selector-div {
+        grid-template-columns: 1fr;
+    }
+    .daily-monthly-div {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+    .daily-monthly-button {
+        width: 45%;
+    }
+    .select-time-div {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
 }
 </style>

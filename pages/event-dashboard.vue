@@ -91,14 +91,14 @@ function toggleSidebar() {
 
 .scroll-container {
     position: relative;
-    width: 100%;
+    width: 100vh;
     height: 100%;
     overflow: scroll;
 }
 
 .scrolling-div {
     padding: 1rem;
-    height: 100%;
+    height: 100vh;
     position: absolute;
 }
 
