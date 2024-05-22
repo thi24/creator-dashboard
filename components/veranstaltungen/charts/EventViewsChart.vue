@@ -78,7 +78,12 @@ function setButtonSelected() {
 function changeChartMonthly(value: boolean) {
     monthlytimeframe.value = value;
     setButtonSelected();
-    getChartData();
+    createChartJson();
+    if (chart == null) {
+        createChart();
+    } else {
+        updateData();
+    }
 }
 
 async function getChartData() {
