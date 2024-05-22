@@ -235,7 +235,9 @@ let series1 = null as am5xy.ColumnSeries | null;
 let series2 = null as am5xy.ColumnSeries | null;
 let xAxis = null as am5xy.CategoryAxis<am5xy.AxisRenderer> | null;
 function createChart() {
-    root = am5.Root.new(chartdiv.value);
+    root = am5.Root.new(chartdiv.value, {
+        useSafeResolution: false
+    });
 
     root.setThemes([am5themes_Animated.new(root)]);
 

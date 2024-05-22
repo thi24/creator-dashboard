@@ -65,7 +65,9 @@ function updateData() {
 }
 
 function createChart() {
-    root = am5.Root.new(chartdiv.value);
+    root = am5.Root.new(chartdiv.value, {
+        useSafeResolution: false
+    });
     root.setThemes([
         am5themes_Animated.new(root)
     ]);

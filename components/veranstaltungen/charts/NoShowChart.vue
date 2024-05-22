@@ -88,16 +88,15 @@ function getChartData() {
 }
 
 function createChart() {
-    root = am5.Root.new(chartdiv.value);
-    root.setThemes([
-        am5themes_Animated.new(root)
-    ]);
+    root = am5.Root.new(chartdiv.value, {
+        useSafeResolution: false
+    });
 
     chart = root.container.children.push(am5percent.PieChart.new(root, {
         layout: root.verticalLayout,
         radius: am5.percent(45),
         centerX: am5.percent(0),
-        innerRadius: am5.percent(30),
+        innerRadius: am5.percent(30)
 
     }));
 
@@ -139,7 +138,7 @@ function createChart() {
 
 function updateData() {
     series?.data.setAll(data.value);
-    legend?.data.setAll(series?.dataItems);
+    legend?.data.setAll(series?.dataItems ?? [] as unknown[]);
 }
 
 
