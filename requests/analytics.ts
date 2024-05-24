@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { GraphData } from "~/classes/AnalyticsGraphData";
 import type { TicketValidation } from "~/classes/TicketValidation";
 import { requireToken } from "~/utils/authentication";
+import { relogIfTokenExpired } from "~/utils/authentication";
 
 function getAnalyticsBaseURL() {
     return useRuntimeConfig().public.analyticsService.baseURL;
@@ -21,7 +22,8 @@ export async function getPageViews(eventId: string, dateFrom: string, dateTo: st
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
@@ -37,7 +39,8 @@ export async function getSoldTickets(eventId: string, dateFrom: string, dateTo: 
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
@@ -53,7 +56,8 @@ export async function getBookings(eventId: string, dateFrom: string, dateTo: str
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
@@ -69,7 +73,8 @@ export function getTicketValidationsPerDay(eventId: string, date: string, onSucc
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
@@ -84,7 +89,8 @@ export function getAmountOfRedeemedTickets(eventId: string, onSuccess: (amount: 
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
@@ -99,7 +105,8 @@ export function getAmountOfValidTickets(eventId: string, onSuccess: (amount: num
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }

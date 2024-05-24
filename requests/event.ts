@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Event } from "~/classes/Event";
 import { byteToBase64 } from "~/utils/util";
+import { relogIfTokenExpired } from "~/utils/authentication";
 
 function getBaseURL() {
     return useRuntimeConfig().public.eventService.baseURL;
@@ -21,7 +22,8 @@ export function getAllEvents(onSuccess: (events: Event[]) => void, onError: () =
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
@@ -36,7 +38,8 @@ export function getEventById(id: string, onSuccess: (event: Event) => void, onEr
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
     onError();
@@ -52,7 +55,8 @@ export function saveEvent(event: FormData, onSuccess: (event: Event) => void, on
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
@@ -69,7 +73,8 @@ export function getImageForEvent(id: string, onSuccess: (image: string) => void,
             let base64Image = byteToBase64(response.data);
             onSuccess(base64Image);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
