@@ -23,6 +23,20 @@ export function getTickets(eventId: string, page: number, onSuccess: (tickets: T
     });
 }
 
+export function getTicketsByBookingItemId(bookingItemId: string, onSuccess: (tickets: Ticket[]) => void, onError: () => void) {
+    axios.get<Ticket[]>(getBaseURL() + '/booking-items/' + bookingItemId + '/tickets', {
+        headers: {
+            Authorization: `Bearer ${requireToken()}`
+        }
+    })
+    .then((response) => {
+        onSuccess(response.data);
+    })
+    .catch(() => {
+        onError();
+    });
+}
+
 export function redeemTicket(ticketId: string, onSuccess: () => void, onError: () => void) {
     axios.patch(getBaseURL() + '/tickets/' + ticketId + '/status', {}, {
         headers: {
