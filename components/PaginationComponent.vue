@@ -4,8 +4,13 @@
             <div class="paging__element center-center" :class="{ hide: current === 0 }" @click="() => before()">
                 <UiIcon>navigate_before</UiIcon>
             </div>
-            <div v-for="index in getRange(count)" class="paging__element center-center" :class="{ current: current === index }" @click="() => set(index)">
-                <p>{{ index + 1 }}</p>
+            <div v-for="index in getRange(count)">
+                <div v-if="index != null" class="paging__element center-center" :class="{ current: current === index }" @click="() => set(index)">
+                    <p>{{ index + 1 }}</p>
+                </div>
+                <div v-if="index == null">
+                    <p>...</p>
+                </div>
             </div>
             <div class="paging__element center-center" :class="{ hide: current === count - 1 }" @click="() => next()">
                 <UiIcon>navigate_next</UiIcon>
