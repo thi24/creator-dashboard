@@ -1,0 +1,93 @@
+<template>
+    <ScrollingPage :loading="!event">
+        <div class="content ticket-page">
+            <div v-if="event">
+                <h2>Buchungen</h2>
+                <p>{{ event.eventName }}</p>
+            </div>
+            <div class="tickets">
+                <div class="tile search-bar">
+                    <UiInput label="Suche">
+                        <input type="text" v-model="search.term">
+                    </UiInput>
+                    <UiInput label="Gebucht ab">
+                        <input type="date" v-model="search.dateFrom">
+                    </UiInput>
+                    <UiInput label="Gebucht bis">
+                        <input type="date" v-model="search.dateTo">
+                    </UiInput>
+                    <UiInput label="Gesamtpreis ab">
+                        <input type="number" v-model="search.priceFrom">
+                    </UiInput>
+                    <UiInput label="Gesamtpreis bis">
+                        <input type="number" v-model="search.priceTo">
+                    </UiInput>
+                </div>
+                <NuxtPage></NuxtPage>
+            </div>
+        </div>
+    </ScrollingPage> 
+    <ViewTicketPopup ref="viewTicketPopup"></ViewTicketPopup>
+</template>
+
+<script setup lang="ts">
+import ScrollingPage from '~/components/util/ScrollingPage.vue';
+import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
+import LoadingPage from '~/components/util/LoadingPage.vue';
+import type { Booking } from '~/classes/Booking';
+import { getAllBookings } from '~/requests/booking';
+
+const search = computed(() => useBookingSearchStore().getSearch());
+
+const event = ref(computed(() => useEventStore().getEvent()));
+const bookings: Ref<Booking[] | undefined> = ref(undefined);
+const pageSize: Ref<number | undefined> = ref(undefined);
+const pageIndex: Ref<number> = ref(0);
+
+const viewTicketPopup = ref();
+</script>
+
+
+<style>
+.ticket-container td, .ticket-container th {
+    padding: 0.5rem 1rem;
+}
+table td:first-of-type { 
+    width: min-content;
+}
+</style>
+
+<style scoped>
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+th {
+    border-bottom: 1px solid lightgray;
+    text-align: left;
+}
+.ticket-page {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-items: flex-start;
+}
+
+.ticket-container {
+    padding: 0px;
+}
+
+.tickets {
+    height: 100%;
+    gap: 1rem;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: flex-start;
+}
+
+.search-bar {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+}
+</style>

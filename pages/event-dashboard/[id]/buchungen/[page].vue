@@ -1,40 +1,27 @@
 <template>
-    <ScrollingPage :loading="!event">
-        <div class="content ticket-page">
-            <div v-if="event">
-                <h2>Buchungen</h2>
-                <p>{{ event.eventName }}</p>
-            </div>
-            <LoadingPage :loading="!bookings">
-                <div class="tickets">
-                    <table class="tile ticket-container">
-                        <tr>
-                            <th>Nummer</th>
-                            <th>Kunde</th>
-                            <th>Gebucht Am</th>
-                            <th>Gesamtpreis</th>
-                            <th></th>
-                        </tr>
-                        <BookingComponent v-for="booking in bookings" :booking="booking"></BookingComponent>
-                    </table>
-                    <div class="center-center" v-if="pageSize">
-                        <PaginationComponent :count="pageSize" :current="pageIndex" :on-change="(page: number) => useRouter().push('/event-dashboard/' + event?.id + '/buchungen/' + page)"></PaginationComponent>
-                    </div>
-                </div>
-            </LoadingPage>
-        </div>
-    </ScrollingPage> 
+    <table class="tile ticket-container">
+        <tr>
+            <th>Nummer</th>
+            <th>Kunde</th>
+            <th>Gebucht Am</th>
+            <th>Gesamtpreis</th>
+            <th></th>
+        </tr>
+        <BookingComponent v-for="booking in bookings" :booking="booking"></BookingComponent>
+    </table>
+    <div class="center-center" v-if="pageSize">
+        <PaginationComponent :count="pageSize" :current="pageIndex" :on-change="(page: number) => useRouter().push('/event-dashboard/' + event?.id + '/buchungen/' + page)"></PaginationComponent>
+    </div>
     <ViewTicketPopup ref="viewTicketPopup"></ViewTicketPopup>
 </template>
 
 <script setup lang="ts">
 import PaginationComponent from '~/components/PaginationComponent.vue';
-import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import BookingComponent from '~/components/veranstaltungen/BookingComponent.vue';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
-import LoadingPage from '~/components/util/LoadingPage.vue';
 import type { Booking } from '~/classes/Booking';
 import { getAllBookings } from '~/requests/booking';
+import type { BookingSearch } from '~/classes/BookingSearch';
 
 const event = ref(computed(() => useEventStore().getEvent()));
 const bookings: Ref<Booking[] | undefined> = ref(undefined);
@@ -43,18 +30,18 @@ const pageIndex: Ref<number> = ref(0);
 
 const viewTicketPopup = ref();
 
-onMounted(() => {
-    pageIndex.value = Number(useRoute().params.page as string);
-    loadByPage(pageIndex.value);
-})
+watch(useBookingSearchStore().getSearch(), (value) => {
+    loadByPage(value, 0);
+    console.log("test");
+}, { immediate: true });
 
-function loadByPage(page: number) {
+function loadByPage(search: BookingSearch, page: number) {
     const eventId: string = useRoute().params.id as string;
     bookings.value = undefined;
-    getAllBookings(eventId, page, (_bookings: Booking[], _pageSize: number) => {
+    getAllBookings(eventId, search, page, (_bookings: Booking[], _pageSize: number) => {
         bookings.value = _bookings;
         pageSize.value = _pageSize;
-    }, () => { });
+    }, () => {});
 }
 </script>
 
@@ -77,22 +64,8 @@ th {
     border-bottom: 1px solid lightgray;
     text-align: left;
 }
-.ticket-page {
-    height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    align-items: flex-start;
-}
 
 .ticket-container {
     padding: 0px;
-}
-
-.tickets {
-    height: 100%;
-    gap: 1rem;
-    display: grid;
-    grid-template-rows: 1fr auto;
-    align-items: flex-start;
 }
 </style>
