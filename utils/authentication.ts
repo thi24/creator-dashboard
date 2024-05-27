@@ -1,4 +1,4 @@
-import type { AxiosResponse } from "axios";
+import { AxiosError, type AxiosResponse } from "axios";
 import axios from "axios";
 
 export async function login() {
@@ -29,4 +29,10 @@ export function requireToken(): string {
         return token.value
     }
     throw new Error();
+}
+
+export function relogIfTokenExpired(error: AxiosError) {
+    if (error.response?.status == 403) {
+        login()
+    }
 }

@@ -19,8 +19,15 @@ defineProps<{
 
 <style scoped>
 .scrolling-page {
-    min-height: 100%;
+    min-height: 100vh;
     display: grid;
     grid-template-rows: 1fr;
+}
+
+@media screen and (max-width: 600px) {
+    .scrolling-page {
+        min-height: 79vh;
+    }
+    
 }
 </style>

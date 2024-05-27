@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import type { Booking } from "~/classes/Booking";
+import { relogIfTokenExpired } from "~/utils/authentication";
 
 function getBaseURL() {
     return useRuntimeConfig().public.ticketService.baseURL;
@@ -23,7 +24,8 @@ export function getAllBookings(eventId: string, page: number, onSuccess: (bookin
         .then((response) => {
             onSuccess(response.data, response.headers["x-page-size"]);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }

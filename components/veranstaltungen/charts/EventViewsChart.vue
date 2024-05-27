@@ -1,14 +1,14 @@
 <template>
     <div class="selector-div">
-            <div class="daily-monthly-div">
-                <button class="daily-monthly-button" @click="changeChartMonthly(false)">Daily</button>
-                <button class="daily-monthly-button" @click="changeChartMonthly(true)">Monthly</button>
-            </div>
+        <div class="daily-monthly-div">
+            <button class="daily-monthly-button" @click="changeChartMonthly(false)">Daily</button>
+            <button class="daily-monthly-button" @click="changeChartMonthly(true)">Monthly</button>
+        </div>
 
-            <div class="select-time-div">
-                <input v-model="dateFrom" type="date" />
-                <input v-model="dateTo" type="date" />
-            </div>
+        <div class="select-time-div">
+            <input v-model="dateFrom" type="date" @input="updateTimeFrame()" />
+            <input v-model="dateTo" type="date" @input="updateTimeFrame()" />
+        </div>
     </div>
     <div class="chartDiv" ref="chartdiv">
         <h1 v-if="chartError">Daten konnten nicht geladen werden, bitte versuchen sie es später erneuet</h1>
@@ -27,28 +27,26 @@ import { getSoldTickets } from '~/requests/analytics';
 import { getPageViews } from '@/requests/analytics';
 import { GraphData } from '~/classes/AnalyticsGraphData';
 
-const chartError = ref(false);
-const chartdiv = ref();
-const monthlytimeframe = ref(false);
+const chartError = ref(false) as Ref<boolean>;
+const chartdiv = ref() as Ref<HTMLDivElement>;
+const monthlytimeframe = ref(false) as Ref<boolean>;
 let root = null;
 
 // Create Dates
-const dateFrom = new Date();
-dateFrom.setDate(dateFrom.getDate() - 7);
-const dateTo = new Date();
+let date = new Date();
+date.setDate(date.getDate() - 7);
+const dateFrom = ref(date.toISOString().substring(0, 10)) as Ref<string>;
+const dateTo = ref(new Date().toISOString().substring(0, 10)) as Ref<string>;
+
 
 // GraphData
 let incomingDataFormatViews: GraphData[] = [];
 let incomingDataFormatOrders: GraphData[] = [];
 let incomingDataFormatTickets: GraphData[] = [];
 
-watch(() => dateFrom, () => {
+function updateTimeFrame() {
     getChartData();
-});
-
-watch(() => dateTo, () => {
-    getChartData();
-});
+}
 
 const props = defineProps<{
     event: Event
@@ -62,12 +60,30 @@ var data = [{
 
 
 onMounted(() => {
+    setButtonSelected();
     getChartData();
 });
 
+
+function setButtonSelected() {
+    if (monthlytimeframe.value == true) {
+        document.getElementsByClassName("daily-monthly-button")[0].classList.remove("selected");
+        document.getElementsByClassName("daily-monthly-button")[1].classList.add("selected");
+    } else {
+        document.getElementsByClassName("daily-monthly-button")[1].classList.remove("selected");
+        document.getElementsByClassName("daily-monthly-button")[0].classList.add("selected");
+    }
+}
+
 function changeChartMonthly(value: boolean) {
     monthlytimeframe.value = value;
-    getChartData();
+    setButtonSelected();
+    createChartJson();
+    if (chart == null) {
+        createChart();
+    } else {
+        updateData();
+    }
 }
 
 async function getChartData() {
@@ -80,7 +96,7 @@ async function getChartData() {
         if (props.event.id == null) {
             return;
         }
-        getPageViews(props.event.id, dateFrom, dateTo, (data: GraphData[]) => {
+        getPageViews(props.event.id, dateFrom.value, dateTo.value, (data: GraphData[]) => {
             incomingDataFormatViews = data;
             resolve();
         }, () => {
@@ -94,7 +110,7 @@ async function getChartData() {
         if (props.event.id == null) {
             return;
         }
-        getBookings(props.event.id, dateFrom, dateTo, (data: GraphData[]) => {
+        getBookings(props.event.id, dateFrom.value, dateTo.value, (data: GraphData[]) => {
 
             incomingDataFormatOrders = data;
             resolve();
@@ -109,7 +125,7 @@ async function getChartData() {
         if (props.event.id == null) {
             return;
         }
-        getSoldTickets(props.event.id, dateFrom, dateTo, (data: GraphData[]) => {
+        getSoldTickets(props.event.id, dateFrom.value, dateTo.value, (data: GraphData[]) => {
             incomingDataFormatTickets = data;
             resolve();
         }, () => {
@@ -120,18 +136,20 @@ async function getChartData() {
 
     try {
         await Promise.all([pageViewsPromise, ordersPromise, ticketsPromise]);
+        chartError.value = false;
         createChartJson();
-        createChart();
-        console.log(data);
+        if (chart == null) {
+            createChart();
+        } else {
+            updateData();
+        }
     } catch (error) {
-        console.error(error);
         chartError.value = true;
     }
 }
 
 function createChartJson() {
     data = [];
-    console.log("Monthly: " + monthlytimeframe.value);
     if (monthlytimeframe.value == true) {
         let currentMonth = 0;
         // Aggregate daily data to monthly data
@@ -139,15 +157,11 @@ function createChartJson() {
         let orders = 0;
         let tickets = 0;
         let date = new Date(incomingDataFormatViews[0].occurringDate);
-        console.log("Date: " + date);
-        console.log("DateAsString: " + incomingDataFormatViews[0].occurringDate);
         let i = 0;
         while (i < incomingDataFormatViews.length) {
             currentMonth = date.getMonth();
             while (date.getMonth() == currentMonth) {
                 date = new Date(incomingDataFormatViews[i].occurringDate);
-                console.log("Date: " + date);
-                console.log("DateAsString: " + incomingDataFormatViews[i].occurringDate);
                 if (date.getMonth() != currentMonth) {
                     data.push({
                         "date": getMonthByNumber(currentMonth),
@@ -177,7 +191,6 @@ function createChartJson() {
     } else {
 
         for (let i = 0; i < incomingDataFormatViews.length; i++) {
-            console.log("Date: " + incomingDataFormatViews[i].occurringDate);
             let dateformat = new Date(incomingDataFormatViews[i].occurringDate).toLocaleDateString();
             data.push({
                 "date": dateformat.slice(0, dateformat.lastIndexOf("/")),
@@ -221,19 +234,27 @@ function getMonthByNumber(month: number) {
     return "Error";
 }
 
+let chart = null as am5xy.XYChart | null;
+let series0 = null as am5xy.ColumnSeries | null;
+let series1 = null as am5xy.ColumnSeries | null;
+let series2 = null as am5xy.ColumnSeries | null;
+let xAxis = null as am5xy.CategoryAxis<am5xy.AxisRenderer> | null;
 function createChart() {
-    root = am5.Root.new(chartdiv.value);
+    root = am5.Root.new(chartdiv.value, {
+        useSafeResolution: false
+    });
 
     root.setThemes([am5themes_Animated.new(root)]);
 
-    let chart = root.container.children.push(
+    chart = root.container.children.push(
         am5xy.XYChart.new(root, {
             panY: false,
             layout: root.verticalLayout,
-            panX: true,
+            panX: false,
 
-            wheelX: "panX",
-            wheelY: "zoomX",
+            wheelX: "none",
+            wheelY: "none",
+            pinchZoomX: false,
             paddingLeft: 0,
         })
     );
@@ -252,7 +273,7 @@ function createChart() {
     });
 
     // Create X-axis
-    let xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+    xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
         categoryField: "date",
         renderer: xRenderer,
         tooltip: am5.Tooltip.new(root, {
@@ -275,7 +296,7 @@ function createChart() {
     xAxis.data.setAll(data);
 
     // Create series
-    let series0 = chart.series.push(am5xy.ColumnSeries.new(root, {
+    series0 = chart.series.push(am5xy.ColumnSeries.new(root, {
         name: "Seitenaufrufe",
         xAxis: xAxis,
         yAxis: yAxis,
@@ -299,7 +320,7 @@ function createChart() {
     series0.data.setAll(data);
 
 
-    let series1 = chart.series.push(am5xy.ColumnSeries.new(root, {
+    series1 = chart.series.push(am5xy.ColumnSeries.new(root, {
         name: "Bestellungen",
         xAxis: xAxis,
         yAxis: yAxis,
@@ -319,7 +340,7 @@ function createChart() {
 
     series1.data.setAll(data);
 
-    let series2 = chart.series.push(am5xy.ColumnSeries.new(root, {
+    series2 = chart.series.push(am5xy.ColumnSeries.new(root, {
         name: "Tickets",
         xAxis: xAxis,
         yAxis: yAxis,
@@ -339,7 +360,6 @@ function createChart() {
 
     series2.data.setAll(data);
 
-
     // Add legend
     let legend = chart.children.push(am5.Legend.new(root, {}));
     legend.data.setAll(chart.series.values);
@@ -350,9 +370,15 @@ function createChart() {
     chart.appear(1000, 100);
     series0.appear();
     series1.appear();
-
+    series2.appear();
 }
 
+function updateData() {
+    xAxis?.data.setAll(data);
+    series0?.data.setAll(data);
+    series1?.data.setAll(data);
+    series2?.data.setAll(data);
+};
 </script>
 
 
@@ -368,11 +394,13 @@ function createChart() {
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 2rem;
-
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
+
 .daily-monthly-div {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     gap: 1rem;
 }
 
@@ -392,4 +420,34 @@ function createChart() {
     justify-content: center;
     gap: 1rem;
 }
+
+.selected {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+
+@media screen and (max-width: 600px) {
+    .chartDiv {
+        height: 450px;
+    }
+    .selector-div {
+        grid-template-columns: 1fr;
+    }
+    .daily-monthly-div {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+    .daily-monthly-button {
+        width: 45%;
+    }
+    .select-time-div {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+}
+
 </style>

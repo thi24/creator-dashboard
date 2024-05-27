@@ -28,12 +28,13 @@
 </template>
 
 <script setup lang="ts">
+import PaginationComponent from '~/components/PaginationComponent2.vue';
 import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import BookingComponent from '~/components/veranstaltungen/BookingComponent.vue';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
 import LoadingPage from '~/components/util/LoadingPage.vue';
-import { getAllBookings } from '~/requests/booking';
 import type { Booking } from '~/classes/Booking';
+import { getAllBookings } from '~/requests/booking';
 
 const event = ref(computed(() => useEventStore().getEvent()));
 const bookings: Ref<Booking[] | undefined> = ref(undefined);

@@ -5,9 +5,6 @@
                 <h2>Veranstaltung</h2>
                 <p>{{ event.eventName }}</p>
             </div>
-            <ClientOnly fallback-tag="span" fallback="Loading comments...">
-                <StackedBarChart v-if="event" :event="event"></StackedBarChart>
-            </ClientOnly>
             <div v-if="event" class="event-container">
                 <div class="event-detail-wrapper">
                     <p class="event-detail">Eventname:</p>
@@ -37,7 +34,6 @@
 <script setup lang="ts">
 import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import dayjs from 'dayjs';
-import StackedBarChart from '~/components/veranstaltungen/StackedBarChart.vue';
 
 const loading = ref(true);
 const event = ref(computed(() => useEventStore().getEvent()));
