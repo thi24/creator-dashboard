@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import PaginationComponent from '~/components/PaginationComponent2.vue';
+import PaginationComponent from '~/components/PaginationComponent.vue';
 import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import BookingComponent from '~/components/veranstaltungen/BookingComponent.vue';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
