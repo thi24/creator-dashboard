@@ -18,7 +18,7 @@
                         <BookingComponent v-for="booking in bookings" :booking="booking"></BookingComponent>
                     </table>
                     <div class="center-center" v-if="pageSize">
-                        <PaginationComponent :count="pageSize" :current="pageIndex" @set="(pageIndex) => setPageIndex(pageIndex)"></PaginationComponent>
+                        <PaginationComponent :count="pageSize" :current="pageIndex" :on-change="(page: number) => useRouter().push('/event-dashboard/' + event?.id + '/buchungen/' + page)"></PaginationComponent>
                     </div>
                 </div>
             </LoadingPage>
@@ -43,7 +43,8 @@ const pageIndex: Ref<number> = ref(0);
 const viewTicketPopup = ref();
 
 onMounted(() => {
-    loadByPage(0);
+    pageIndex.value = Number(useRoute().params.page as string);
+    loadByPage(pageIndex.value);
 })
 
 function setPageIndex(index: number) {
@@ -54,8 +55,9 @@ function setPageIndex(index: number) {
 function loadByPage(page: number) {
     const eventId: string = useRoute().params.id as string;
     bookings.value = undefined;
-    getAllBookings(eventId, (_bookings: Booking[]) => {
+    getAllBookings(eventId, page, (_bookings: Booking[], _pageSize: number) => {
         bookings.value = _bookings;
+        pageSize.value = _pageSize;
     }, () => { });
 }
 </script>

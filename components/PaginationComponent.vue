@@ -1,19 +1,20 @@
 <template>
     <div class="center-center">
         <div class="paging center-center tile">
-            <div class="paging__element center-center" :class="{ hide: current === 0 }" @click="() => before()">
+            <div class="paging__element center-center" :class="{ hide: current === 0 }" @click="() => start()">
+                <UiIcon>keyboard_double_arrow_left</UiIcon>
+            </div>
+            <div class="paging__element center-center" :class="{ hide: current === 0 }" @click="() => before(current)">
                 <UiIcon>navigate_before</UiIcon>
             </div>
-            <div v-for="index in getRange(count)">
-                <div v-if="index != null" class="paging__element center-center" :class="{ current: current === index }" @click="() => set(index)">
-                    <p>{{ index + 1 }}</p>
-                </div>
-                <div v-if="index == null">
-                    <p>...</p>
-                </div>
+            <div class="paging__element center-center">
+                <p>{{ current + 1 }}</p>
             </div>
-            <div class="paging__element center-center" :class="{ hide: current === count - 1 }" @click="() => next()">
+            <div class="paging__element center-center" :class="{ hide: current === count - 1 }" @click="() => next(current)">
                 <UiIcon>navigate_next</UiIcon>
+            </div>
+            <div class="paging__element center-center" :class="{ hide: current === count - 1 }" @click="() => end()">
+                <UiIcon>keyboard_double_arrow_right</UiIcon>
             </div>
         </div>
     </div>
@@ -22,32 +23,24 @@
 <script setup lang="ts">
 const props = defineProps<{
     count: number,
-    current: number
-}>();
-const emits = defineEmits<{
-    ( e: 'set', payload: number): void
+    current: number,
+    onChange: (page: number) => void
 }>();
 
-function next() {
-    set(props.current + 1);
+function next(page: number) {
+    props.onChange(page + 1);
 }
 
-function before() {
-    set(props.current - 1);
+function before(page: number) {
+    props.onChange(page - 1);
 }
 
-function set(value: number) {
-    if(value >= 0 && value < props.count) {
-        emits('set', value);
-    }
+function start() {
+    props.onChange(0);
 }
 
-function getRange(count: number) {
-    const result: number[] = [];
-    for(let i = 0; i < count; i++) {
-        result.push(i);
-    }
-    return result;
+function end() {
+    props.onChange(props.count - 1);
 }
 </script>
 
