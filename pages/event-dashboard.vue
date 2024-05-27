@@ -28,6 +28,8 @@
                     </NuxtLink>
                     <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'" @click="toggleSidebar">Analyse
                     </NuxtLink>
+                    <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'" @click="toggleSidebar">Analyse
+                    </NuxtLink>
                     <NuxtLink @click="toggleSidebar(); entryComponent.show()">Einlass</NuxtLink>
                     <NuxtLink :to="'../../veranstaltungen'">Zurück zu allen Veranstaltungen</NuxtLink>
                 </div>
