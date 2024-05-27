@@ -47,11 +47,6 @@ onMounted(() => {
     loadByPage(pageIndex.value);
 })
 
-function setPageIndex(index: number) {
-    pageIndex.value = index;
-    loadByPage(index);
-}
-
 function loadByPage(page: number) {
     const eventId: string = useRoute().params.id as string;
     bookings.value = undefined;
