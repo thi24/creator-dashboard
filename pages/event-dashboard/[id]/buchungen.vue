@@ -28,11 +28,12 @@
 </template>
 
 <script setup lang="ts">
+import PaginationComponent from '~/components/PaginationComponent2.vue';
 import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import BookingComponent from '~/components/veranstaltungen/BookingComponent.vue';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
 import LoadingPage from '~/components/util/LoadingPage.vue';
-import { getAllBookings } from '~/requests/booking';
+import { getBookingsForEvent } from '~/requests/booking';
 import type { Booking } from '~/classes/Booking';
 
 const event = ref(computed(() => useEventStore().getEvent()));
@@ -54,8 +55,9 @@ function setPageIndex(index: number) {
 function loadByPage(page: number) {
     const eventId: string = useRoute().params.id as string;
     bookings.value = undefined;
-    getAllBookings(eventId, (_bookings: Booking[]) => {
+    getBookingsForEvent(eventId, page, (_bookings: Booking[], _pageSize: number) => {
         bookings.value = _bookings;
+        pageSize.value = _pageSize;
     }, () => { });
 }
 </script>
