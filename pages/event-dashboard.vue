@@ -4,12 +4,8 @@
             <NuxtLink :to="'/event-dashboard/' + eventId" :class="{ active: useRoute().fullPath.startsWith('') }">
                 Veranstaltung</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'">Tickets</NuxtLink>
-<<<<<<< HEAD
             <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'">Buchungen</NuxtLink>
-=======
-            <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'">Buchungen</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'">Analyse</NuxtLink>
->>>>>>> 89cf5a3bc8438f98bd4231477467f3f15ef3472d
             <p class="entry-button" @click="() => entryComponent.show()">Einlass</p>
         </nav>
 
