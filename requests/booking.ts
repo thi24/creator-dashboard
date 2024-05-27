@@ -11,12 +11,14 @@ function getToken() {
     return token.value
 }
 
-export function getBookingsForEvent(eventId: string, page: number, onSuccess: (events: Booking[] , pageSize: number) => void, onError: () => void) {
+export function getAllBookings(eventId: string, page: number, onSuccess: (bookings: Booking[], pageSize: number) => void, onError: () => void) {
     let baseURL = getBaseURL();
-    const pageSize = 15;
-    axios.get<Booking[]>(baseURL + "/bookings/event/" + eventId + "/" + page + "/" + pageSize, {
+    axios.get<Booking[]>(baseURL + "/bookings/" + page, {
         headers: {
             Authorization: `Bearer ${getToken()}`
+        },
+        params: {
+            eventId: eventId
         }
     })
         .then((response) => {

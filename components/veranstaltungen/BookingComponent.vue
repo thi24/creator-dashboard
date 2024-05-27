@@ -3,7 +3,7 @@
         <td><p v-if="booking.id">{{ booking.id.substring(0, 8) }}</p></td>
         <td><p v-if="booking.customer">{{ booking.customer.email }}</p></td>
         <td><p>{{ dayjs(booking.bookedAt).format("DD.MM.YYYY") }}</p></td>
-        <td><p>10,10€</p></td>
+        <td><p v-if="booking.totalPrice">{{ formatPrice(booking.totalPrice) }}</p></td>
         <td class="dropdown" @click="() => showTickets = !showTickets">
             <UiIcon v-if="showTickets">navigate_next</UiIcon>
             <UiIcon v-if="!showTickets">keyboard_arrow_down</UiIcon>
@@ -20,6 +20,7 @@
 import type { Booking } from '~/classes/Booking';
 import dayjs from 'dayjs';
 import TicketsComponent from './TicketsComponent.vue';
+import { formatPrice } from '#imports';
 
 defineProps<{
     booking: Booking
