@@ -7,3 +7,24 @@ export function byteToBase64(byteArray: number[]) {
     }
     return window.btoa(binary);
 }
+
+export function jsonToUrlParams(object: any) {
+    const mapping: Map<string, string> = new Map();
+    for(let name in object) {
+        const value = object[name];
+        if(value != null) {
+            mapping.set(name, value);
+        }
+    }
+
+    let result = "";
+    let index = 0;
+    for(const [key, value] of mapping.entries()) {
+        if(index > 0) {
+            result = result.concat("&");
+        }
+        result = result.concat(key + "=" + value);
+        index++;
+    }
+    return result;
+}
