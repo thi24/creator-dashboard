@@ -31,11 +31,14 @@ const pageSize: Ref<number | undefined> = ref(undefined);
 const viewTicketPopup = ref();
 
 const search = useBookingSearchStore().getSearch();
-let pageIndex = Number(useRoute().params.page as string);
+const pageIndex = Number(useRoute().params.page as string);
 
 watch(search, (value) => {
-    pageIndex = 0;
-    loadByPage(value, 0);
+    if(pageIndex !== 0) {
+        useRouter().push('/event-dashboard/' + event.value?.id + '/buchungen/0')
+    } else {
+        loadByPage(value, 0);
+    }
 });
 
 onMounted(() => {

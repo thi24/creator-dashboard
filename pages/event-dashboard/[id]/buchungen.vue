@@ -33,48 +33,20 @@
 <script setup lang="ts">
 import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
-import LoadingPage from '~/components/util/LoadingPage.vue';
-import type { Booking } from '~/classes/Booking';
-import { getAllBookings } from '~/requests/booking';
 
 const search = computed(() => useBookingSearchStore().getSearch());
 
 const event = ref(computed(() => useEventStore().getEvent()));
-const bookings: Ref<Booking[] | undefined> = ref(undefined);
-const pageSize: Ref<number | undefined> = ref(undefined);
-const pageIndex: Ref<number> = ref(0);
 
 const viewTicketPopup = ref();
 </script>
 
-
-<style>
-.ticket-container td, .ticket-container th {
-    padding: 0.5rem 1rem;
-}
-table td:first-of-type { 
-    width: min-content;
-}
-</style>
-
 <style scoped>
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-th {
-    border-bottom: 1px solid lightgray;
-    text-align: left;
-}
 .ticket-page {
     height: 100%;
     display: grid;
     grid-template-rows: auto 1fr;
     align-items: flex-start;
-}
-
-.ticket-container {
-    padding: 0px;
 }
 
 .tickets {
