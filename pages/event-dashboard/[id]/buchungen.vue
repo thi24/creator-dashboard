@@ -33,6 +33,10 @@
 <script setup lang="ts">
 import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
+import LoadingPage from '~/components/util/LoadingPage.vue';
+import type { Booking } from '~/classes/Booking';
+import { getAllBookings } from '~/requests/booking';
+import { useBookingSearchStore } from '~/stores/BookingSearchStore';
 
 const search = computed(() => useBookingSearchStore().getSearch());
 
