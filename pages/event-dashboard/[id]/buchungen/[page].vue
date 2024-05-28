@@ -10,7 +10,7 @@
         <BookingComponent v-for="booking in bookings" :booking="booking"></BookingComponent>
     </table>
     <div class="center-center" v-if="pageSize">
-        <PaginationComponent :count="pageSize" :current="pageIndex" :on-change="(page: number) => useRouter().push('/event-dashboard/' + event?.id + '/buchungen/' + page)"></PaginationComponent>
+        <PaginationComponent :count="Number(pageSize)" :current="pageIndex" :on-change="(page: number) => useRouter().push('/event-dashboard/' + event?.id + '/buchungen/' + page)"></PaginationComponent>
     </div>
     <ViewTicketPopup ref="viewTicketPopup"></ViewTicketPopup>
 </template>
