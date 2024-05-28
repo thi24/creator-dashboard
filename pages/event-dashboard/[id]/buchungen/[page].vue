@@ -22,6 +22,7 @@ import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
 import type { Booking } from '~/classes/Booking';
 import { getAllBookings } from '~/requests/booking';
 import type { BookingSearch } from '~/classes/BookingSearch';
+import { jsonToUrlParams } from '~/utils/util';
 
 const event = ref(computed(() => useEventStore().getEvent()));
 const bookings: Ref<Booking[] | undefined> = ref(undefined);
@@ -32,7 +33,6 @@ const viewTicketPopup = ref();
 
 watch(useBookingSearchStore().getSearch(), (value) => {
     loadByPage(value, 0);
-    console.log("test");
 }, { immediate: true });
 
 function loadByPage(search: BookingSearch, page: number) {

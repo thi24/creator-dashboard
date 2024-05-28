@@ -14,10 +14,7 @@ function getToken() {
 
 export function getAllBookings(eventId: string, search: BookingSearch, page: number, onSuccess: (bookings: Booking[], pageSize: number) => void, onError: () => void) {
     let baseURL = getBaseURL();
-    axios.get<Booking[]>(baseURL + "/bookings/" + page + 
-    '?eventId=' + eventId + 
-    '&term=' + search.term +
-    '&bookedFrom=' + search.dateFrom, {
+    axios.get<Booking[]>(baseURL + "/bookings/" + page + '?eventId=' + eventId + "&" + jsonToUrlParams(search), {
         headers: {
             Authorization: `Bearer ${getToken()}`
         }
