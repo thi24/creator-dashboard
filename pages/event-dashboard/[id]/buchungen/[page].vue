@@ -27,13 +27,20 @@ import { jsonToUrlParams } from '~/utils/util';
 const event = ref(computed(() => useEventStore().getEvent()));
 const bookings: Ref<Booking[] | undefined> = ref(undefined);
 const pageSize: Ref<number | undefined> = ref(undefined);
-const pageIndex: Ref<number> = ref(0);
 
 const viewTicketPopup = ref();
 
-watch(useBookingSearchStore().getSearch(), (value) => {
+const search = useBookingSearchStore().getSearch();
+let pageIndex = Number(useRoute().params.page as string);
+
+watch(search, (value) => {
+    pageIndex = 0;
     loadByPage(value, 0);
-}, { immediate: true });
+});
+
+onMounted(() => {
+    loadByPage(search, pageIndex);
+})
 
 function loadByPage(search: BookingSearch, page: number) {
     const eventId: string = useRoute().params.id as string;
