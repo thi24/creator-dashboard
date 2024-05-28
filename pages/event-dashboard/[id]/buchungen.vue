@@ -23,7 +23,9 @@
                         <input type="number" v-model="search.priceTo">
                     </UiInput>
                 </div>
-                <NuxtPage></NuxtPage>
+                <div class="bookings center-center">
+                    <NuxtPage></NuxtPage>
+                </div>
             </div>
         </div>
     </ScrollingPage> 
@@ -33,9 +35,6 @@
 <script setup lang="ts">
 import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
-import LoadingPage from '~/components/util/LoadingPage.vue';
-import type { Booking } from '~/classes/Booking';
-import { getAllBookings } from '~/requests/booking';
 import { useBookingSearchStore } from '~/stores/BookingSearchStore';
 
 const search = computed(() => useBookingSearchStore().getSearch());
@@ -57,7 +56,7 @@ const viewTicketPopup = ref();
     height: 100%;
     gap: 1rem;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr;
     align-items: flex-start;
 }
 
@@ -65,5 +64,8 @@ const viewTicketPopup = ref();
     display: grid;
     grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
     gap: 1rem;
+}
+.bookings {
+    height: 100%;
 }
 </style>

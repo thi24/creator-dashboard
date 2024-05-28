@@ -1,17 +1,20 @@
 <template>
-    <table class="tile ticket-container">
-        <tr>
-            <th>Nummer</th>
-            <th>Kunde</th>
-            <th>Gebucht Am</th>
-            <th>Gesamtpreis</th>
-            <th></th>
-        </tr>
-        <BookingComponent v-for="booking in bookings" :booking="booking"></BookingComponent>
-    </table>
-    <div class="center-center" v-if="pageSize">
-        <PaginationComponent :count="Number(pageSize)" :current="pageIndex" :on-change="(page: number) => useRouter().push('/event-dashboard/' + event?.id + '/buchungen/' + page)"></PaginationComponent>
+    <div v-if="bookings" class="booking-page">
+        <table class="tile ticket-container">
+            <tr>
+                <th>Nummer</th>
+                <th>Kunde</th>
+                <th>Gebucht Am</th>
+                <th>Gesamtpreis</th>
+                <th></th>
+            </tr>
+            <BookingComponent v-for="booking in bookings" :booking="booking"></BookingComponent>
+        </table>
+        <div class="center-center" v-if="pageSize">
+            <PaginationComponent :count="Number(pageSize)" :current="pageIndex" :on-change="(page: number) => useRouter().push('/event-dashboard/' + event?.id + '/buchungen/' + page)"></PaginationComponent>
+        </div>
     </div>
+    <LoadingComponent :loading="!bookings"></LoadingComponent>
     <ViewTicketPopup ref="viewTicketPopup"></ViewTicketPopup>
 </template>
 
@@ -22,7 +25,7 @@ import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
 import type { Booking } from '~/classes/Booking';
 import { getAllBookings } from '~/requests/booking';
 import type { BookingSearch } from '~/classes/BookingSearch';
-import { jsonToUrlParams } from '~/utils/util';
+import LoadingComponent from '~/components/util/LoadingComponent.vue';
 
 const event = ref(computed(() => useEventStore().getEvent()));
 const bookings: Ref<Booking[] | undefined> = ref(undefined);
@@ -77,5 +80,14 @@ th {
 
 .ticket-container {
     padding: 0px;
+    width: 100%;
+}
+.booking-page {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 1fr auto;
+    align-items: flex-start;
 }
 </style>
