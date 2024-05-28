@@ -1,9 +1,18 @@
 <template>
     <div class="tickettype">
-        <div class="status">
-            <p v-if="ticketType.active && isValidDate" :class="{ active: ticketType.active }">VVK ongoing</p>
-            <p v-else-if="!isValidDate" class="inactive">Außerhalb des Verkaufszeitraums</p>
-            <p v-else class="inactive">VVK manuell gestoppt</p>
+        <div class="status-wrapper">
+            <div v-if="ticketType.active && isValidDate" class="status">
+                <span class="dot active"></span>
+                <p class="status-text">Verkauf ongoing</p>
+            </div>
+            <div v-else-if="!isValidDate" class="status">
+                <span class="dot date"></span>
+                <p class="status-text">Außerhalb des Verkaufszeitraums</p>
+            </div>
+            <div v-else class="status">
+                <span class="dot stopped"></span>
+                <p class="status-text">VVK manuell gestoppt</p>
+            </div>
         </div>
         <span></span>
         <p class="tickettype-name"> {{ ticketType.name }} </p>
@@ -116,27 +125,43 @@ function updateTicketType() {
     display: flex
 }
 
-.active,
 .inactive {
+    background-color: rgb(221, 218, 218);
+}
+
+.status-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 1rem;
-    padding: 0.2rem 0.5rem;
+    justify-content: flex-start;
+}
+
+.dot {
+    height: 0.7rem;
+    width: 0.7rem;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.stopped {
+    background-color: red;
+}
+
+.date {
+    background-color: rgb(221, 218, 218);
 }
 
 .active {
     background-color: #08d20f;
 }
 
-.inactive {
-    background-color: rgb(221, 218, 218);
-}
-
 .status {
     display: flex;
-    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.status-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding-left: 0.3rem;
 }
 </style>

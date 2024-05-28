@@ -1,6 +1,5 @@
 <template>
     <div class="chartDiv" ref="chartdiv">
-        <button @click="getChartData">Get Data</button>
         <h1 v-if="chartError">Daten konnten nicht geladen werden, bitte versuchen sie es später erneuet</h1>
     </div>
 </template>

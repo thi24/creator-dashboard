@@ -6,6 +6,7 @@
             <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'">Tickets</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'">Buchungen</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'">Analyse</NuxtLink>
+            <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'">Stornierung</NuxtLink>
             <p class="entry-button" @click="() => entryComponent.show()">Einlass</p>
         </nav>
 
@@ -28,7 +29,7 @@
                     </NuxtLink>
                     <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'" @click="toggleSidebar">Analyse
                     </NuxtLink>
-                    <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'" @click="toggleSidebar">Analyse
+                    <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'" @click="toggleSidebar">Stornierung
                     </NuxtLink>
                     <NuxtLink @click="toggleSidebar(); entryComponent.show()">Einlass</NuxtLink>
                     <NuxtLink :to="'../../veranstaltungen'">Zurück zu allen Veranstaltungen</NuxtLink>
