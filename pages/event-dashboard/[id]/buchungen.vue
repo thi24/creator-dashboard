@@ -5,53 +5,43 @@
                 <h2>Buchungen</h2>
                 <p>{{ event.eventName }}</p>
             </div>
-            <LoadingPage :loading="!tickets || !pageSize">
-                <div class="tickets">
-                    <div class="tile ticket-container">
-                        <TicketComponent v-for="ticket in tickets" :ticket="ticket" @click="() => viewTicketPopup.open(ticket)"></TicketComponent>
-                    </div>
-                    <div class="center-center" v-if="pageSize && tickets">
-                        <PaginationComponent :count="pageSize" :current="pageIndex" @set="(pageIndex) => setPageIndex(pageIndex)"></PaginationComponent>
-                    </div>
+            <div class="tickets">
+                <div class="tile search-bar">
+                    <UiInput label="Suche">
+                        <input type="text" v-model="search.term">
+                    </UiInput>
+                    <UiInput label="Gebucht ab">
+                        <input type="date" v-model="search.dateFrom">
+                    </UiInput>
+                    <UiInput label="Gebucht bis">
+                        <input type="date" v-model="search.dateTo">
+                    </UiInput>
+                    <UiInput label="Gesamtpreis ab">
+                        <input type="number" v-model="search.priceFrom">
+                    </UiInput>
+                    <UiInput label="Gesamtpreis bis">
+                        <input type="number" v-model="search.priceTo">
+                    </UiInput>
                 </div>
-            </LoadingPage>
+                <div class="bookings center-center">
+                    <NuxtPage></NuxtPage>
+                </div>
+            </div>
         </div>
     </ScrollingPage> 
     <ViewTicketPopup ref="viewTicketPopup"></ViewTicketPopup>
 </template>
 
 <script setup lang="ts">
-import { Ticket } from '~/classes/Ticket';
 import ScrollingPage from '~/components/util/ScrollingPage.vue';
-import TicketComponent from '~/components/veranstaltungen/TicketComponent.vue';
-import { getTickets } from '~/requests/ticket';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
-import LoadingPage from '~/components/util/LoadingPage.vue';
+import { useBookingSearchStore } from '~/stores/BookingSearchStore';
+
+const search = computed(() => useBookingSearchStore().getSearch());
 
 const event = ref(computed(() => useEventStore().getEvent()));
-const tickets: Ref<Ticket[] | undefined> = ref(undefined);
-const pageSize: Ref<number | undefined> = ref(undefined);
-const pageIndex: Ref<number> = ref(0);
 
 const viewTicketPopup = ref();
-
-onMounted(() => {
-    loadByPage(0);
-})
-
-function setPageIndex(index: number) {
-    pageIndex.value = index;
-    loadByPage(index);
-}
-
-function loadByPage(page: number) {
-    const eventId: string = useRoute().params.id as string;
-    tickets.value = undefined;
-    getTickets(eventId, page, (_tickets: Ticket[], _pageSize: number) => {
-        tickets.value = _tickets;
-        pageSize.value = _pageSize;
-    }, () => { });
-}
 </script>
 
 <style scoped>
@@ -62,27 +52,20 @@ function loadByPage(page: number) {
     align-items: flex-start;
 }
 
-.ticket-container {
-    padding: 0px;
-    display: grid;
-    grid-template-columns: auto auto 1fr;
-    border-radius: 0.5rem;
-    align-items: stretch;
-    width: 100%;
-    cursor: pointer;
-}
-
 .tickets {
     height: 100%;
     gap: 1rem;
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: auto 1fr;
     align-items: flex-start;
 }
 
-@media (max-width: 576px) { 
-    .ticket-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.search-bar {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+}
+.bookings {
+    height: 100%;
 }
 </style>

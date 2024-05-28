@@ -1,5 +1,20 @@
 <template>
     <div class="tickettype">
+        <div class="status-wrapper">
+            <div v-if="ticketType.active && isValidDate" class="status">
+                <span class="dot active"></span>
+                <p class="status-text">Verkauf ongoing</p>
+            </div>
+            <div v-else-if="!isValidDate" class="status">
+                <span class="dot date"></span>
+                <p class="status-text">Außerhalb des Verkaufszeitraums</p>
+            </div>
+            <div v-else class="status">
+                <span class="dot stopped"></span>
+                <p class="status-text">VVK manuell gestoppt</p>
+            </div>
+        </div>
+        <span></span>
         <p class="tickettype-name"> {{ ticketType.name }} </p>
         <div class="edit-button-div">
             <button class="edit-button" @click="() => editTicketPopup.open({ ...ticketType })">
@@ -29,7 +44,14 @@ import EditTicketTypePopup from '@/components/popups/EditTicketTypePopup.vue';
 const editTicketPopup = ref();
 const emits = defineEmits(['update']);
 
-defineProps<{
+const isValidDate = computed(() => {
+    const now = new Date();
+    const validFrom = new Date(currentTicket.ticketType.validFrom);
+    const validTo = new Date(currentTicket.ticketType.validTo);
+    return now >= validFrom && now < validTo;
+});
+
+const currentTicket = defineProps<{
     ticketType: TicketType
 }>()
 
@@ -101,5 +123,45 @@ function updateTicketType() {
 
 .period {
     display: flex
+}
+
+.inactive {
+    background-color: rgb(221, 218, 218);
+}
+
+.status-wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.dot {
+    height: 0.7rem;
+    width: 0.7rem;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.stopped {
+    background-color: red;
+}
+
+.date {
+    background-color: rgb(221, 218, 218);
+}
+
+.active {
+    background-color: #08d20f;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.status-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding-left: 0.3rem;
 }
 </style>

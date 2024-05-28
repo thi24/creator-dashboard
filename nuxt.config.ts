@@ -13,6 +13,9 @@ export default defineNuxtConfig({
       ticketService: {
         baseURL: process.env.TICKET_SERVICE_BASE_URL
       },
+      analyticsService: {
+        baseURL: process.env.ANALYTICS_SERVICE_BASE_URL
+      },
       authOriginURL: process.env.AUTH_ORIGIN
     },
     keycloakId: process.env.KEYCLOAK_ID,

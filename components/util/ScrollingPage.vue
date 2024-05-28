@@ -23,4 +23,11 @@ defineProps<{
     display: grid;
     grid-template-rows: 1fr;
 }
+
+@media screen and (max-width: 600px) {
+    .scrolling-page {
+        min-height: 79vh;
+    }
+    
+}
 </style>

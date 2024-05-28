@@ -89,7 +89,7 @@ select:focus {
 
 .tile {
     background-color: white;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     padding: 1rem;
     overflow: hidden;
 }

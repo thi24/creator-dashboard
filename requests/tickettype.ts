@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import type { Ticket } from "~/classes/Ticket";
 import type { TicketType } from "~/classes/TicketType";
+import { relogIfTokenExpired } from "~/utils/authentication";
 
 function getBaseURL() {
     return useRuntimeConfig().public.eventService.baseURL;
@@ -22,7 +23,8 @@ export function getAllTicketTypes(id: string, onSuccess: (TicketType: TicketType
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
@@ -37,7 +39,8 @@ export function saveTicketType(TicketType: TicketType, onSuccess: (TicketType: T
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }
@@ -52,7 +55,8 @@ export function updateTicketType(ticketType: TicketType, onSuccess: (TicketType:
         .then((response) => {
             onSuccess(response.data);
         })
-        .catch(() => {
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
             onError();
         });
 }

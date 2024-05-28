@@ -1,26 +1,26 @@
 <template>
-    <div class="ticket" v-if="ticket">
+    <div class="ticket" v-if="storno">
         <div class="ticket__id">
-            <p v-if="ticket.bookingItem && ticket.bookingItem.ticketType">{{ ticket.bookingItem.ticketType.name }}</p>
-            <p class="grayed-out">{{ ticket.publicId }}</p>
+            <p v-if="storno.bookingItem && storno.bookingItem.ticketType">{{ storno.bookingItem.ticketType.name }}</p>
+            <p class="grayed-out">{{ storno.publicId }}</p>
         </div>
-        <div class="ticket__property" v-if="ticket.price">
-            <p>{{ (ticket.price / 100).toFixed(2) }}€</p>
-            <p class="grayed-out">{{ ticket.taxRate }}%</p>
+            //Soll rein?
+            <p>Kunde</p>
+        <div>
+        <div>
+            <button type="button">Accept</button>
+            <button type="button">Decline</button>
         </div>
-        <div class="ticket-status">
-            <TicketStatusComponent :status="ticket.status"></TicketStatusComponent>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { Ticket } from '~/classes/Ticket';
-import TicketStatusComponent from './TicketStatusComponent.vue';
+import { Storno } from '~/classes/Storno';
 import dayjs from 'dayjs';
 
 defineProps<{
-    ticket: Ticket
+    storno: Storno
 }>()
 </script>
 

@@ -12,6 +12,7 @@ services:
         - AUTH_URL=${AUTH_URL}
         - TICKET_SERVICE_BASE_URL=${TICKET_SERVICE_BASE_URL}
         - EVENT_SERVICE_BASE_URL=${EVENT_SERVICE_BASE_URL}
+        - ANALYTICS_SERVICE_BASE_URL=${ANALYTICS_SERVICE_BASE_URL}
         
     container_name: benevolo.creator.dashboard
     image: ghcr.io/thi24/benevolo.creator.dashboard:${GITHUB_RUN_ID}

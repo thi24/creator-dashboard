@@ -4,7 +4,9 @@
             <NuxtLink :to="'/event-dashboard/' + eventId" :class="{ active: useRoute().fullPath.startsWith('') }">
                 Veranstaltung</NuxtLink>
             <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'">Tickets</NuxtLink>
-            <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'">Buchungen</NuxtLink>
+            <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'">Buchungen</NuxtLink>
+            <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'">Analyse</NuxtLink>
+            <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'">Stornierung</NuxtLink>
             <p class="entry-button" @click="() => entryComponent.show()">Einlass</p>
         </nav>
 
@@ -23,7 +25,11 @@
                         Veranstaltung</NuxtLink>
                     <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'" @click="toggleSidebar">Tickets
                     </NuxtLink>
-                    <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen'" @click="toggleSidebar">Buchungen
+                    <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'" @click="toggleSidebar">Buchungen
+                    </NuxtLink>
+                    <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'" @click="toggleSidebar">Analyse
+                    </NuxtLink>
+                    <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'" @click="toggleSidebar">Stornierung
                     </NuxtLink>
                     <NuxtLink @click="toggleSidebar(); entryComponent.show()">Einlass</NuxtLink>
                     <NuxtLink :to="'../../veranstaltungen'">Zurück zu allen Veranstaltungen</NuxtLink>
@@ -88,14 +94,14 @@ function toggleSidebar() {
 
 .scroll-container {
     position: relative;
-    width: 100%;
+    width: 100vh;
     height: 100%;
     overflow: scroll;
 }
 
 .scrolling-div {
     padding: 1rem;
-    height: 100%;
+    height: 100vh;
     position: absolute;
 }
 
