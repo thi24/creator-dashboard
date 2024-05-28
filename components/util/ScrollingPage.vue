@@ -19,7 +19,7 @@ defineProps<{
 
 <style scoped>
 .scrolling-page {
-    min-height: 100vh;
+    min-height: 100%;
     display: grid;
     grid-template-rows: 1fr;
 }
