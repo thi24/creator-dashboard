@@ -10,10 +10,10 @@
 import {TicketStatus} from '~/classes/TicketStatus';
 
 defineProps<{
-  status: TicketStatus | undefined
+  status: TicketStatus | string | undefined
 }>();
 
-function getLabel(status: TicketStatus) {
+function getLabel(status: TicketStatus | string) {
   if (status.toString() === TicketStatus[TicketStatus.PENDING]) {
     return "Ausstehend";
   }
