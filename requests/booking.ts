@@ -27,3 +27,79 @@ export function getAllBookings(eventId: string, search: BookingSearch, page: num
         onError();
     });
 }
+
+export function getTotalPrice(eventId: string, onSuccess: (totalPrice: number) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.get<number>(baseURL + "/bookings/total-price", {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        },
+        params: {
+            eventId: eventId
+        }
+    })
+    .then((response) => {
+        onSuccess(response.data);
+    })
+    .catch((error: AxiosError) => {
+        relogIfTokenExpired(error)
+        onError();
+    });
+}
+
+export function getTotalBookings(eventId: string, onSuccess: (bookings: number) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.get<number>(baseURL + "/bookings/total-bookings", {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        },
+        params: {
+            eventId: eventId
+        }
+    })
+    .then((response) => {
+        onSuccess(response.data);
+    })
+    .catch((error: AxiosError) => {
+        relogIfTokenExpired(error)
+        onError();
+    });
+}
+
+export function getTotalTickets(eventId: string, onSuccess: (tickets: number) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.get<number>(baseURL + "/bookings/total-tickets", {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        },
+        params: {
+            eventId: eventId
+        }
+    })
+    .then((response) => {
+        onSuccess(response.data);
+    })
+    .catch((error: AxiosError) => {
+        relogIfTokenExpired(error)
+        onError();
+    });
+}
+
+export function getAveragePrice(eventId: string, onSuccess: (avgPrice: number) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.get<number>(baseURL + "/bookings/average-price", {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        },
+        params: {
+            eventId: eventId
+        }
+    })
+    .then((response) => {
+        onSuccess(response.data);
+    })
+    .catch((error: AxiosError) => {
+        relogIfTokenExpired(error)
+        onError();
+    });
+}
