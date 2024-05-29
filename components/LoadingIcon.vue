@@ -1,9 +1,10 @@
 <template>
-    <UiIcon class="rotate">progress_activity</UiIcon>
+  <UiIcon class="rotate">progress_activity</UiIcon>
 </template>
 
 <script setup lang="ts">
 import UiIcon from './ui/UiIcon.vue';
+
 defineProps({
   fontSize: {
     type: String,
@@ -13,11 +14,14 @@ defineProps({
 </script>
 
 <style scoped>
-.rotate{
+.rotate {
   animation: rotate 1s linear infinite;
   font-size: v-bind(fontSize);
 }
-@keyframes rotate{
-  to{ transform: rotate(360deg); }
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
