@@ -69,7 +69,7 @@ onMounted(() => {
   table-layout: fixed;
 }
 
-.tickets-table th {
+.tickets-table th, .no-tickets {
   text-align: left;
   background-color: rgba(211, 211, 211, 0.26);
 }
@@ -77,5 +77,6 @@ onMounted(() => {
 .no-tickets {
   display: flex;
   gap: 0.5rem;
+  padding: 0.5rem 1rem;
 }
 </style>
