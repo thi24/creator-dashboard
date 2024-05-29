@@ -1,9 +1,9 @@
 export class BookingSearch {
 
-    term = "" as string;
-    dateFrom = undefined as Date | undefined;
-    dateTo = undefined as Date | undefined;
-    priceFrom = undefined as number | undefined;
-    priceTo = undefined as number | undefined;
+    term: string = "" as string;
+    dateFrom: Date | undefined = undefined as Date | undefined;
+    dateTo: Date | undefined = undefined as Date | undefined;
+    priceFrom: number | undefined = undefined as number | undefined;
+    priceTo: number | undefined = undefined as number | undefined;
 
 }

@@ -1,18 +1,17 @@
-import type { BookingItem } from "./BookingItem";
-import type { Customer } from "./Customer";
-import type { TicketStatus } from "./TicketStatus";
-import type { TicketType } from "./TicketType";
+import type {BookingItem} from "./BookingItem";
+import type {Customer} from "./Customer";
+import type {TicketStatus} from "./TicketStatus";
 
 export class Ticket {
 
-    id = undefined as string | undefined;
-    publicId = undefined as string | undefined;
-    status = undefined as TicketStatus | undefined;
-    bookedAt = undefined as Date | undefined;
-    price = undefined as number | undefined;
-    taxRate = undefined as number | undefined;
-    customer = undefined as Customer | undefined;
-    bookingItem = undefined as BookingItem | undefined;
+    id: string | undefined = undefined as string | undefined;
+    publicId: string | undefined = undefined as string | undefined;
+    status: TicketStatus | undefined = undefined as TicketStatus | undefined;
+    bookedAt: Date | undefined = undefined as Date | undefined;
+    price: number | undefined = undefined as number | undefined;
+    taxRate: number | undefined = undefined as number | undefined;
+    customer: Customer | undefined = undefined as Customer | undefined;
+    bookingItem: BookingItem | undefined = undefined as BookingItem | undefined;
 
     constructor(id?: string, publicId?: string, status?: TicketStatus, bookedAt?: Date, price?: number, taxRate?: number, customer?: Customer, bookingItem?: BookingItem) {
         this.id = id;

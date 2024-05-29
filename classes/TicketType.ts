@@ -1,13 +1,14 @@
-import { Event } from '@/classes/Event';
+import {Event} from '@/classes/Event';
+
 export class TicketType {
 
-    id = undefined as string | undefined;
-    name = "" as string;
-    price = undefined as number | undefined;
-    validFrom = new Date() as Date;
-    validTo = new Date() as Date;
-    capacity = undefined as number | undefined;
-    active = true;
-    taxRate = undefined as number | undefined;
-    event = undefined as Event | undefined;
+    id: string | undefined = undefined;
+    name: string = "";
+    price: number | undefined = undefined;
+    validFrom: Date = new Date();
+    validTo: Date = new Date();
+    capacity: number | undefined = undefined;
+    active: boolean = true;
+    taxRate: number | undefined = undefined;
+    event: Event | undefined = undefined;
 }
