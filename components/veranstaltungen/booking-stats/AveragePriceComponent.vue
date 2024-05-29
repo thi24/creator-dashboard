@@ -1,5 +1,5 @@
 <template>
-    <StatsComponent label="Gesamtumsatz" :value="formatPrice(averagePrice)"></StatsComponent>
+    <StatsComponent label="Durchschnittspreis" :value="formatPrice(averagePrice)"></StatsComponent>
 </template>
 
 <script setup lang="ts">
