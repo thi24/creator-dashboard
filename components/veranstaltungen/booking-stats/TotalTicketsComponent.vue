@@ -1,5 +1,5 @@
 <template>
-    <StatsComponent label="Buchungen" :value="tickets"></StatsComponent>
+    <StatsComponent label="Tickets" :value="tickets"></StatsComponent>
 </template>
 
 <script setup lang="ts">
