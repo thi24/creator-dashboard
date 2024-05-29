@@ -124,14 +124,6 @@ function updateTicketType() {
   background-color: var(--secondary-color-dark);
 }
 
-.period {
-  display: flex
-}
-
-.inactive {
-  background-color: rgb(221, 218, 218);
-}
-
 .status-wrapper {
   display: flex;
   justify-content: flex-start;

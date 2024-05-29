@@ -414,12 +414,6 @@ function updateData() {
   gap: 1rem;
 }
 
-.selected {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-
 @media screen and (max-width: 600px) {
   .chartDiv {
     height: 450px;
