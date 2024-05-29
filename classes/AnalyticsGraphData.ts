@@ -1,4 +1,4 @@
 export class GraphData {
-    occurringDate = new Date() as Date;
-    value = -1 as number;
+    occurringDate: Date = new Date() as Date;
+    value: number = -1 as number;
 }

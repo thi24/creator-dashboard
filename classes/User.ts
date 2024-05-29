@@ -1,8 +1,10 @@
 export class User {
-    id = "" as string;
-    username = "" as string;
-    email = "" as string;
-    password = "" as string;
-    role = "" as string;
-    token = "" as string;
+
+    id: string = "";
+    username: string | undefined = "";
+    email: string | undefined = "";
+    password: string | undefined = "";
+    role: string | undefined = "";
+    token: string | undefined = "";
+    
 }
