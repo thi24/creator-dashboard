@@ -1,9 +1,15 @@
-<template>
+<template> 
   <ScrollingPage :loading="!event">
     <div class="content ticket-page">
       <div v-if="event">
         <h2>Buchungen</h2>
         <p>{{ event.eventName }}</p>
+      </div>
+      <div class="col-4">
+        <TotalBookingsComponent></TotalBookingsComponent>
+        <TotalTicketsComponent></TotalTicketsComponent>
+        <AveragePriceComponent></AveragePriceComponent>
+        <TotalPriceComponent></TotalPriceComponent>
       </div>
       <div class="tickets">
         <div class="tile search-bar">
@@ -35,7 +41,11 @@
 <script setup lang="ts">
 import ScrollingPage from '~/components/util/ScrollingPage.vue';
 import ViewTicketPopup from '~/components/popups/ViewTicketPopup.vue';
-import {useBookingSearchStore} from '~/stores/BookingSearchStore';
+import { useBookingSearchStore } from '~/stores/BookingSearchStore';
+import TotalPriceComponent from '~/components/veranstaltungen/booking-stats/TotalPriceComponent.vue';
+import TotalBookingsComponent from '~/components/veranstaltungen/booking-stats/TotalBookingsComponent.vue';
+import TotalTicketsComponent from '~/components/veranstaltungen/booking-stats/TotalTicketsComponent.vue';
+import AveragePriceComponent from '~/components/veranstaltungen/booking-stats/AveragePriceComponent.vue';
 
 const search = computed(() => useBookingSearchStore().getSearch());
 
@@ -48,7 +58,7 @@ const viewTicketPopup = ref();
 .ticket-page {
   height: 100%;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   align-items: flex-start;
 }
 

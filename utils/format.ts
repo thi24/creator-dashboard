@@ -1,3 +1,6 @@
-export function formatPrice(price: number): string {
-    return (price/100).toFixed(2) + "€";
+export function formatPrice(price: number | undefined): string | undefined {
+    if(price) {
+        return (price/100).toFixed(2) + "€";
+    }
+    return undefined;
 }

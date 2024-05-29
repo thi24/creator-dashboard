@@ -80,6 +80,12 @@ select:focus {
     gap: 1rem;
 }
 
+.col-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
 .center-center {
     display: flex;
     justify-content: center;
