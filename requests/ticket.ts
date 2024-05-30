@@ -24,9 +24,12 @@ export function getTickets(eventId: string, page: number, onSuccess: (tickets: T
 }
 
 export function getTicketsByBookingItemId(bookingItemId: string, onSuccess: (tickets: Ticket[]) => void, onError: () => void) {
-    axios.get<Ticket[]>(getBaseURL() + '/booking-items/' + bookingItemId + '/tickets', {
+    axios.get<Ticket[]>(getBaseURL() + '/tickets', {
         headers: {
             Authorization: `Bearer ${requireToken()}`
+        },
+        params: {
+            bookingItemId: bookingItemId
         }
     })
     .then((response) => {
