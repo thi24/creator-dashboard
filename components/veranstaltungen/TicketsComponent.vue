@@ -78,5 +78,6 @@ onMounted(() => {
   display: flex;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
+  align-items: center;
 }
 </style>

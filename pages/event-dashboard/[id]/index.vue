@@ -1,10 +1,29 @@
 <template>
   <ScrollingPage :loading="!event">
-    <div>
+    <div class="content">
       <div v-if="event">
         <h2>Veranstaltung</h2>
         <p>{{ event.eventName }}</p>
       </div>
+      <div class="col-4">
+        <div class="tile" v-if="event">
+          <h3>Startet am</h3>
+          <p>{{ dayjs(event.startsAt).format("DD.MM.YYYY") }}</p>
+        </div>
+        <div class="tile" v-if="event">
+          <h3>Endet am</h3>
+          <p>{{ dayjs(event.endsAt).format("DD.MM.YYYY") }}</p>
+        </div>
+        <div class="tile" v-if="event">
+          <h3>Adresse</h3>
+          <p>{{ event.address.street }}</p>
+        </div>
+        <div class="tile" v-if="event">
+          <h3>Ort</h3>
+          <p>{{ event.address.zip }} {{ event.address.city }}, {{ event.address.state }}</p>
+        </div>
+      </div>
+      <!--
       <div v-if="event" class="event-container">
         <div class="event-detail-wrapper">
           <p class="event-detail">Eventname:</p>
@@ -27,6 +46,7 @@
           <p class="event-detail"> {{ event.address.zip }} {{ event.address.city }}, {{ event.address.state }}</p>
         </div>
       </div>
+      -->
     </div>
   </ScrollingPage>
 </template>

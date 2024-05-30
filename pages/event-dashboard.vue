@@ -1,11 +1,11 @@
 <template>
   <div class="account-layout">
     <nav class="nav-bar">
-      <NuxtLink :to="'/event-dashboard/' + eventId" :class="{ active: useRoute().fullPath.startsWith('') }">
+      <NuxtLink :to="'/event-dashboard/' + eventId">
         Veranstaltung
       </NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'">Tickets</NuxtLink>
-      <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'">Buchungen</NuxtLink>
+      <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'" :class="{ active: useRoute().fullPath.includes('buchungen') }">Buchungen</NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'">Analyse</NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'">Stornierung</NuxtLink>
       <p class="entry-button" @click="() => entryComponent.show()">Einlass</p>
@@ -21,13 +21,12 @@
           <UiButton icon="close" @click="toggleSidebar()"></UiButton>
         </div>
         <div class="link-list">
-          <NuxtLink :to="'/event-dashboard/' + eventId"
-                    :class="{ active: useRoute().fullPath.startsWith('') }" @click="toggleSidebar">
+          <NuxtLink :to="'/event-dashboard/' + eventId" @click="toggleSidebar">
             Veranstaltung
           </NuxtLink>
           <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'" @click="toggleSidebar">Tickets
           </NuxtLink>
-          <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'" @click="toggleSidebar">Buchungen
+          <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'" :class="{ active: useRoute().fullPath.includes('buchungen') }" @click="toggleSidebar">Buchungen
           </NuxtLink>
           <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'" @click="toggleSidebar">Analyse
           </NuxtLink>
@@ -88,7 +87,7 @@ function toggleSidebar() {
   align-items: center;
 }
 
-.nav-bar > *.router-link-active {
+.nav-bar > *.router-link-active, .nav-bar > *.active {
   background-color: var(--primary-color);
   color: white;
   border-radius: 10rem;
