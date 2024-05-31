@@ -14,7 +14,7 @@ function getTicketServiceBaseURL() {
 
 export async function getPageViews(eventId: string, dateFrom: string, dateTo: string, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
     let baseURL = getAnalyticsBaseURL();
-    axios.get<GraphData[]>(baseURL + "/event/" + eventId + "/event-views/" + dateFrom + "/" + dateTo, {
+    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/event-views/" + dateFrom + "/" + dateTo, {
         headers: {
             Authorization: `Bearer ${requireToken()}`,
         }
