@@ -1,7 +1,6 @@
-import axios, { AxiosError } from "axios";
-import type { Ticket } from "~/classes/Ticket";
-import type { TicketType } from "~/classes/TicketType";
-import { relogIfTokenExpired } from "~/utils/authentication";
+import axios, {AxiosError} from "axios";
+import type {TicketType} from "~/classes/TicketType";
+import {relogIfTokenExpired} from "~/utils/authentication";
 
 function getBaseURL() {
     return useRuntimeConfig().public.eventService.baseURL;
@@ -15,11 +14,7 @@ function getToken() {
 
 export function getAllTicketTypes(id: string, onSuccess: (TicketType: TicketType[]) => void, onError: () => void) {
     let baseURL = getBaseURL();
-    axios.get<TicketType[]>(baseURL + "/ticket-types?eventId=" + id, {
-        headers: {
-            Authorization: `Bearer ${getToken()}`
-        }
-    })
+    axios.get<TicketType[]>(baseURL + "/ticket-types?eventId=" + id, {})
         .then((response) => {
             onSuccess(response.data);
         })
@@ -31,11 +26,7 @@ export function getAllTicketTypes(id: string, onSuccess: (TicketType: TicketType
 
 export function saveTicketType(TicketType: TicketType, onSuccess: (TicketType: TicketType) => void, onError: () => void) {
     let baseURL = getBaseURL();
-    axios.post(baseURL + "/ticket-types", TicketType, {
-        headers: {
-            Authorization: `Bearer ${getToken()}`
-        }
-    })
+    axios.post(baseURL + "/ticket-types", TicketType, {})
         .then((response) => {
             onSuccess(response.data);
         })
@@ -47,11 +38,7 @@ export function saveTicketType(TicketType: TicketType, onSuccess: (TicketType: T
 
 export function updateTicketType(ticketType: TicketType, onSuccess: (TicketType: TicketType) => void, onError: () => void) {
     let baseURL = getBaseURL();
-    axios.put(baseURL + "/ticket-types/" + ticketType.id, ticketType, {
-        headers: {
-            Authorization: `Bearer ${getToken()}`
-        }
-    })
+    axios.put(baseURL + "/ticket-types/" + ticketType.id, ticketType, {})
         .then((response) => {
             onSuccess(response.data);
         })
