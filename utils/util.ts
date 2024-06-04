@@ -12,7 +12,7 @@ export function jsonToUrlParams(object: any) {
     const mapping: Map<string, string> = new Map();
     for(let name in object) {
         const value = object[name];
-        if(value != null) {
+        if(value) {
             mapping.set(name, value);
         }
     }

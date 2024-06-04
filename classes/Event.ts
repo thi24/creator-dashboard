@@ -1,14 +1,14 @@
-import { Address } from "./Address";
-import { TicketType } from "./TicketType";
+import {Address} from "./Address";
+import {TicketType} from "./TicketType";
 
 export class Event {
-  
-    id = undefined as string | undefined;
-    eventName = "" as string;
-    startsAt = new Date() as Date;
-    endsAt = new Date() as Date;
-    address = new Address("", "", "", "");
-    description = "" as string;
-    ticketTypes = undefined as TicketType[] | undefined;
+
+    id: string | undefined = undefined as string | undefined;
+    eventName: string | undefined = undefined as string | undefined;
+    startsAt: Date = new Date() as Date;
+    endsAt: Date = new Date() as Date;
+    address: Address = new Address("", "", "", "");
+    description: string | undefined = undefined as string | undefined;
+    ticketTypes: TicketType[] | undefined = undefined as TicketType[] | undefined;
 
 }

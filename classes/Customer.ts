@@ -1,8 +1,8 @@
 export class Customer {
 
-    email = undefined as string | undefined;
-    name =  undefined as string | undefined;
-    stripeId = undefined as string | undefined;
+    email: string | undefined = undefined as string | undefined;
+    name: string | undefined = undefined as string | undefined;
+    stripeId: string | undefined = undefined as string | undefined;
 
     constructor(email?: string, name?: string, stripeId?: string) {
         this.email = email;

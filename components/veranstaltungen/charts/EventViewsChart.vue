@@ -431,23 +431,26 @@ function updateData() {
     .chartDiv {
         height: 450px;
     }
+
     .selector-div {
         grid-template-columns: 1fr;
     }
+
     .daily-monthly-div {
         display: flex;
         justify-content: space-between;
         gap: 1rem;
     }
+
     .daily-monthly-button {
         width: 45%;
     }
+
     .select-time-div {
         display: flex;
         justify-content: center;
         gap: 1rem;
     }
-    
-}
 
+}
 </style>
