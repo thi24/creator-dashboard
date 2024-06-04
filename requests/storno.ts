@@ -8,7 +8,7 @@ function getBaseURL() {
 }
 
 export function getStorno(eventId: string, onSuccess: (stornos: Storno[]) => void, onError: () => void) {
-    axios.get<Storno[]>(getBaseURL() + '/cancellation/' + eventId + {})
+    axios.get<Storno[]>(getBaseURL() + '/cancellation/' + eventId)
         .then((response) => {
             onSuccess(response.data);
         })
