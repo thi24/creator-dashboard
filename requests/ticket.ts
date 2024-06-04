@@ -33,7 +33,7 @@ export function getTicketsByBookingItemId(bookingItemId: string, onSuccess: (tic
 }
 
 export function redeemTicket(ticketId: string, onSuccess: () => void, onError: () => void) {
-    axios.patch(getBaseURL() + '/tickets/' + ticketId + '/status', {}, {})
+    axios.put(getBaseURL() + '/tickets/' + ticketId + '/status', {}, {})
         .then(() => {
             onSuccess();
         })
