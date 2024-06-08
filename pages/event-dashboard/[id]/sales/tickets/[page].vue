@@ -61,7 +61,6 @@ function loadByPage(page: number) {
 
 <style scoped>
 .ticket-table {
-    width: 100%;
     padding: 0rem;
     table-layout: fixed;
     border-collapse: collapse;
