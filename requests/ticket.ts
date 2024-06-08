@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import type { BookingSearch } from "~/classes/BookingSearch";
 import type { Ticket } from "~/classes/Ticket";
 import { requireToken } from "~/utils/authentication";
 import { relogIfTokenExpired } from "~/utils/authentication";
@@ -48,6 +49,22 @@ export function redeemTicket(ticketId: string, onSuccess: () => void, onError: (
     })
     .then(() => {
         onSuccess();
+    })
+    .catch((error: AxiosError) => {
+        relogIfTokenExpired(error)
+        onError();
+    });
+}
+
+export function getTicketsBySearch(eventId: string, search: BookingSearch, page: number, onSuccess: (bookings: Ticket[], pageSize: number) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.get<Ticket[]>(baseURL + "/tickets/search/" + page + '?eventId=' + eventId + "&" + jsonToUrlParams(search), {
+        headers: {
+            Authorization: `Bearer ${requireToken()}`
+        }
+    })
+    .then((response) => {
+        onSuccess(response.data, response.headers["x-page-size"]);
     })
     .catch((error: AxiosError) => {
         relogIfTokenExpired(error)

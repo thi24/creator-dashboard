@@ -117,3 +117,9 @@ select:focus {
     color: #525252;
     font-size: 0.85rem;
 }
+
+.space-between-center {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
