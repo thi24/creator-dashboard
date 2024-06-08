@@ -1,6 +1,6 @@
 <template>
     <div class="sales-header content">
-        <div class="col-4">
+        <div class="col-4 booking-stats">
             <TotalBookingsComponent></TotalBookingsComponent>
             <TotalTicketsComponent></TotalTicketsComponent>
             <AveragePriceComponent></AveragePriceComponent>
@@ -33,11 +33,9 @@ import { TicketStatus } from '~/classes/TicketStatus';
     display: flex;
     gap: 1rem;
 }
-.status-filter {
-    width: 30rem;
-}
 .status-input {
     height: 37px;
+    width: 5.5rem;
     border-radius: 0.5rem;
     background-color: rgba(209, 209, 209, 0.5);
     display: flex;
@@ -64,5 +62,26 @@ import { TicketStatus } from '~/classes/TicketStatus';
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 0.5rem;
+}
+
+@media only screen and (max-width: 1300px) {
+    .search-bar {
+        flex-direction: column;
+    }
+    .search-bar > *:first-of-type {
+        width: 100%;
+    }
+    .booking-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .status-input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .booking-stats {
+        grid-template-columns: 1fr;
+    }
 }
 </style>

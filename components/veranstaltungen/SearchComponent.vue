@@ -1,7 +1,7 @@
 <template>
     <div class="search-header">
         <div class="tile search-bar">
-            <UiInput label="Suche">
+            <UiInput label="Suche" class="search-input">
               <input type="text" v-model="search.term">
             </UiInput>
             <UiInput label="Gebucht ab">
@@ -32,7 +32,19 @@ const search = computed(() => useBookingSearchStore().getSearch());
 }
 .search-bar {
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr repeat(4, 8rem);
     gap: 1rem;
+}
+
+@media only screen and (max-width: 1300px) {
+    .search-bar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .search-input {
+        grid-column: span 2;
+    }
 }
 </style>

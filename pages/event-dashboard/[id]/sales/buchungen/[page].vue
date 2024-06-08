@@ -63,16 +63,10 @@ function loadByPage(search: BookingSearch, page: number) {
 .ticket-container td, .ticket-container th {
     padding: 0.5rem 1rem;
 }
-table td:first-of-type { 
-    width: min-content;
-}
 </style>
 
 <style scoped>
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-}
+
 th {
     border-bottom: 1px solid lightgray;
     text-align: left;

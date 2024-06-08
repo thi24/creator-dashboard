@@ -27,10 +27,10 @@ const event = ref(computed(() => useEventStore().getEvent()));
 .sales-table-container {
     display: grid;
     gap: 1rem;
-    width: 100%;
     height: 100%;
     grid-template-rows: 1fr auto;
     align-items: flex-start;
+    overflow-x: auto;
 }
 </style>
 
