@@ -1,9 +1,6 @@
 import { defineStore } from "pinia"
 import { BookingSearch } from "~/classes/BookingSearch";
-import { Event } from "~/classes/Event";
 import { TicketStatus } from "~/classes/TicketStatus";
-import Tickets from "~/pages/event-dashboard/[id]/sales/tickets.vue";
-import { getEventById } from "~/requests/event";
 
 export const useBookingSearchStore = defineStore('booking-search', {
     state: () => ({ 

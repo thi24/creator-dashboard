@@ -28,6 +28,7 @@ const search = computed(() => useBookingSearchStore().getSearch());
 .search-header {
     display: grid;
     grid-template-columns: 1fr;
+    flex: 1;
 }
 .search-bar {
     display: grid;
