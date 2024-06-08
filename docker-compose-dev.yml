@@ -3,7 +3,7 @@ services:
   dev.benevolo.creator.dashboard:
     build: 
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
       args:
         - KEYCLOAK_ID=${KEYCLOAK_ID}
         - KEYCLOAK_SECRET=${KEYCLOAK_SECRET}

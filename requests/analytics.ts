@@ -1,8 +1,7 @@
-import axios, { AxiosError } from "axios";
-import { GraphData } from "~/classes/AnalyticsGraphData";
-import type { TicketValidation } from "~/classes/TicketValidation";
-import { requireToken } from "~/utils/authentication";
-import { relogIfTokenExpired } from "~/utils/authentication";
+import axios, {AxiosError} from "axios";
+import {GraphData} from "~/classes/AnalyticsGraphData";
+import type {TicketValidation} from "~/classes/TicketValidation";
+import {relogIfTokenExpired} from "~/utils/authentication";
 
 function getAnalyticsBaseURL() {
     return useRuntimeConfig().public.analyticsService.baseURL;
@@ -14,11 +13,7 @@ function getTicketServiceBaseURL() {
 
 export async function getPageViews(eventId: string, dateFrom: string, dateTo: string, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
     let baseURL = getAnalyticsBaseURL();
-    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/event-views/" + dateFrom + "/" + dateTo, {
-        headers: {
-            Authorization: `Bearer ${requireToken()}`,
-        }
-    })
+    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/event-views/" + dateFrom + "/" + dateTo, {})
         .then((response) => {
             onSuccess(response.data);
         })
@@ -31,11 +26,7 @@ export async function getPageViews(eventId: string, dateFrom: string, dateTo: st
 
 export async function getSoldTickets(eventId: string, dateFrom: string, dateTo: string, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
     let baseURL = getTicketServiceBaseURL();
-    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/ticketstatsbyday/" + dateFrom + "/" + dateTo, {
-        headers: {
-            Authorization: `Bearer ${requireToken()}`,
-        }
-    })
+    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/ticketstatsbyday/" + dateFrom + "/" + dateTo, {})
         .then((response) => {
             onSuccess(response.data);
         })
@@ -48,11 +39,7 @@ export async function getSoldTickets(eventId: string, dateFrom: string, dateTo: 
 
 export async function getBookings(eventId: string, dateFrom: string, dateTo: string, onSuccess: (GraphData: GraphData[]) => void, onError: () => void) {
     let baseURL = getTicketServiceBaseURL();
-    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/bookingstatsbyday/" + dateFrom + "/" + dateTo, {
-        headers: {
-            Authorization: `Bearer ${requireToken()}`,
-        }
-    })
+    axios.get<GraphData[]>(baseURL + "/events/" + eventId + "/bookingstatsbyday/" + dateFrom + "/" + dateTo, {})
         .then((response) => {
             onSuccess(response.data);
         })
@@ -65,11 +52,7 @@ export async function getBookings(eventId: string, dateFrom: string, dateTo: str
 
 export function getTicketValidationsPerDay(eventId: string, date: string, onSuccess: (GraphData: TicketValidation[]) => void, onError: () => void) {
     let baseURL = getAnalyticsBaseURL();
-    axios.get<TicketValidation[]>(baseURL + "/validated-tickets/event/" + eventId + "/" + date, {
-        headers: {
-            Authorization: `Bearer ${requireToken()}`,
-        }
-    })
+    axios.get<TicketValidation[]>(baseURL + "/validated-tickets/event/" + eventId + "/" + date, {})
         .then((response) => {
             onSuccess(response.data);
         })
@@ -81,11 +64,7 @@ export function getTicketValidationsPerDay(eventId: string, date: string, onSucc
 
 export function getAmountOfRedeemedTickets(eventId: string, onSuccess: (amount: number) => void, onError: () => void) {
     let baseURL = getTicketServiceBaseURL();
-    axios.get<number>(baseURL + "/events/" + eventId + "/redeemed/amount", {
-        headers: {
-            Authorization: `Bearer ${requireToken()}`,
-        }
-    })
+    axios.get<number>(baseURL + "/events/" + eventId + "/redeemed/amount", {})
         .then((response) => {
             onSuccess(response.data);
         })
@@ -97,11 +76,7 @@ export function getAmountOfRedeemedTickets(eventId: string, onSuccess: (amount: 
 
 export function getAmountOfValidTickets(eventId: string, onSuccess: (amount: number) => void, onError: () => void) {
     let baseURL = getTicketServiceBaseURL();
-    axios.get<number>(baseURL + "/events/" + eventId + "/valid-tickets/amount", {
-        headers: {
-            Authorization: `Bearer ${requireToken()}`,
-        }
-    })
+    axios.get<number>(baseURL + "/events/" + eventId + "/valid-tickets/amount", {})
         .then((response) => {
             onSuccess(response.data);
         })
