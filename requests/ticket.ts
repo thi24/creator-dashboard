@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 import axios, { AxiosError } from "axios";
 import type { BookingSearch } from "~/classes/BookingSearch";
 import type { Ticket } from "~/classes/Ticket";
 import { requireToken } from "~/utils/authentication";
 import { relogIfTokenExpired } from "~/utils/authentication";
-=======
-import axios, {AxiosError} from "axios";
-import type {Ticket} from "~/classes/Ticket";
-import {relogIfTokenExpired} from "~/utils/authentication";
->>>>>>> 7128b8b7b1f5ac1d71050a8a78a90626d51a7a3e
 
 function getBaseURL() {
     return useRuntimeConfig().public.ticketService.baseURL;
@@ -41,8 +35,7 @@ export function getTicketsByBookingItemId(bookingItemId: string, onSuccess: (tic
 }
 
 export function redeemTicket(ticketId: string, onSuccess: () => void, onError: () => void) {
-<<<<<<< HEAD
-    axios.patch(getBaseURL() + '/tickets/' + ticketId + '/status', {}, {
+    axios.put(getBaseURL() + '/tickets/' + ticketId + '/status', {}, {
         headers: {
             Authorization: `Bearer ${requireToken()}`
         }
@@ -70,14 +63,4 @@ export function getTicketsBySearch(eventId: string, search: BookingSearch, page:
         relogIfTokenExpired(error)
         onError();
     });
-=======
-    axios.put(getBaseURL() + '/tickets/' + ticketId + '/status', {}, {})
-        .then(() => {
-            onSuccess();
-        })
-        .catch((error: AxiosError) => {
-            relogIfTokenExpired(error)
-            onError();
-        });
->>>>>>> 7128b8b7b1f5ac1d71050a8a78a90626d51a7a3e
 }
