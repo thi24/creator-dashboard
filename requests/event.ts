@@ -7,11 +7,6 @@ function getBaseURL() {
     return useRuntimeConfig().public.eventService.baseURL;
 }
 
-function getToken() {
-    const token = useCookie('token')
-    return token.value
-}
-
 export function getAllEvents(onSuccess: (events: Event[]) => void, onError: () => void) {
     let baseURL = getBaseURL();
     axios.get<Event[]>(baseURL + "/events", {})
@@ -57,6 +52,18 @@ export function getImageForEvent(id: string, onSuccess: (image: string) => void,
         .then((response) => {
             let base64Image = byteToBase64(response.data);
             onSuccess(base64Image);
+        })
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
+            onError();
+        });
+}
+
+export function updateEntry(event: Event, onSuccess: (event: Event) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.put(baseURL + "/events/" + event.id, event, {})
+        .then((response) => {
+            onSuccess(response.data);
         })
         .catch((error: AxiosError) => {
             relogIfTokenExpired(error)
