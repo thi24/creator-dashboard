@@ -17,7 +17,7 @@
         </tr>
         <tr>
           <td>
-            <p>Vorverkauf für alle TicketTypen starten</p>
+            <p>Einlass für alle TicketTypen starten</p>
           </td>
           <td>
             <label class="switch">
