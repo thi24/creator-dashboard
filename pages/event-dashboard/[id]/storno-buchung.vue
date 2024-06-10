@@ -1,11 +1,11 @@
 <template>
-  <ScrollingPage :loading=true>
+  <ScrollingPage :loading = !stornoBool>
     <div class="content ticket-page">
       <div>
         <h2>Storno Anfragen</h2>
         <p>Event Name</p>
       </div>
-      <LoadingPage :loading=false>
+      <LoadingPage :loading="loading">
         <div class="storno">
           <div class="title ticket-container">
             <div class="stornoGrid ticket">
@@ -44,6 +44,8 @@ import { getStorno } from '~/requests/storno';
 import LoadingPage from '~/components/util/LoadingPage.vue';
 
 const stornos: Ref<Storno[] | undefined> = ref(undefined);
+const loading = ref(false);
+const stornoBool = ref(computed(() => loadStornos()));
 
 onMounted(() => {
     loadStornos();

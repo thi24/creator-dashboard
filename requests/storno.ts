@@ -1,5 +1,3 @@
-//To be defined
-
 import axios from "axios";
 import type {Storno} from "~/classes/Storno";
 
@@ -8,7 +6,7 @@ function getBaseURL() {
 }
 
 export function getStorno(eventId: string, onSuccess: (stornos: Storno[]) => void, onError: () => void) {
-    axios.get<Storno[]>(getBaseURL() + '/cancellation/' + eventId)
+    axios.get<Storno[]>(getBaseURL() + '/cancellations/' + eventId)
         .then((response) => {
             onSuccess(response.data);
         })
