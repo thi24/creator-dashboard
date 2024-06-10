@@ -25,7 +25,7 @@ defineProps<{
 
 @media screen and (max-width: 600px) {
   .scrolling-page {
-    min-height: 79vh;
+    /*min-height: 79vh; -> Not working*/
   }
 }
 </style>

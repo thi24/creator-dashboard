@@ -1,5 +1,5 @@
 <template>
-    <StatsComponent label="Durchschnittspreis" :value="formatPrice(averagePrice)"></StatsComponent>
+    <StatsComponent label="Durchschnittspreis pro Buchung" :value="formatPrice(averagePrice)"></StatsComponent>
 </template>
 
 <script setup lang="ts">
