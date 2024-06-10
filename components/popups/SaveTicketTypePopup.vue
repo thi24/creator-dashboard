@@ -83,6 +83,7 @@ function saveTicket() {
     ticketType.value.taxRate = undefined;
     ticketType.value.validFrom = new Date();
     ticketType.value.validTo = new Date();
+    ticketType.value.entryStarted = false;
   }
 
   let onError = () => {
