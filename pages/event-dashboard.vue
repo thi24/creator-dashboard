@@ -5,10 +5,12 @@
         Veranstaltung
       </NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'">Tickets</NuxtLink>
-      <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'" :class="{ active: useRoute().fullPath.includes('buchungen') }">Buchungen</NuxtLink>
+      <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'"
+                :class="{ active: useRoute().fullPath.includes('buchungen') }">Buchungen
+      </NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'">Analyse</NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'">Stornierung</NuxtLink>
-      <p class="entry-button" @click="() => entryComponent.show()">Einlass</p>
+      <p v-if="event?.entryStarted" class="entry-button" @click="() => entryComponent.show()">Einlass</p>
     </nav>
 
     <nav class="toggled-nav-bar">
@@ -26,7 +28,8 @@
           </NuxtLink>
           <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'" @click="toggleSidebar">Tickets
           </NuxtLink>
-          <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'" :class="{ active: useRoute().fullPath.includes('buchungen') }" @click="toggleSidebar">Buchungen
+          <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'"
+                    :class="{ active: useRoute().fullPath.includes('buchungen') }" @click="toggleSidebar">Buchungen
           </NuxtLink>
           <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'" @click="toggleSidebar">Analyse
           </NuxtLink>
@@ -42,7 +45,7 @@
       <NuxtPage></NuxtPage>
     </div>
   </div>
-  <EntryComponent ref="entryComponent"></EntryComponent>
+  <EntryComponent v-if="event?.entryStarted" ref="entryComponent"></EntryComponent>
 </template>
 
 <script setup lang="ts">
@@ -51,6 +54,7 @@ import EntryComponent from '~/components/EntryComponent.vue';
 
 const eventId = useRoute().params.id as string;
 const visible = ref(false);
+const event = ref(computed(() => useEventStore().getEvent()));
 
 onMounted(() => {
   useEventStore().init(eventId);
