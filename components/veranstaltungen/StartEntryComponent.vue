@@ -116,10 +116,7 @@ function changeAllTicketTypesStatus() {
     return;
   }
 
-  // Überprüfen, ob alle Tickettypen aktiviert sind
   const allActive = areAllTicketTypesActive()
-
-  // Wenn alle aktiv sind, setzen Sie alle auf inaktiv. Andernfalls setzen Sie alle auf aktiv.
   const newStatus = !allActive;
 
   for (let ticketType of ticketTypes.value) {
