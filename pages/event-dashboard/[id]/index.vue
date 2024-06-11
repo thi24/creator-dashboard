@@ -23,7 +23,9 @@
           <p>{{ event.address.zip }} {{ event.address.city }}, {{ event.address.state }}</p>
         </div>
       </div>
+
       <StartEntryComponent :event="event"></StartEntryComponent>
+
     </div>
   </ScrollingPage>
 </template>
@@ -45,12 +47,10 @@ onMounted(() => {
 
 <style scoped>
 @media (max-width: 900px) {
-
   .col-4 {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
   }
-
 }
 </style>

@@ -63,4 +63,12 @@ export function getTicketsBySearch(eventId: string, search: BookingSearch, page:
         relogIfTokenExpired(error)
         onError();
     });
+    axios.put(getBaseURL() + '/tickets/' + ticketId + '/status', {}, {})
+        .then(() => {
+            onSuccess();
+        })
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
+            onError();
+        });
 }
