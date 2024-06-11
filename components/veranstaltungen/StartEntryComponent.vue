@@ -9,7 +9,6 @@
           <span class="slider round"></span>
         </label>
       </div>
-
       <table class="entry-start-table" v-if="event.entryStarted">
         <tr>
           <th></th>
@@ -19,7 +18,7 @@
           <td>
             <p>Einlass für alle TicketTypen starten</p>
           </td>
-          <td>
+          <td class="slider-container">
             <label class="switch">
               <input @click="changeAllTicketTypesStatus()" type="checkbox" :checked="areAllTicketTypesActive()"
                      :class="{ active: areAllTicketTypesActive() }" :disabled="!event.entryStarted">
@@ -31,7 +30,7 @@
           <td>
             <p> {{ ticketType.name }}</p>
           </td>
-          <td>
+          <td class="slider-container">
             <label class="switch">
               <input @click="changeSingleTicketTypeStatus(ticketType)" type="checkbox"
                      :checked="ticketType.entryStarted"
@@ -63,7 +62,6 @@ onMounted(() => {
 
 const props = defineProps<{
   event: Event;
-
 }>()
 
 function changeEventStatus() {
@@ -71,6 +69,14 @@ function changeEventStatus() {
   let onSuccess = () => {
     if (props.event.entryStarted) {
       loadTicketTypes();
+    } else if (ticketTypes.value) {
+      for (let ticketType of ticketTypes.value) {
+        ticketType.entryStarted = false;
+        updateEntryStatus(ticketType, () => {
+        }, () => {
+        });
+
+      }
     }
   }
 
@@ -214,5 +220,11 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.slider-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0.5rem;
 }
 </style>

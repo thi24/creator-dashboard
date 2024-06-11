@@ -5,7 +5,10 @@
         Veranstaltung
       </NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'">Tickettypen</NuxtLink>
-      <NuxtLink :to="'/event-dashboard/' + eventId + '/sales/buchungen/0'" :class="{ active: useRoute().fullPath.includes('buchungen') || useRoute().fullPath.includes('tickets') }" @click="toggleSidebar">Sales</NuxtLink>
+      <NuxtLink :to="'/event-dashboard/' + eventId + '/sales/buchungen/0'"
+                :class="{ active: useRoute().fullPath.includes('buchungen') || useRoute().fullPath.includes('tickets') }"
+                @click="toggleSidebar">Sales
+      </NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'">Analyse</NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'">Stornierung</NuxtLink>
       <p v-if="event?.entryStarted" class="entry-button" @click="() => entryComponent.show()">Einlass</p>
@@ -26,18 +29,19 @@
           </NuxtLink>
           <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'" @click="toggleSidebar">Tickettypen
           </NuxtLink>
-          <NuxtLink :to="'/event-dashboard/' + eventId + '/sales/buchungen/0'" :class="{ active: useRoute().fullPath.includes('buchungen') || useRoute().fullPath.includes('tickets') }" @click="toggleSidebar">Sales
+          <NuxtLink :to="'/event-dashboard/' + eventId + '/sales/buchungen/0'"
+                    :class="{ active: useRoute().fullPath.includes('buchungen') || useRoute().fullPath.includes('tickets') }"
+                    @click="toggleSidebar">Sales
           </NuxtLink>
           <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'" @click="toggleSidebar">Analyse
           </NuxtLink>
           <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'" @click="toggleSidebar">Stornierung
           </NuxtLink>
-          <NuxtLink @click="toggleSidebar(); entryComponent.show()">Einlass</NuxtLink>
+          <NuxtLink v-if="event?.entryStarted" @click="toggleSidebar(); entryComponent.show()">Einlass</NuxtLink>
           <NuxtLink :to="'../../veranstaltungen'">Zurück zu allen Veranstaltungen</NuxtLink>
         </div>
       </div>
     </nav>
-
     <div>
       <NuxtPage></NuxtPage>
     </div>
