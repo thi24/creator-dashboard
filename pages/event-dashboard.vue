@@ -4,11 +4,14 @@
       <NuxtLink :to="'/event-dashboard/' + eventId">
         Veranstaltung
       </NuxtLink>
-      <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'">Tickets</NuxtLink>
-      <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'" :class="{ active: useRoute().fullPath.includes('buchungen') }">Buchungen</NuxtLink>
+      <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'">Tickettypen</NuxtLink>
+      <NuxtLink :to="'/event-dashboard/' + eventId + '/sales/buchungen/0'"
+                :class="{ active: useRoute().fullPath.includes('buchungen') || useRoute().fullPath.includes('tickets') }"
+                @click="toggleSidebar">Sales
+      </NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'">Analyse</NuxtLink>
       <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'">Stornierung</NuxtLink>
-      <p class="entry-button" @click="() => entryComponent.show()">Einlass</p>
+      <p v-if="event?.entryStarted" class="entry-button" @click="() => entryComponent.show()">Einlass</p>
     </nav>
 
     <nav class="toggled-nav-bar">
@@ -24,25 +27,26 @@
           <NuxtLink :to="'/event-dashboard/' + eventId" @click="toggleSidebar">
             Veranstaltung
           </NuxtLink>
-          <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'" @click="toggleSidebar">Tickets
+          <NuxtLink :to="'/event-dashboard/' + eventId + '/ticket-typen'" @click="toggleSidebar">Tickettypen
           </NuxtLink>
-          <NuxtLink :to="'/event-dashboard/' + eventId + '/buchungen/0'" :class="{ active: useRoute().fullPath.includes('buchungen') }" @click="toggleSidebar">Buchungen
+          <NuxtLink :to="'/event-dashboard/' + eventId + '/sales/buchungen/0'"
+                    :class="{ active: useRoute().fullPath.includes('buchungen') || useRoute().fullPath.includes('tickets') }"
+                    @click="toggleSidebar">Sales
           </NuxtLink>
           <NuxtLink :to="'/event-dashboard/' + eventId + '/analyse'" @click="toggleSidebar">Analyse
           </NuxtLink>
           <NuxtLink :to="'/event-dashboard/' + eventId + '/storno-buchung'" @click="toggleSidebar">Stornierung
           </NuxtLink>
-          <NuxtLink @click="toggleSidebar(); entryComponent.show()">Einlass</NuxtLink>
+          <NuxtLink v-if="event?.entryStarted" @click="toggleSidebar(); entryComponent.show()">Einlass</NuxtLink>
           <NuxtLink :to="'../../veranstaltungen'">Zurück zu allen Veranstaltungen</NuxtLink>
         </div>
       </div>
     </nav>
-
     <div>
       <NuxtPage></NuxtPage>
     </div>
   </div>
-  <EntryComponent ref="entryComponent"></EntryComponent>
+  <EntryComponent v-if="event?.entryStarted" ref="entryComponent"></EntryComponent>
 </template>
 
 <script setup lang="ts">
@@ -51,6 +55,7 @@ import EntryComponent from '~/components/EntryComponent.vue';
 
 const eventId = useRoute().params.id as string;
 const visible = ref(false);
+const event = ref(computed(() => useEventStore().getEvent()));
 
 onMounted(() => {
   useEventStore().init(eventId);

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="bookings" class="booking-page">
+    <div v-if="bookings" class="sales-table-container">
         <table class="tile ticket-container">
             <tr>
                 <th>Nummer</th>
@@ -11,7 +11,7 @@
             <BookingComponent v-for="booking in bookings" :booking="booking"></BookingComponent>
         </table>
         <div class="center-center" v-if="pageSize">
-            <PaginationComponent :count="Number(pageSize)" :current="pageIndex" :on-change="(page: number) => useRouter().push('/event-dashboard/' + event?.id + '/buchungen/' + page)"></PaginationComponent>
+            <PaginationComponent :count="Number(pageSize)" :current="pageIndex" :on-change="(page: number) => useRouter().push('/event-dashboard/' + event?.id + '/sales/buchungen/' + page)"></PaginationComponent>
         </div>
     </div>
     <LoadingComponent :loading="!bookings"></LoadingComponent>
@@ -38,7 +38,7 @@ const pageIndex = Number(useRoute().params.page as string);
 
 watch(search, (value) => {
     if(pageIndex !== 0) {
-        useRouter().push('/event-dashboard/' + event.value?.id + '/buchungen/0')
+        useRouter().push('/event-dashboard/' + event.value?.id + '/sales/buchungen/0')
     } else {
         loadByPage(value, 0);
     }
@@ -63,16 +63,10 @@ function loadByPage(search: BookingSearch, page: number) {
 .ticket-container td, .ticket-container th {
     padding: 0.5rem 1rem;
 }
-table td:first-of-type { 
-    width: min-content;
-}
 </style>
 
 <style scoped>
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
-}
+
 th {
     border-bottom: 1px solid lightgray;
     text-align: left;
@@ -81,13 +75,5 @@ th {
 .ticket-container {
     padding: 0px;
     width: 100%;
-}
-.booking-page {
-    display: grid;
-    gap: 1rem;
-    width: 100%;
-    height: 100%;
-    grid-template-rows: 1fr auto;
-    align-items: flex-start;
 }
 </style>

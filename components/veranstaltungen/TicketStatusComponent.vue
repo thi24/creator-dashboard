@@ -1,5 +1,5 @@
 <template>
-  <p class="ticket-label" v-if="status != null" :class="{ pending: status.toString() === TicketStatus[TicketStatus.PENDING],
+  <p class="ticket-label" v-if="status != null" :class="{
         valid: status.toString() === TicketStatus[TicketStatus.VALID],
         redeemed: status.toString() === TicketStatus[TicketStatus.REDEEMED],
         cancelled: status.toString() === TicketStatus[TicketStatus.CANCELLED]
@@ -14,9 +14,6 @@ defineProps<{
 }>();
 
 function getLabel(status: TicketStatus | string) {
-  if (status.toString() === TicketStatus[TicketStatus.PENDING]) {
-    return "Ausstehend";
-  }
   if (status.toString() === TicketStatus[TicketStatus.VALID]) {
     return "Gültig";
   }
@@ -41,16 +38,12 @@ function getLabel(status: TicketStatus | string) {
   color: white;
 }
 
-.pending {
-  background-color: #8a8a8a;
-}
-
 .valid {
   background-color: #08d20f;
 }
 
 .redeemed {
-  background-color: #d21508;
+  background-color: #a0a0a0;
 }
 
 .cancelled {

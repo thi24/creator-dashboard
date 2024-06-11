@@ -10,5 +10,6 @@ export class Event {
     address: Address = new Address("", "", "", "");
     description: string | undefined = undefined as string | undefined;
     ticketTypes: TicketType[] | undefined = undefined as TicketType[] | undefined;
+    entryStarted: boolean | undefined = undefined as boolean | undefined;
 
 }

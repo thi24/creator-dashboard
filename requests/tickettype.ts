@@ -6,12 +6,6 @@ function getBaseURL() {
     return useRuntimeConfig().public.eventService.baseURL;
 }
 
-function getToken() {
-    const token = useCookie('token')
-    return token.value
-}
-
-
 export function getAllTicketTypes(id: string, onSuccess: (TicketType: TicketType[]) => void, onError: () => void) {
     let baseURL = getBaseURL();
     axios.get<TicketType[]>(baseURL + "/ticket-types?eventId=" + id, {})
@@ -39,6 +33,18 @@ export function saveTicketType(TicketType: TicketType, onSuccess: (TicketType: T
 export function updateTicketType(ticketType: TicketType, onSuccess: (TicketType: TicketType) => void, onError: () => void) {
     let baseURL = getBaseURL();
     axios.put(baseURL + "/ticket-types/" + ticketType.id, ticketType, {})
+        .then((response) => {
+            onSuccess(response.data);
+        })
+        .catch((error: AxiosError) => {
+            relogIfTokenExpired(error)
+            onError();
+        });
+}
+
+export function updateEntryStatus(ticketType: TicketType, onSuccess: (TicketType: TicketType) => void, onError: () => void) {
+    let baseURL = getBaseURL();
+    axios.patch(baseURL + "/ticket-types/" + ticketType.id, ticketType, {})
         .then((response) => {
             onSuccess(response.data);
         })

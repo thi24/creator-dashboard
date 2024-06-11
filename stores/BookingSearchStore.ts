@@ -1,8 +1,6 @@
 import { defineStore } from "pinia"
 import { BookingSearch } from "~/classes/BookingSearch";
-import { Event } from "~/classes/Event";
 import { TicketStatus } from "~/classes/TicketStatus";
-import { getEventById } from "~/requests/event";
 
 export const useBookingSearchStore = defineStore('booking-search', {
     state: () => ({ 
@@ -15,6 +13,16 @@ export const useBookingSearchStore = defineStore('booking-search', {
         },
         getTicketStatus: (state) => {
             return () => state.ticketStatus;
+        }
+    },
+    actions: {
+        toggle(status: TicketStatus) {
+            const exists = this.search.status.includes(status);
+            if(exists) {
+                this.search.status = this.search.status.filter(item => item !== status);
+            } else {
+                this.search.status.push(status);
+            }
         }
     }
   });
