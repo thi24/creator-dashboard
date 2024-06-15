@@ -4,8 +4,8 @@
       <div class="stornoGrid ticket">
         <div class="ticket__id">
           <p>{{ storno.ticket?.bookingItem?.ticketType?.name }}</p>
-          <p class="grayed-out">{{ storno.id }}</p>
-          <p class="grayed-out">{{ storno.ticket?.bookingItem?.id }}</p>
+          <p class="grayed-out id_padding">{{ storno.id }}</p>
+          <p class="grayed-out id_padding">{{ storno.ticket?.bookingItem?.id }}</p>
         </div>
         <div class="customer-center">
           <p>{{ storno.booking?.customer?.email }}</p>
@@ -65,6 +65,10 @@ defineProps<{
   padding: 10px 0px 0px 5px;
 }
 
+.id_padding {
+  padding: 5px 0px 5px 0px;
+}
+
 .stornoGrid {
   display: grid;
   grid-template-columns: 10rem 13rem 7rem 7rem 7rem;
@@ -73,14 +77,14 @@ defineProps<{
 
 .accept__BT {
   margin: 0px 0px 0px 10px;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }
 
 .decline__BT {
   margin: 0px 0px 0px 10px;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }
