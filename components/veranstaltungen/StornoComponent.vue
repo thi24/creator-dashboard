@@ -4,12 +4,11 @@
       <div class="stornoGrid ticket">
         <div class="ticket__id">
           <p>{{ storno.ticket?.bookingItem?.ticketType?.name }}</p>
-          <p class="grayed-out">{{ storno.stornoId }}</p>
+          <p class="grayed-out">{{ storno.id }}</p>
           <p class="grayed-out">{{ storno.ticket?.bookingItem?.id }}</p>
         </div>
-              <!--Soll rein?-->
         <div class="customer-center">
-          <p>{{ storno.ticket?.customer?.email }}</p>
+          <p>{{ storno.booking?.customer?.email }}</p>
         </div>
         <div v-if="storno.ticket?.price" class="customer-center">
           <p>{{ (storno.ticket?.price / 100).toFixed(2)  }}€</p>
@@ -19,24 +18,24 @@
         </div>
         <div>
           <div v-if="storno.cancelStatus == TicketStatus.PENDING" class="accept__BT">
-            <p @onClick="
+            <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 true,
-                storno.stornoId)">Accept</p>
+                storno.id)">Accept</p>
           </div>
           <div v-if="storno.cancelStatus == TicketStatus.PENDING" class="decline__BT">
-            <p @onClick="
+            <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 false,
-                storno.stornoId)">Decline</p>
+                storno.id)">Decline</p>
           </div>
           <div v-if="storno.cancelStatus == TicketStatus.VALID">
             <p>Genehmigt</p>
@@ -68,7 +67,7 @@ defineProps<{
 
 .stornoGrid {
   display: grid;
-  grid-template-columns: 10rem 13rem 7rem 5rem 5rem;
+  grid-template-columns: 10rem 13rem 7rem 7rem 7rem;
   grid-auto-flow: column;
 }
 
