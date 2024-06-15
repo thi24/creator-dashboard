@@ -4,8 +4,8 @@
       <div class="stornoGrid ticket">
         <div class="ticket__id">
           <p>{{ storno.ticket?.bookingItem?.ticketType?.name }}</p>
-          <p class="grayed-out id_padding">{{ storno.id }}</p>
-          <p class="grayed-out id_padding">{{ storno.ticket?.bookingItem?.id }}</p>
+          <p class="grayed-out id__padding">{{ storno.id }}</p>
+          <p class="grayed-out id__padding">{{ storno.ticket?.bookingItem?.id }}</p>
         </div>
         <div class="customer-center">
           <p>{{ storno.booking?.customer?.email }}</p>
@@ -17,7 +17,7 @@
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
         <div>
-          <div v-if="storno.cancelStatus == TicketStatus.PENDING" class="accept__BT">
+          <div v-if="storno.cancelStatus == TicketStatus.PENDING">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -25,9 +25,9 @@
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 true,
-                storno.id)">Accept</p>
+                storno.id)" class="accept__BT">Accept</p>
           </div>
-          <div v-if="storno.cancelStatus == TicketStatus.PENDING" class="decline__BT">
+          <div v-if="storno.cancelStatus == TicketStatus.PENDING">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -35,7 +35,7 @@
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 false,
-                storno.id)">Decline</p>
+                storno.id)" class="decline__BT">Decline</p>
           </div>
           <div v-if="storno.cancelStatus == TicketStatus.VALID">
             <p>Genehmigt</p>
@@ -65,7 +65,7 @@ defineProps<{
   padding: 10px 0px 0px 5px;
 }
 
-.id_padding {
+.id__padding {
   padding: 5px 0px 5px 0px;
 }
 
@@ -76,14 +76,12 @@ defineProps<{
 }
 
 .accept__BT {
-  margin: 0px 0px 0px 10px;
   padding: 0px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }
 
 .decline__BT {
-  margin: 0px 0px 0px 10px;
   padding: 0px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
