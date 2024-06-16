@@ -90,6 +90,18 @@ function save() {
     errorMessage.value = "Bitte Eventname eingeben";
     return
   }
+  if (event.value.startsAt == undefined) {
+    errorMessage.value = "Bitte Startdatum eingeben";
+    return
+  }
+  if (event.value.endsAt == undefined) {
+    errorMessage.value = "Bitte Enddatum eingeben";
+    return
+  }
+  if (event.value.endsAt < event.value.startsAt) {
+    errorMessage.value = "Enddatum muss nach Startdatum liegen";
+    return
+  }
 
   const eventJSON = JSON.stringify(event.value)
   const eventBlob = new Blob([eventJSON], {type: 'application/json'})

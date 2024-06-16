@@ -81,6 +81,26 @@ function _updateTicketType() {
     errorMessage.value = "Bitte Steuerschlüssel eingeben";
     return
   }
+  if (ticketType.value.taxRate > 100) {
+    errorMessage.value = "Steuerschlüssel darf nicht größer als 100 sein";
+    return
+  }
+  if (ticketType.value.taxRate < 0) {
+    errorMessage.value = "Steuerschlüssel darf nicht kleiner als 0 sein";
+    return
+  }
+  if (ticketType.value.validFrom == undefined) {
+    errorMessage.value = "Bitte Verkaufsstart eingeben";
+    return
+  }
+  if (ticketType.value.validTo == undefined) {
+    errorMessage.value = "Bitte Verkaufsende eingeben";
+    return
+  }
+  if (ticketType.value.validFrom > ticketType.value.validTo) {
+    errorMessage.value = "Verkaufsende muss nach Verkaufstart liegen";
+    return
+  }
 
   let onSuccess = () => {
     loading.value = false;
