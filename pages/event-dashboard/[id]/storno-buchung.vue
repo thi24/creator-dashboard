@@ -5,7 +5,7 @@
         <h2>Storno Anfragen</h2>
         <p>Event Name</p>
       </div>
-      <LoadingPage :loading="loading">
+      <LoadingPage :loading = false>
         <div class="storno">
           <div class="title ticket-container">
             <div class="stornoGrid ticket">

@@ -17,7 +17,7 @@
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
         <div>
-          <div v-if="storno.cancelStatus == CancellationStatus.PENDING" class="accept__BT">
+          <div class="accept__BT" v-if="storno.cancelStatus == CancellationStatus.PENDING">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -27,7 +27,7 @@
                 true,
                 storno.id)">Accept</p>
           </div>
-          <div v-if="storno.cancelStatus == CancellationStatus.PENDING" class="decline__BT">
+          <div class="decline__BT" v-if="storno.cancelStatus == CancellationStatus.PENDING">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
