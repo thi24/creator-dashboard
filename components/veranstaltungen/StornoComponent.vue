@@ -66,26 +66,22 @@ defineProps<{
   padding: 10px 0px 0px 5px;
 }
 
-.id__padding {
-  padding: 5px 0px 5px 0px;
-}
-
 .stornoGrid {
   display: grid;
-  grid-template-columns: 10rem 13rem 7rem 7rem 7rem;
+  grid-template-columns: 10rem 13rem 7rem 5rem 5rem;
   grid-auto-flow: column;
 }
 
 .accept__BT {
-  margin: 5px 0px 5px 0px;
-  padding: 0px 0px 5px 0px;
+  margin: 0px 0px 0px 10px;
+  padding: 0px 10px 0px 10px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }
 
 .decline__BT {
-  margin: 5px 0px 5px 0px;
-  padding: 0px 0px 5px 0px;
+  margin: 0px 0px 0px 10px;
+  padding: 0px 10px 0px 10px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }

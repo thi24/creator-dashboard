@@ -1,11 +1,12 @@
+
 <template>
-  <ScrollingPage :loading = false>
+  <ScrollingPage :loading ="!event">
     <div class="content ticket-page">
       <div>
         <h2>Storno Anfragen</h2>
         <p>Event Name</p>
       </div>
-      <LoadingPage :loading="loading">
+      <LoadingPage :loading="!stornos">
         <div class="storno">
           <div class="title ticket-container">
             <div class="stornoGrid ticket">
@@ -44,6 +45,8 @@ import { getStorno } from '~/requests/storno';
 import LoadingPage from '~/components/util/LoadingPage.vue';
 
 const stornos: Ref<Storno[] | undefined> = ref(undefined);
+
+const event = ref(computed(() => useEventStore().getEvent()));
 
 onMounted(() => {
     loadStornos();
