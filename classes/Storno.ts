@@ -1,6 +1,6 @@
 import type { Booking } from "./Booking";
 import type { Ticket } from "./Ticket";
-import type { TicketStatus } from "./TicketStatus";
+import type { CancellationStatus } from "./CancellationStatus";
 
 export class Storno {
     
@@ -8,9 +8,9 @@ export class Storno {
     ticket: Ticket | undefined = undefined as Ticket | undefined;
     booking: Booking | undefined = undefined as Booking | undefined;
     requestedAt: Date | undefined = undefined as Date | undefined;
-    cancelStatus: TicketStatus | undefined = undefined as TicketStatus | undefined;
+    cancelStatus: CancellationStatus | undefined = undefined as CancellationStatus | undefined;
 
-    constructor(stornoId?: string, ticket?: Ticket, booking?: Booking, requestedAt?: Date, cancelStatus?: TicketStatus) {
+    constructor(stornoId?: string, ticket?: Ticket, booking?: Booking, requestedAt?: Date, cancelStatus?: CancellationStatus) {
         this.id = stornoId;
         this.ticket = ticket;
         this.booking = booking;

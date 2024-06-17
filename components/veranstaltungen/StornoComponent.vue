@@ -17,7 +17,7 @@
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
         <div>
-          <div v-if="storno.cancelStatus == TicketStatus.PENDING">
+          <div v-if="storno.cancelStatus == CancellationStatus.PENDING" class="accept__BT">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -25,9 +25,9 @@
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 true,
-                storno.id)" class="accept__BT">Accept</p>
+                storno.id)">Accept</p>
           </div>
-          <div v-if="storno.cancelStatus == TicketStatus.PENDING">
+          <div v-if="storno.cancelStatus == CancellationStatus.PENDING" class="decline__BT">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -35,12 +35,12 @@
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 false,
-                storno.id)" class="decline__BT">Decline</p>
+                storno.id)">Decline</p>
           </div>
-          <div v-if="storno.cancelStatus == TicketStatus.VALID">
+          <div v-if="storno.cancelStatus == CancellationStatus.ACCEPTED">
             <p>Genehmigt</p>
           </div>
-          <div v-if="storno.cancelStatus == TicketStatus.CANCELLED">
+          <div v-if="storno.cancelStatus == CancellationStatus.DECLINED">
             <p>Abgelehnt</p>
           </div>
         </div>
@@ -52,7 +52,7 @@
 <script setup lang="ts">
 import {Storno} from '~/classes/Storno';
 import dayjs from 'dayjs';
-import { TicketStatus } from '~/classes/TicketStatus';
+import { CancellationStatus } from '~/classes/CancellationStatus';
 import { responseToProcessEngine } from '~/requests/storno';
 
 defineProps<{
@@ -76,12 +76,14 @@ defineProps<{
 }
 
 .accept__BT {
+  margin: 5px 0px 5px 0px;
   padding: 0px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }
 
 .decline__BT {
+  margin: 5px 0px 5px 0px;
   padding: 0px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
