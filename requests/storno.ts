@@ -28,9 +28,9 @@ export function responseToProcessEngine(eventId?: string, ticketId?: string, pri
     },
     {
         headers: {
-            "Accept": "/",
-            //"Authorization": "Bearer ",
-            "Conent-Type": "application/json"
+            //"Accept": "/",
+            "Authorization": "Bearer ",
+            "Content-Type": "application/json"
         }
         
     })

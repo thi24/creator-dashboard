@@ -4,11 +4,12 @@
       <div class="stornoGrid ticket">
         <div class="ticket__id">
           <p>{{ storno.ticket?.bookingItem?.ticketType?.name }}</p>
-          <p class="grayed-out id__padding">{{ storno.id }}</p>
-          <p class="grayed-out id__padding">{{ storno.ticket?.bookingItem?.id }}</p>
+          <p class="grayed-out">{{ storno.id }}</p>
+          <p class="grayed-out">{{ storno.ticket?.bookingItem?.id }}</p>
         </div>
+              <!--Soll rein?-->
         <div class="customer-center">
-          <p>{{ storno.booking?.customer?.email }}</p>
+          <p>{{ storno.ticket?.customer?.email }}</p>
         </div>
         <div v-if="storno.ticket?.price" class="customer-center">
           <p>{{ (storno.ticket?.price / 100).toFixed(2)  }}€</p>
@@ -17,8 +18,8 @@
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
         <div>
-          <div class="accept__BT" v-if="storno.cancelStatus == CancellationStatus.PENDING">
-            <p @click="
+          <div v-if="storno.cancelStatus == CancellationStatus.PENDING" class="accept__BT">
+            <p @onClick="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
@@ -27,8 +28,8 @@
                 true,
                 storno.id)">Accept</p>
           </div>
-          <div class="decline__BT" v-if="storno.cancelStatus == CancellationStatus.PENDING">
-            <p @click="
+          <div v-if="storno.cancelStatus == CancellationStatus.PENDING" class="decline__BT">
+            <p @onClick="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,

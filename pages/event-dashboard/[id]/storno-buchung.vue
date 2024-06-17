@@ -5,7 +5,7 @@
         <h2>Storno Anfragen</h2>
         <p>Event Name</p>
       </div>
-      <LoadingPage :loading = false>
+      <LoadingPage :loading="loading">
         <div class="storno">
           <div class="title ticket-container">
             <div class="stornoGrid ticket">
@@ -64,7 +64,7 @@ function loadStornos() {
 
 .stornoGrid {
   display: grid;
-  grid-template-columns: 10rem 13rem 7rem 7rem 7rem;
+  grid-template-columns: 10rem 13rem 7rem 5rem 5rem;
   grid-auto-flow: column;
 }
 
