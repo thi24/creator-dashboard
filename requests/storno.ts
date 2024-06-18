@@ -17,8 +17,10 @@ export function getStorno(eventId: string, onSuccess: (stornos: Storno[]) => voi
 
 //Request to ProcessEngine -> to be defined
 export function responseToProcessEngine(eventId?: string, ticketId?: string, price?: number, kundenId?: string, response?: boolean, stornoId?: string) {
-    const peToken = import.meta.env.PE_TOKEN;
-    console.log(peToken);
+    const peToken = import.meta.env.PE_TOKEN
+    const token = useCookie('id_token')
+    console.log(token)
+    console.log(peToken)
     axios.post("https://engine.pe.benevolo.de/v1.0/messages/adminResponse1?execution_mode=synchronous",
     {
         "eventId": eventId, 
@@ -31,7 +33,7 @@ export function responseToProcessEngine(eventId?: string, ticketId?: string, pri
     {
         headers: {
             //"Accept": "/",
-            "Authorization": "Bearer " + {peToken},
+            "Authorization": "Bearer " + token, 
             "Content-Type": "application/json"
         }
         
