@@ -17,11 +17,11 @@
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
         <div>
-          <p class="textCenter">{{ storno.status }}</p>
+          <p>{{ storno.status }}</p>
         </div>
         <div>
           <div class="accept__BT">
-            <p @onClick="
+            <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
@@ -31,7 +31,7 @@
                 storno.id)" class="textCenter">Accept</p>
           </div>
           <div class="decline__BT">
-            <p @onClick="
+            <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
