@@ -1,8 +1,9 @@
 import axios, {AxiosError, type AxiosResponse} from "axios";
 
 axios.interceptors.request.use((config) => {
-    // Do not add Authorization header for login request
-    if (config.url !== "/api/login") {
+    // Do not add Authorization header for login & request to PE
+    const externalUrl = "https://engine.pe.benevolo.de/v1.0/messages/adminResponse1?execution_mode=synchronous"
+    if (config.url !== "/api/login" && config.url !== externalUrl) {
         const token = requireToken();
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
