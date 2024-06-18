@@ -35,6 +35,9 @@
         </div>
         <StornoComponent v-for="storno in stornos" :storno="storno">
         </StornoComponent>
+        <div>
+          <p class="grayed-out textCenter headline">Keine weiteren Stornoanfragen vorhanden</p>
+        </div>
       </LoadingPage>
     </div>
   </ScrollingPage>
@@ -66,6 +69,10 @@ function loadStornos() {
 <style scoped>
 .headline {
   padding: 10px 0px 0px 5px;
+}
+
+.textCenter {
+  text-align: center;
 }
 
 .stornoGrid {
