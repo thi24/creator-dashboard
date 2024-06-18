@@ -17,6 +17,7 @@ jobs:
       TICKET_SERVICE_BASE_URL: https://benevolo.de/api/ticket-service
       EVENT_SERVICE_BASE_URL: https://benevolo.de/api/event-service
       ANALYTICS_SERVICE_BASE_URL: https://benevolo.de/api/analytics-service
+      PE_TOKEN: ${{ secrets.PE_TOKEN }}
 
     steps:
     - name: Checkout
