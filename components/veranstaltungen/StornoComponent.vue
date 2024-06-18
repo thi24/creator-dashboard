@@ -17,7 +17,10 @@
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
         <div>
-          <div v-if="storno.status === CancellationStatus.PENDING" class="accept__BT">
+          <p class="textCenter">{{ storno.status }}</p>
+        </div>
+        <div>
+          <div class="accept__BT">
             <p @onClick="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -27,7 +30,7 @@
                 true,
                 storno.id)" class="textCenter">Accept</p>
           </div>
-          <div v-if="storno.status === CancellationStatus.PENDING" class="decline__BT">
+          <div class="decline__BT">
             <p @onClick="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -36,12 +39,6 @@
                 storno.booking?.customer?.stripeId,
                 false,
                 storno.id)" class="textCenter">Decline</p>
-          </div>
-          <div v-if="storno.status === CancellationStatus.ACCEPTED">
-            <p class="textCenter">Genehmigt</p>
-          </div>
-          <div v-if="storno.status === CancellationStatus.DECLINED">
-            <p class="textCenter">Abgelehnt</p>
           </div>
         </div>
       </div>
@@ -75,7 +72,7 @@ defineProps<{
 
 .stornoGrid {
   display: grid;
-  grid-template-columns: 10rem 13rem 7rem 5rem 5rem;
+  grid-template-columns: 10rem 13rem 7rem 7rem 7rem 7rem;
   grid-auto-flow: column;
 }
 
