@@ -1,13 +1,14 @@
 <template>
   <div class="tickettype">
     <div class="status-wrapper">
-      <div v-if="ticketType.active && isValidDate" class="status">
+      <div v-if="ticketType.active && isValidDate && !ticketType.entryStarted" class="status">
         <span class="dot active"></span>
         <p class="status-text">Verkauf ongoing</p>
       </div>
-      <div v-else-if="!isValidDate" class="status">
+      <div v-else-if="!isValidDate || ticketType.entryStarted" class="status">
         <span class="dot date"></span>
-        <p class="status-text">Außerhalb des Verkaufszeitraums</p>
+        <p class="status-text" v-if="!isValidDate">Außerhalb des Verkaufszeitraums</p>
+        <p class="status-text" v-if="ticketType.entryStarted">Einlass gestartet</p>
       </div>
       <div v-else class="status">
         <span class="dot stopped"></span>
