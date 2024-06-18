@@ -31,6 +31,12 @@ export default eventHandler(async (event) => {
             httpOnly: false,
             maxAge: 60 * 120 // 10 min
         });
+        setCookie(event, "id_token", tokens.idToken, {
+            secure: true, // set to false in localhost
+            path: "/",
+            httpOnly: false,
+            maxAge: 60 * 120 // 10 min
+        });
         // return { token: tokens.accessToken}
     } catch (e) {
         if (e instanceof OAuth2RequestError) {

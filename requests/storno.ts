@@ -33,7 +33,7 @@ export function responseToProcessEngine(eventId?: string, ticketId?: string, pri
     {
         headers: {
             //"Accept": "/",
-            "Authorization": "Bearer " + token.value, 
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"
         }
         
