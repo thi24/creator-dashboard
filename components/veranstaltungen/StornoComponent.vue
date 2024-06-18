@@ -4,12 +4,11 @@
       <div class="stornoGrid ticket">
         <div class="ticket__id">
           <p>{{ storno.ticket?.bookingItem?.ticketType?.name }}</p>
-          <p class="grayed-out">{{ storno.id }}</p>
-          <p class="grayed-out">{{ storno.ticket?.bookingItem?.id }}</p>
+          <p class="grayed-out id__padding">{{ storno.id }}</p>
+          <p class="grayed-out id__padding">{{ storno.ticket?.bookingItem?.id }}</p>
         </div>
-              <!--Soll rein?-->
         <div class="customer-center">
-          <p>{{ storno.ticket?.customer?.email }}</p>
+          <p>{{ storno.booking?.customer?.email }}</p>
         </div>
         <div v-if="storno.ticket?.price" class="customer-center">
           <p>{{ (storno.ticket?.price / 100).toFixed(2)  }}€</p>
@@ -18,7 +17,7 @@
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
         <div>
-          <div v-if="storno.cancelStatus == CancellationStatus.PENDING" class="accept__BT">
+          <div v-if="storno.status == CancellationStatus.PENDING" class="accept__BT">
             <p @onClick="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -26,9 +25,9 @@
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 true,
-                storno.id)">Accept</p>
+                storno.id)" class="textCenter">Accept</p>
           </div>
-          <div v-if="storno.cancelStatus == CancellationStatus.PENDING" class="decline__BT">
+          <div v-if="storno.status == CancellationStatus.PENDING" class="decline__BT">
             <p @onClick="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -36,13 +35,13 @@
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 false,
-                storno.id)">Decline</p>
+                storno.id)" class="textCenter">Decline</p>
           </div>
-          <div v-if="storno.cancelStatus == CancellationStatus.ACCEPTED">
-            <p>Genehmigt</p>
+          <div v-if="storno.status == CancellationStatus.ACCEPTED">
+            <p class="textCenter">Genehmigt</p>
           </div>
-          <div v-if="storno.cancelStatus == CancellationStatus.DECLINED">
-            <p>Abgelehnt</p>
+          <div v-if="storno.status == CancellationStatus.DECLINED">
+            <p class="textCenter">Abgelehnt</p>
           </div>
         </div>
       </div>
@@ -66,6 +65,14 @@ defineProps<{
   padding: 10px 0px 0px 5px;
 }
 
+.textCenter {
+  text-align: center;
+}
+
+.id__padding {
+  padding: 5px 0px 5px 0px;
+}
+
 .stornoGrid {
   display: grid;
   grid-template-columns: 10rem 13rem 7rem 5rem 5rem;
@@ -73,15 +80,13 @@ defineProps<{
 }
 
 .accept__BT {
-  margin: 0px 0px 0px 10px;
-  padding: 0px 10px 0px 10px;
+  margin: 5px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }
 
 .decline__BT {
-  margin: 0px 0px 0px 10px;
-  padding: 0px 10px 0px 10px;
+  margin: 5px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }

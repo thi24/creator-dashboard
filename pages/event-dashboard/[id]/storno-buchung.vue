@@ -4,7 +4,7 @@
     <div class="content ticket-page">
       <div>
         <h2>Storno Anfragen</h2>
-        <p>Event Name</p>
+        <p> {{ event?.eventName }}</p>
       </div>
       <LoadingPage :loading="!stornos">
         <div class="storno">
@@ -67,7 +67,7 @@ function loadStornos() {
 
 .stornoGrid {
   display: grid;
-  grid-template-columns: 10rem 13rem 7rem 5rem 5rem;
+  grid-template-columns: 10rem 13rem 7rem 7rem 7rem;
   grid-auto-flow: column;
 }
 
