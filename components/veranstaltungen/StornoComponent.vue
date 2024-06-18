@@ -40,8 +40,8 @@
           <div v-if="storno.status == CancellationStatus.ACCEPTED">
             <p class="textCenter">Genehmigt</p>
           </div>
-          <div v-if="storno.status == CancellationStatus.DECLINED">
-            <p class="textCenter">Abgelehnt</p>
+          <div>
+            <p class="textCenter">{{ storno.status }}</p>
           </div>
         </div>
       </div>
