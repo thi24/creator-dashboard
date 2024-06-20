@@ -20,7 +20,7 @@
           <p>{{ storno.status }}</p>
         </div>
         <div>
-          <div v-if="storno.status == CancellationStatus.PENDING" class="accept__BT">
+          <div class="accept__BT">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -30,7 +30,7 @@
                 true,
                 storno.id)" class="textCenter">Accept</p>
           </div>
-          <div v-if="storno.status == CancellationStatus.PENDING" class="decline__BT">
+          <div class="decline__BT">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
