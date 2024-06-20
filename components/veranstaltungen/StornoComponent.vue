@@ -30,7 +30,7 @@
                 true,
                 storno.id)" class="textCenter">Accept</p>
           </div>
-          <div v-if="storno.status === CancellationStatus.PENDING" class="decline__BT">
+          <div v-if="storno.status === 0" class="decline__BT">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
