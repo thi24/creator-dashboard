@@ -28,7 +28,7 @@
         </tr>
         <tr v-for="ticketType in ticketTypes">
           <td>
-            <p> {{ ticketType.name }}</p>
+            <p class="tickettype-name"> {{ ticketType.name }}</p>
           </td>
           <td class="slider-container">
             <label class="switch">
@@ -53,6 +53,7 @@ import {getAllTicketTypes, updateEntryStatus} from "~/requests/tickettype";
 
 const loading = ref(false);
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
+const eventId = useRoute().params.id as string;
 
 onMounted(() => {
   loadTicketTypes();
@@ -101,7 +102,6 @@ function changeSingleTicketTypeStatus(ticketType: TicketType) {
 
 function loadTicketTypes() {
   loading.value = true;
-  const eventId = useRoute().params.id as string;
 
   let onSuccess = (_ticketTypes: TicketType[]) => {
     ticketTypes.value = _ticketTypes;
@@ -206,7 +206,6 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
@@ -223,5 +222,9 @@ input:checked + .slider:before {
   display: flex;
   justify-content: flex-end;
   padding-right: 0.5rem;
+}
+
+.tickettype-name {
+  padding-left: 0.5rem;
 }
 </style>
