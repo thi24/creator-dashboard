@@ -55,9 +55,7 @@ const loading = ref(false);
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
 
 onMounted(() => {
-  if (props.event.entryStarted) {
-    loadTicketTypes();
-  }
+  loadTicketTypes();
 })
 
 const props = defineProps<{
@@ -67,18 +65,17 @@ const props = defineProps<{
 function changeEventStatus() {
   props.event.entryStarted = !props.event.entryStarted;
   let onSuccess = () => {
-    if (props.event.entryStarted) {
-      loadTicketTypes();
-    } else if (ticketTypes.value) {
+    if (ticketTypes.value) {
       for (let ticketType of ticketTypes.value) {
-        ticketType.entryStarted = false;
-        updateEntryStatus(ticketType, () => {
-        }, () => {
-        });
-
+        if (!props.event.entryStarted && ticketType.entryStarted) {
+          changeSingleTicketTypeStatus(ticketType)
+        } else if (props.event.entryStarted && !ticketType.entryStarted) {
+          changeSingleTicketTypeStatus(ticketType)
+        }
       }
     }
   }
+
 
   let onError = () => {
   };
