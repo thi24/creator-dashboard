@@ -22,6 +22,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 
+    
+    - name:
+      uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: http://37.27.45.27:9000
 
     - name: Log in to the Container registry
       uses: docker/login-action@v3
