@@ -2,8 +2,9 @@
        <div class="page">
         <div class="login-container tile">
             <h1>Benevolo Login</h1>
+            <p>Verwalten Sie Ihre Events und verkaufen Sie Tickets mühelos – alles an einem Ort für Ihre Veranstaltung!</p>
             <div class="social-logins">
-                <UiButton class="button social-button center-center" @click="login">Login</UiButton>
+                <UiButton class="button social-button" @click="login">Login</UiButton>
             </div>
         </div>
     </div>
