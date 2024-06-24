@@ -21,7 +21,7 @@ export function responseToProcessEngine(eventId?: string, ticketId?: string, pri
     const token = useCookie('id_token')
     console.log(token)
     console.log(peToken)
-    axios.post("https://engine.pe.benevolo.de/v1.0/messages/adminResponse?execution_mode=synchronous",
+    axios.post("https://engine.pe.benevolo.de/v1.0/messages/administratorResponse?execution_mode=synchronous",
     {
         "eventId": eventId, 
         "ticketId": ticketId, 
