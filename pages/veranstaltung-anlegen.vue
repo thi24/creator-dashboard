@@ -54,7 +54,7 @@
 
 <script lang="ts" setup>
 import {Event} from '@/classes/Event'
-import {responseToProcessEngine, saveEvent} from '@/requests/event'
+import {saveEvent} from '@/requests/event'
 import UiButton from '@/components/ui/UiButton.vue'
 import UiInput from '~/components/ui/UiInput.vue';
 
@@ -109,9 +109,6 @@ function save() {
 
 
   let onSuccess = (event: Event) => {
-    let _onSuccess = () => {
-    }
-    responseToProcessEngine(event, _onSuccess, onError);
     loading.value = false;
     navigateTo("/event-dashboard/" + event.id)
   }

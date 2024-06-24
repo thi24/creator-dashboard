@@ -70,21 +70,3 @@ export function updateEntry(event: Event, onSuccess: (event: Event) => void, onE
             onError();
         });
 }
-
-export function responseToProcessEngine(event: Event, onSuccess: () => void, onError: () => void) {
-    const peToken = import.meta.env.PE_TOKEN
-    const token = useCookie('id_token')
-    axios.post("https://engine.pe.benevolo.de/v1.0/messages/Eventanlegen?execution_mode=synchronous",
-        {
-            event
-        },
-        {
-            headers: {
-                "Authorization": `Bearer ${token.value}`,
-                "Content-Type": "application/json"
-            }
-
-        })
-        .then(/* IDK */)
-        .catch(/* IDK */);
-}
