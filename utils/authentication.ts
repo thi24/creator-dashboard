@@ -6,7 +6,6 @@ axios.interceptors.request.use((config) => {
         if (token && !config.headers.Authorization) {
             config.headers.Authorization = `Bearer ${token}`;
         } else if (!token) {
-            console.error("No valid token found");
         }
     }
     return config;
@@ -17,11 +16,9 @@ axios.interceptors.request.use((config) => {
 export async function login() {
     axios.get<{ redirectUrl: string }>("/api/login")
         .then((response: AxiosResponse) => {
-            console.log(response.data.redirectUrl);
             navigateTo(response.data.redirectUrl, {external: true});
         })
         .catch(() => {
-            console.error("Failed to login");
         });
 }
 

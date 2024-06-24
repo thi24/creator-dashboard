@@ -1,5 +1,3 @@
-import { keys } from "@amcharts/amcharts5/.internal/core/util/Object";
-
 export function byteToBase64(byteArray: number[]) {
     let binary = '';
     let bytes = new Uint8Array(byteArray);
@@ -12,18 +10,17 @@ export function byteToBase64(byteArray: number[]) {
 
 export function jsonToUrlParams(object: any) {
     const mapping: Map<string, string> = new Map();
-    for(let name in object) {
+    for (let name in object) {
         const value = object[name];
-        if(value) {
+        if (value) {
             mapping.set(name, value);
         }
     }
 
     let result = "";
     let index = 0;
-    for(const [key, value] of mapping.entries()) {
-        if(Array.isArray(value)) {
-            console.log(value);
+    for (const [key, value] of mapping.entries()) {
+        if (Array.isArray(value)) {
             Array.from(value).forEach(item => {
                 result = result.concat(key + "=" + item);
                 result = result.concat("&");
@@ -34,6 +31,5 @@ export function jsonToUrlParams(object: any) {
         }
         index++;
     }
-    console.log(result);
     return result;
 }
