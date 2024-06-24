@@ -11,10 +11,7 @@
         </label>
       </div>
       <table class="entry-start-table" v-if="event.entryStarted" title="TicketTypen Tabelle">
-        <tr>
-          <th></th>
-          <th></th>
-        </tr>
+        <caption>Einlass für TicketTypen</caption>
         <tr>
           <td>
             <p>Einlass für alle TicketTypen starten</p>
