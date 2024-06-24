@@ -3,13 +3,14 @@
     <div class="tile">
       <div class="entry-start-heading">
         <h3>Einlass</h3>
-        <label class="switch">
-          <input @click="changeEventStatus()" type="checkbox" :checked="event.entryStarted"
+        <label class="switch" :for="'EventStatus' + event.id">
+          <input @click="changeEventStatus()" type="checkbox" :id="'EventStatus' + event.id"
+                 :checked="event.entryStarted"
                  :class="{ active: event.entryStarted }">
           <span class="slider round"></span>
         </label>
       </div>
-      <table class="entry-start-table" v-if="event.entryStarted">
+      <table class="entry-start-table" v-if="event.entryStarted" title="TicketTypen Tabelle">
         <tr>
           <th></th>
           <th></th>
@@ -19,8 +20,9 @@
             <p>Einlass für alle TicketTypen starten</p>
           </td>
           <td class="slider-container">
-            <label class="switch">
-              <input @click="changeAllTicketTypesStatus()" type="checkbox" :checked="areAllTicketTypesActive()"
+            <label class="switch" for="AllTicketTypesStatus">
+              <input @click="changeAllTicketTypesStatus()" type="checkbox" id="AllTicketTypesStatus"
+                     :checked="areAllTicketTypesActive()"
                      :class="{ active: areAllTicketTypesActive() }" :disabled="!event.entryStarted">
               <span class="slider round"></span>
             </label>
@@ -31,8 +33,9 @@
             <p class="tickettype-name"> {{ ticketType.name }}</p>
           </td>
           <td class="slider-container">
-            <label class="switch">
+            <label class="switch" :for="'TicketTypeStatus' + ticketType.id">
               <input @click="changeSingleTicketTypeStatus(ticketType)" type="checkbox"
+                     :id="'TicketTypeStatus' + ticketType.id"
                      :checked="ticketType.entryStarted"
                      :class="{ active: ticketType.entryStarted }" :disabled="!event.entryStarted">
               <span class="slider round"></span>
@@ -226,5 +229,11 @@ input:checked + .slider:before {
 
 .tickettype-name {
   padding-left: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .col-2 {
+    display: block;
+  }
 }
 </style>

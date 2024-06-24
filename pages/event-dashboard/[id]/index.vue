@@ -23,9 +23,7 @@
           <p>{{ event.address.zip }} {{ event.address.city }}, {{ event.address.state }}</p>
         </div>
       </div>
-
       <StartEntryComponent :event="event"></StartEntryComponent>
-
     </div>
   </ScrollingPage>
 </template>

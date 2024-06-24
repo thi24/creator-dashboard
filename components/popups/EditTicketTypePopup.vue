@@ -20,8 +20,8 @@
         <input type="datetime-local" id="end-date" required v-model="ticketType.validTo">
       </UiInput>
       <UiInput label="VVK manuell stoppen">
-        <label class="switch">
-          <input @click="changeStatus()" type="checkbox" id="VVKStatus" :checked="!ticketType.active"
+        <label class="switch" :for="'VVKStatus' + ticketType.id">
+          <input @click="changeStatus()" type="checkbox" :id="'VVKStatus' + ticketType.id" :checked="!ticketType.active"
                  :class="{ active: ticketType.active }">
           <span class="slider round"></span>
         </label>
