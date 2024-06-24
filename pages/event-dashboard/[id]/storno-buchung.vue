@@ -77,7 +77,7 @@ function loadStornos() {
 
 .stornoGrid {
   display: grid;
-  grid-template-columns: 10rem 13rem 7rem 7rem 7rem 7rem;
+  grid-template-columns: 10rem 17rem 7rem 7rem 7rem 7rem;
   grid-auto-flow: column;
 }
 

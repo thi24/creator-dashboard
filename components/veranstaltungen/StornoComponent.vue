@@ -30,7 +30,7 @@
                 true,
                 storno.id)" class="textCenter">Accept</p>
           </div>
-          <div v-if="storno.status?.toString() == 'PENDING'" class="decline__BT">
+          <div v-if="storno.status?.toString() === 'PENDING'" class="decline__BT">
             <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
@@ -72,7 +72,7 @@ defineProps<{
 
 .stornoGrid {
   display: grid;
-  grid-template-columns: 10rem 13rem 7rem 7rem 7rem 7rem;
+  grid-template-columns: 10rem 17rem 7rem 7rem 7rem 7rem;
   grid-auto-flow: column;
 }
 
