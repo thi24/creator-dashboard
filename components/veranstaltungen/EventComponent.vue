@@ -23,8 +23,6 @@ import LoadingComponent from '../util/LoadingComponent.vue';
 const thumbnail = ref<string | undefined>(undefined);
 
 function _getImageForEvent() {
-  console.log("Getting image for event");
-  console.log(props.event.id);
   let onSucess = (image: string) => {
     if (image == null || image == '') {
       onError();

@@ -1,13 +1,17 @@
 <template>
   <div class="tickettype">
     <div class="status-wrapper">
-      <div v-if="ticketType.active && isValidDate" class="status">
+      <div v-if="ticketType.active && isValidDate && !ticketType.entryStarted" class="status">
         <span class="dot active"></span>
         <p class="status-text">Verkauf ongoing</p>
       </div>
       <div v-else-if="!isValidDate" class="status">
         <span class="dot date"></span>
-        <p class="status-text">Außerhalb des Verkaufszeitraums</p>
+        <p class="status-text" v-if="!isValidDate">Außerhalb des Verkaufszeitraums</p>
+      </div>
+      <div v-else-if="event.entryStarted" class="status">
+        <span class="dot stopped"></span>
+        <p class="status-text" v-if="event.entryStarted">Einlass gestartet</p>
       </div>
       <div v-else class="status">
         <span class="dot stopped"></span>
@@ -41,6 +45,7 @@
 
 <script setup lang="ts">
 import {TicketType} from '~/classes/TicketType';
+import {Event} from '~/classes/Event';
 import dayjs from 'dayjs';
 import EditTicketTypePopup from '@/components/popups/EditTicketTypePopup.vue';
 
@@ -55,7 +60,9 @@ const isValidDate = computed(() => {
 });
 
 const currentTicket = defineProps<{
-  ticketType: TicketType
+  ticketType: TicketType;
+  event: Event
+
 }>()
 
 function updateTicketType() {

@@ -8,7 +8,7 @@
       <LoadingPage :loading="loading">
         <div class="form tile">
           <TicketTypeComponent @update="loadTicketTypes()"
-                               v-for="ticketType in ticketTypes" :ticketType="ticketType">
+                               v-for="ticketType in ticketTypes" :ticketType="ticketType" :event="event" v-if="event">
           </TicketTypeComponent>
           <div class="empty-ticket-container" @click="saveTicketPopup.open()">
             <h3>Neuen Tickettypen anlegen</h3>

@@ -1,11 +1,12 @@
+
 <template>
-  <ScrollingPage :loading = false>
+  <ScrollingPage :loading ="!event">
     <div class="content ticket-page">
       <div>
         <h2>Storno Anfragen</h2>
-        <p>Event Name</p>
+        <p> {{ event?.eventName }}</p>
       </div>
-      <LoadingPage :loading="loading">
+      <LoadingPage :loading="!stornos">
         <div class="storno">
           <div class="title ticket-container">
             <div class="stornoGrid ticket">
@@ -26,11 +27,17 @@
               <div>
                 <p>Status</p>
               </div>
+              <div>
+                <p>Aktion</p>
+              </div>
             </div>
           </div>
         </div>
         <StornoComponent v-for="storno in stornos" :storno="storno">
         </StornoComponent>
+        <div>
+          <p class="grayed-out textCenter headline">Keine weiteren Stornoanfragen vorhanden</p>
+        </div>
       </LoadingPage>
     </div>
   </ScrollingPage>
@@ -44,6 +51,8 @@ import { getStorno } from '~/requests/storno';
 import LoadingPage from '~/components/util/LoadingPage.vue';
 
 const stornos: Ref<Storno[] | undefined> = ref(undefined);
+
+const event = ref(computed(() => useEventStore().getEvent()));
 
 onMounted(() => {
     loadStornos();
@@ -62,9 +71,13 @@ function loadStornos() {
   padding: 10px 0px 0px 5px;
 }
 
+.textCenter {
+  text-align: center;
+}
+
 .stornoGrid {
   display: grid;
-  grid-template-columns: 10rem 13rem 7rem 5rem 5rem;
+  grid-template-columns: 10rem 17rem 7rem 7rem 7rem 7rem;
   grid-auto-flow: column;
 }
 

@@ -4,12 +4,11 @@
       <div class="stornoGrid ticket">
         <div class="ticket__id">
           <p>{{ storno.ticket?.bookingItem?.ticketType?.name }}</p>
-          <p class="grayed-out">{{ storno.stornoId }}</p>
-          <p class="grayed-out">{{ storno.ticket?.bookingItem?.id }}</p>
+          <p class="grayed-out id__padding">{{ storno.id }}</p>
+          <p class="grayed-out id__padding">{{ storno.ticket?.bookingItem?.id }}</p>
         </div>
-              <!--Soll rein?-->
         <div class="customer-center">
-          <p>{{ storno.ticket?.customer?.email }}</p>
+          <p>{{ storno.booking?.customer?.email }}</p>
         </div>
         <div v-if="storno.ticket?.price" class="customer-center">
           <p>{{ (storno.ticket?.price / 100).toFixed(2)  }}€</p>
@@ -18,31 +17,28 @@
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
         <div>
-          <div v-if="storno.cancelStatus == TicketStatus.PENDING" class="accept__BT">
-            <p @onClick="
+          <p>{{ storno.status }}</p>
+        </div>
+        <div>
+          <div v-if="storno.status?.toString() === 'PENDING'" class="accept__BT">
+            <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 true,
-                storno.stornoId)">Accept</p>
+                storno.id)" class="textCenter">Accept</p>
           </div>
-          <div v-if="storno.cancelStatus == TicketStatus.PENDING" class="decline__BT">
-            <p @onClick="
+          <div v-if="storno.status?.toString() === 'PENDING'" class="decline__BT">
+            <p @click="
               responseToProcessEngine(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 false,
-                storno.stornoId)">Decline</p>
-          </div>
-          <div v-if="storno.cancelStatus == TicketStatus.VALID">
-            <p>Genehmigt</p>
-          </div>
-          <div v-if="storno.cancelStatus == TicketStatus.CANCELLED">
-            <p>Abgelehnt</p>
+                storno.id)" class="textCenter">Decline</p>
           </div>
         </div>
       </div>
@@ -53,7 +49,7 @@
 <script setup lang="ts">
 import {Storno} from '~/classes/Storno';
 import dayjs from 'dayjs';
-import { TicketStatus } from '~/classes/TicketStatus';
+import { CancellationStatus } from '~/classes/CancellationStatus';
 import { responseToProcessEngine } from '~/requests/storno';
 
 defineProps<{
@@ -66,22 +62,28 @@ defineProps<{
   padding: 10px 0px 0px 5px;
 }
 
+.textCenter {
+  text-align: center;
+}
+
+.id__padding {
+  padding: 5px 0px 5px 0px;
+}
+
 .stornoGrid {
   display: grid;
-  grid-template-columns: 10rem 13rem 7rem 5rem 5rem;
+  grid-template-columns: 10rem 17rem 7rem 7rem 7rem 7rem;
   grid-auto-flow: column;
 }
 
 .accept__BT {
-  margin: 0px 0px 0px 10px;
-  padding: 0px 10px 0px 10px;
+  margin: 5px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }
 
 .decline__BT {
-  margin: 0px 0px 0px 10px;
-  padding: 0px 10px 0px 10px;
+  margin: 5px 0px 5px 0px;
   border: 1.5px solid black;
   border-radius: 2.5rem;
 }

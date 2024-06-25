@@ -5,8 +5,8 @@ export class TicketType {
     id: string | undefined = undefined;
     name: string = "";
     price: number | undefined = undefined;
-    validFrom: Date = new Date();
-    validTo: Date = new Date();
+    validFrom: Date | undefined = undefined;
+    validTo: Date | undefined = undefined;
     capacity: number | undefined = undefined;
     active: boolean = true;
     taxRate: number | undefined = undefined;

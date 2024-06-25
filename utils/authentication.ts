@@ -1,13 +1,11 @@
 import axios, {AxiosError, type AxiosResponse} from "axios";
 
 axios.interceptors.request.use((config) => {
-    // Do not add Authorization header for login request
     if (config.url !== "/api/login") {
         const token = requireToken();
-        if (token) {
+        if (token && !config.headers.Authorization) {
             config.headers.Authorization = `Bearer ${token}`;
-        } else {
-            console.error("No valid token found");
+        } else if (!token) {
         }
     }
     return config;
@@ -18,11 +16,9 @@ axios.interceptors.request.use((config) => {
 export async function login() {
     axios.get<{ redirectUrl: string }>("/api/login")
         .then((response: AxiosResponse) => {
-            console.log(response.data.redirectUrl);
             navigateTo(response.data.redirectUrl, {external: true});
         })
         .catch(() => {
-            console.error("Failed to login");
         });
 }
 

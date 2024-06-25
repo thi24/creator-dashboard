@@ -3,36 +3,35 @@
     <div class="tile">
       <div class="entry-start-heading">
         <h3>Einlass</h3>
-        <label class="switch">
-          <input @click="changeEventStatus()" type="checkbox" :checked="event.entryStarted"
+        <label class="switch" :for="'EventStatus' + event.id">
+          <input @click="changeEventStatus()" type="checkbox" :id="'EventStatus' + event.id"
+                 :checked="event.entryStarted"
                  :class="{ active: event.entryStarted }">
           <span class="slider round"></span>
         </label>
       </div>
-      <table class="entry-start-table" v-if="event.entryStarted">
-        <tr>
-          <th></th>
-          <th></th>
-        </tr>
+      <table class="entry-start-table" v-if="event.entryStarted" title="TicketTypen Tabelle">
         <tr>
           <td>
             <p>Einlass für alle TicketTypen starten</p>
           </td>
           <td class="slider-container">
-            <label class="switch">
-              <input @click="changeAllTicketTypesStatus()" type="checkbox" :checked="areAllTicketTypesActive()"
+            <label class="switch" for="AllTicketTypesStatus">
+              <input @click="changeAllTicketTypesStatus()" type="checkbox" id="AllTicketTypesStatus"
+                     :checked="areAllTicketTypesActive()"
                      :class="{ active: areAllTicketTypesActive() }" :disabled="!event.entryStarted">
               <span class="slider round"></span>
             </label>
           </td>
         </tr>
-        <tr v-for="ticketType in ticketTypes">
+        <tr class="single-tickettype" v-for="ticketType in ticketTypes">
           <td>
-            <p> {{ ticketType.name }}</p>
+            <p class="tickettype-name"> {{ ticketType.name }}</p>
           </td>
           <td class="slider-container">
-            <label class="switch">
+            <label class="switch" :for="'TicketTypeStatus' + ticketType.id">
               <input @click="changeSingleTicketTypeStatus(ticketType)" type="checkbox"
+                     :id="'TicketTypeStatus' + ticketType.id"
                      :checked="ticketType.entryStarted"
                      :class="{ active: ticketType.entryStarted }" :disabled="!event.entryStarted">
               <span class="slider round"></span>
@@ -53,11 +52,10 @@ import {getAllTicketTypes, updateEntryStatus} from "~/requests/tickettype";
 
 const loading = ref(false);
 const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
+const eventId = useRoute().params.id as string;
 
 onMounted(() => {
-  if (props.event.entryStarted) {
-    loadTicketTypes();
-  }
+  loadTicketTypes();
 })
 
 const props = defineProps<{
@@ -67,18 +65,17 @@ const props = defineProps<{
 function changeEventStatus() {
   props.event.entryStarted = !props.event.entryStarted;
   let onSuccess = () => {
-    if (props.event.entryStarted) {
-      loadTicketTypes();
-    } else if (ticketTypes.value) {
+    if (ticketTypes.value) {
       for (let ticketType of ticketTypes.value) {
-        ticketType.entryStarted = false;
-        updateEntryStatus(ticketType, () => {
-        }, () => {
-        });
-
+        if (!props.event.entryStarted && ticketType.entryStarted) {
+          changeSingleTicketTypeStatus(ticketType)
+        } else if (props.event.entryStarted && !ticketType.entryStarted) {
+          changeSingleTicketTypeStatus(ticketType)
+        }
       }
     }
   }
+
 
   let onError = () => {
   };
@@ -104,7 +101,6 @@ function changeSingleTicketTypeStatus(ticketType: TicketType) {
 
 function loadTicketTypes() {
   loading.value = true;
-  const eventId = useRoute().params.id as string;
 
   let onSuccess = (_ticketTypes: TicketType[]) => {
     ticketTypes.value = _ticketTypes;
@@ -209,7 +205,6 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
@@ -226,5 +221,19 @@ input:checked + .slider:before {
   display: flex;
   justify-content: flex-end;
   padding-right: 0.5rem;
+}
+
+.tickettype-name {
+  padding-left: 0.5rem;
+}
+
+.single-tickettype {
+  padding-left: 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .col-2 {
+    display: block;
+  }
 }
 </style>

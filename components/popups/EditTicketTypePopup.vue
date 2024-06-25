@@ -20,8 +20,8 @@
         <input type="datetime-local" id="end-date" required v-model="ticketType.validTo">
       </UiInput>
       <UiInput label="VVK manuell stoppen">
-        <label class="switch">
-          <input @click="changeStatus()" type="checkbox" id="VVKStatus" :checked="!ticketType.active"
+        <label class="switch" :for="'VVKStatus' + ticketType.id">
+          <input @click="changeStatus()" type="checkbox" :id="'VVKStatus' + ticketType.id" :checked="!ticketType.active"
                  :class="{ active: ticketType.active }">
           <span class="slider round"></span>
         </label>
@@ -79,6 +79,26 @@ function _updateTicketType() {
   }
   if (ticketType.value.taxRate == undefined) {
     errorMessage.value = "Bitte Steuerschlüssel eingeben";
+    return
+  }
+  if (ticketType.value.taxRate > 100) {
+    errorMessage.value = "Steuerschlüssel darf nicht größer als 100 sein";
+    return
+  }
+  if (ticketType.value.taxRate < 0) {
+    errorMessage.value = "Steuerschlüssel darf nicht kleiner als 0 sein";
+    return
+  }
+  if (ticketType.value.validFrom == undefined) {
+    errorMessage.value = "Bitte Verkaufsstart eingeben";
+    return
+  }
+  if (ticketType.value.validTo == undefined) {
+    errorMessage.value = "Bitte Verkaufsende eingeben";
+    return
+  }
+  if (ticketType.value.validFrom > ticketType.value.validTo) {
+    errorMessage.value = "Verkaufsende muss nach Verkaufstart liegen";
     return
   }
 
