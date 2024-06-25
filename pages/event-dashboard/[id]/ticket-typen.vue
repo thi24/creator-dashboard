@@ -32,7 +32,7 @@ import LoadingPage from '~/components/util/LoadingPage.vue';
 
 const loading = ref(false);
 const event = ref(computed(() => useEventStore().getEvent()));
-const ticketTypes: Ref<TicketType[] | undefined> = ref(undefined);
+const ticketTypes: Ref<TicketType[]> = ref([]);
 const saveTicketPopup = ref();
 
 function loadTicketTypes() {
