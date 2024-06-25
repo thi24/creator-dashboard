@@ -49,7 +49,6 @@
       </UiButton>
     </div>
   </div>
-
 </template>
 
 <script lang="ts" setup>
@@ -120,12 +119,14 @@ function save() {
   saveEvent(eventData, onSuccess, onError);
 }
 
-function onFileChange(event: any) { //kein any 
-  eventData.append('image', event.target.files[0]);
+function onFileChange(event: InputEvent) {
+  if (!event.target) {
+    return
+  }
 
+  eventData.append('image', event.target.files[0]);
   let reader = new FileReader();
 
-  // Lesen Sie die ausgewählte Datei als Data-URL
   reader.onload = (e) => {
     if (e.target != null) {
       previewImage.value = e.target.result as string;

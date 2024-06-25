@@ -11,7 +11,6 @@
         </label>
       </div>
       <table class="entry-start-table" v-if="event.entryStarted" title="TicketTypen Tabelle">
-        <caption>Einlass für TicketTypen</caption>
         <tr>
           <td>
             <p>Einlass für alle TicketTypen starten</p>
@@ -25,7 +24,7 @@
             </label>
           </td>
         </tr>
-        <tr v-for="ticketType in ticketTypes">
+        <tr class="single-tickettype" v-for="ticketType in ticketTypes">
           <td>
             <p class="tickettype-name"> {{ ticketType.name }}</p>
           </td>
@@ -225,6 +224,10 @@ input:checked + .slider:before {
 }
 
 .tickettype-name {
+  padding-left: 0.5rem;
+}
+
+.single-tickettype {
   padding-left: 0.5rem;
 }
 
