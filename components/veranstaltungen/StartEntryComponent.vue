@@ -88,7 +88,6 @@ function changeSingleTicketTypeStatus(ticketType: TicketType) {
 
   let onSuccess = () => {
     loading.value = false;
-    close();
   }
 
   let onError = () => {
