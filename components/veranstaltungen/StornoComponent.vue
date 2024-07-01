@@ -81,7 +81,7 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
       if(ticketId){
         var statusElem = document.getElementById(ticketId)
         if(statusElem){
-        statusElem.innerHTML = "<p class='ticket-label declined'>Abgelehnt</p>"
+        statusElem.innerHTML = "<p class='ticket-label accepted'>Akzeptiert</p>"
         }
       }
     }
