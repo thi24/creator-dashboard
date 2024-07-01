@@ -81,7 +81,12 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
       if(ticketId){
         var statusElem = document.getElementById(ticketId)
         if(statusElem){
-        statusElem.innerHTML = '<p class="ticket-label accepted">Akzeptiert</p>'
+          statusElem.innerHTML = '';
+          const par = document.createElement('p');
+          par.textContent = "Akzeptiert";
+          par.classList.add("ticket-label");
+          par.classList.add("accepted");
+          statusElem.appendChild(par)
         }
       }
     }
@@ -89,7 +94,12 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
       if(ticketId){
         var statusElem = document.getElementById(ticketId)
         if(statusElem){
-        statusElem.innerHTML = '<p class="ticket-label declined">Abgelehnt</p>'
+          statusElem.innerHTML = '';
+          const par = document.createElement('p');
+          par.textContent = "Abgelehnt";
+          par.classList.add("ticket-label");
+          par.classList.add("declined");
+          statusElem.appendChild(par)
         }
       }
     }
