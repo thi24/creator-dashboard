@@ -6,8 +6,8 @@
     </div>
 
     <div class="select-time-div">
-      <input v-model="dateFrom" type="date" @input="updateTimeFrame()"/>
-      <input v-model="dateTo" type="date" @input="updateTimeFrame()"/>
+      <input v-model="dateFrom" type="date" @change="updateTimeFrame()"/>
+      <input v-model="dateTo" type="date" @change="updateTimeFrame()"/>
     </div>
   </div>
   <div class="chartDiv" ref="chartdiv">
@@ -188,6 +188,7 @@ function createChartJson() {
 
     for (let i = 0; i < incomingDataFormatViews.length; i++) {
       let dateformat = new Date(incomingDataFormatViews[i].occurringDate).toLocaleDateString();
+      console.log(dateformat);
       data.push({
             "date": dateformat.slice(0, dateformat.lastIndexOf("/")),
             "views": incomingDataFormatViews[i].value,
