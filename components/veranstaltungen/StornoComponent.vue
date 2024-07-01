@@ -16,12 +16,12 @@
         <div>
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
-        <div id={{ storno.ticket?.id }}>
+        <div id='{{ storno.ticket?.id.toString() }}'>
           <p v-if="storno.status?.toString() === 'PENDING'" class="ticket-label pending">Ausstehend</p>
           <p v-if="storno.status?.toString() === 'ACCEPTED'" class="ticket-label accepted">Akzeptiert</p>
           <p v-if="storno.status?.toString() === 'DECLINED'" class="ticket-label declined">Abgelehnt</p>
         </div>
-        <div id={{ storno.id.toString() }}>
+        <div id='{{ storno.id.toString() }}'>
           <div v-if="storno.status?.toString() === 'PENDING'" class="accept__BT">
             <input @click="
               startStornoResponse(
@@ -63,7 +63,7 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
 
   var innerBT_HTML = "";
   if(stornoId){
-    var btElem = document.getElementById(stornoId)
+    var btElem = document.getElementById("{{ " + stornoId + " }}")
     if(btElem){
       innerBT_HTML = btElem.innerHTML;
       btElem.innerHTML = "<p>Prozess wurde angestoßen...</p>";
@@ -72,14 +72,14 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
 
   let onSuccess = () => {
     if(stornoId){
-      var btElem = document.getElementById(stornoId)
+      var btElem = document.getElementById("{{ " + stornoId + " }}")
       if(btElem){
         btElem.innerHTML = "<p>Abgeschlossen</p>";
       }
     }
     if(response == true){
       if(ticketId){
-        var statusElem = document.getElementById(ticketId)
+        var statusElem = document.getElementById("{{ " + ticketId + " }}")
         if(statusElem){
         statusElem.innerHTML = "<p class='ticket-label declined'>Abgelehnt</p>"
         }
@@ -87,7 +87,7 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
     }
     else{
       if(ticketId){
-        var statusElem = document.getElementById(ticketId)
+        var statusElem = document.getElementById("{{ " + ticketId + " }}")
         if(statusElem){
         statusElem.innerHTML = "<p class='ticket-label declined'>Abgelehnt</p>"
         }
