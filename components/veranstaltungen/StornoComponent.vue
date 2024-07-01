@@ -11,15 +11,15 @@
           <p>{{ storno.booking?.customer?.email }}</p>
         </div>
         <div v-if="storno.ticket?.price" class="customer-center">
-          <p>{{ (storno.ticket?.price / 100).toFixed(2)  }}€</p>
+          <p>{{ (storno.ticket?.price / 100).toFixed(2) }}€</p>
         </div>
         <div>
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
         <div :id="storno.ticket?.id">
-          <p v-if="storno.status?.toString() === 'PENDING'" class="ticket-label pending">Ausstehend</p>
-          <p v-if="storno.status?.toString() === 'ACCEPTED'" class="ticket-label accepted">Akzeptiert</p>
-          <p v-if="storno.status?.toString() === 'DECLINED'" class="ticket-label declined">Abgelehnt</p>
+          <p v-if="storno.status?.toString() === 'PENDING'" :class="'ticket-label pending'">Ausstehend</p>
+          <p v-if="storno.status?.toString() === 'ACCEPTED'" :class="'ticket-label accepted'">Akzeptiert</p>
+          <p v-if="storno.status?.toString() === 'DECLINED'" :class="'ticket-label declined'">Abgelehnt</p>
         </div>
         <div :id="storno.id">
           <div v-if="storno.status?.toString() === 'PENDING'" class="accept__BT">
@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import {Storno} from '~/classes/Storno';
 import dayjs from 'dayjs';
-import { responseToProcessEngine } from '~/requests/storno';
+import {responseToProcessEngine} from '~/requests/storno';
 
 const status: Ref<String | undefined> = ref(undefined);
 
@@ -62,25 +62,25 @@ defineProps<{
 function startStornoResponse(eventId?: string, ticketId?: string, price?: number, kundenId?: string, response?: boolean, stornoId?: string) {
 
   var innerBT_HTML = "";
-  if(stornoId){
+  if (stornoId) {
     var btElem = document.getElementById(stornoId)
-    if(btElem){
+    if (btElem) {
       innerBT_HTML = btElem.innerHTML;
       btElem.innerHTML = "<p>Prozess wurde angestoßen...</p>";
     }
   }
 
   let onSuccess = () => {
-    if(stornoId){
+    if (stornoId) {
       var btElem = document.getElementById(stornoId)
-      if(btElem){
+      if (btElem) {
         btElem.innerHTML = "<p>Abgeschlossen</p>";
       }
     }
-    if(response == true){
-      if(ticketId){
+    if (response == true) {
+      if (ticketId) {
         var statusElem = document.getElementById(ticketId)
-        if(statusElem){
+        if (statusElem) {
           statusElem.innerHTML = '';
           const par = document.createElement('p');
           par.textContent = "Akzeptiert";
@@ -89,11 +89,10 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
           statusElem.appendChild(par)
         }
       }
-    }
-    else{
-      if(ticketId){
+    } else {
+      if (ticketId) {
         var statusElem = document.getElementById(ticketId)
-        if(statusElem){
+        if (statusElem) {
           statusElem.innerHTML = '';
           const par = document.createElement('p');
           par.textContent = "Abgelehnt";
@@ -106,23 +105,23 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
   }
 
   let onError = () => {
-    if(stornoId){
+    if (stornoId) {
       var btElem = document.getElementById(stornoId)
-      if(btElem){
+      if (btElem) {
         btElem.innerHTML = innerBT_HTML;
       }
     }
   }
 
   responseToProcessEngine(
-                onSuccess,
-                onError,
-                eventId,
-                ticketId,
-                price,
-                kundenId,
-                response,
-                stornoId)
+      onSuccess,
+      onError,
+      eventId,
+      ticketId,
+      price,
+      kundenId,
+      response,
+      stornoId)
 }
 
 </script>
