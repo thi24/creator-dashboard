@@ -16,31 +16,31 @@
         <div>
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
-        <div id='{{ storno.ticket?.id.toString() }}'>
+        <div :id="storno.ticket?.id">
           <p v-if="storno.status?.toString() === 'PENDING'" class="ticket-label pending">Ausstehend</p>
           <p v-if="storno.status?.toString() === 'ACCEPTED'" class="ticket-label accepted">Akzeptiert</p>
           <p v-if="storno.status?.toString() === 'DECLINED'" class="ticket-label declined">Abgelehnt</p>
         </div>
-        <div id='{{ storno.id.toString() }}'>
+        <div :id="storno.id">
           <div v-if="storno.status?.toString() === 'PENDING'" class="accept__BT">
-            <input @click="
+            <p @click="
               startStornoResponse(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 true,
-                storno.id)" class="textCenter">Akzeptieren</input>
+                storno.id)" class="textCenter">Akzeptieren</p>
           </div>
           <div v-if="storno.status?.toString() === 'PENDING'" class="decline__BT">
-            <input @click="
+            <p @click="
               startStornoResponse(
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 false,
-                storno.id)" class="textCenter">Ablehnen</input>
+                storno.id)" class="textCenter">Ablehnen</p>
           </div>
         </div>
       </div>
