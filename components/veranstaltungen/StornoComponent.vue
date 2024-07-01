@@ -16,7 +16,7 @@
         <div>
           <p>{{ dayjs(storno.requestedAt).format("DD.MM.YYYY H:mm") }}</p>
         </div>
-        <div :id="{storno.id + "s"}">
+        <div id={{ storno.ticket?.id }}>
           <p v-if="storno.status?.toString() === 'PENDING'" class="ticket-label pending">Ausstehend</p>
           <p v-if="storno.status?.toString() === 'ACCEPTED'" class="ticket-label accepted">Akzeptiert</p>
           <p v-if="storno.status?.toString() === 'DECLINED'" class="ticket-label declined">Abgelehnt</p>
@@ -78,17 +78,19 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
       }
     }
     if(response == true){
-      var elemId = stornoid + "s"; 
-      var statusElem = document.getElementById(elemId)
-      if(statusElem){
-        statusElem.innerHTML = "<p class='ticket-label accepted'>Akzeptiert</p>"
+      if(ticketId){
+        var statusElem = document.getElementById(ticketId)
+        if(statusElem){
+        statusElem.innerHTML = "<p class='ticket-label declined'>Abgelehnt</p>"
+        }
       }
     }
     else{
-      var elemId = stornoid + "s";
-      var statusElem = document.getElementById(elemId)
-      if(statusElem){
+      if(ticketId){
+        var statusElem = document.getElementById(ticketId)
+        if(statusElem){
         statusElem.innerHTML = "<p class='ticket-label declined'>Abgelehnt</p>"
+        }
       }
     }
   }
