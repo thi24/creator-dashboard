@@ -16,7 +16,7 @@ export function getStorno(eventId: string, onSuccess: (stornos: Storno[]) => voi
 }
 
 //Request to ProcessEngine -> to be defined
-export function responseToProcessEngine(onSuccess: () => void, onError: () => void, eventId?: string, ticketId?: string, price?: number, kundenId?: string, response?: boolean, stornoId?: string) {
+export function responseToProcessEngine(onSuccess: () => void, onError: () => void, eventId?: string, ticketId?: string, price?: number, kundenId?: string, response?: boolean, stornoId?: string, email?: string) {
     const peToken = import.meta.env.PE_TOKEN
     const token = useCookie('id_token')
     
@@ -27,7 +27,8 @@ export function responseToProcessEngine(onSuccess: () => void, onError: () => vo
         "price": price, 
         "kundenId": kundenId,
         "stornoResponse": response,
-        "stornoId": stornoId
+        "stornoId": stornoId,
+        "email": email
     },
     {
         headers: {
