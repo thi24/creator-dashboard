@@ -63,7 +63,7 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
 
   var innerBT_HTML = "";
   if(stornoId){
-    var btElem = document.getElementById("{{ " + stornoId + " }}")
+    var btElem = document.getElementById(stornoId)
     if(btElem){
       innerBT_HTML = btElem.innerHTML;
       btElem.innerHTML = "<p>Prozess wurde angestoßen...</p>";
@@ -72,14 +72,14 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
 
   let onSuccess = () => {
     if(stornoId){
-      var btElem = document.getElementById("{{ " + stornoId + " }}")
+      var btElem = document.getElementById(stornoId)
       if(btElem){
         btElem.innerHTML = "<p>Abgeschlossen</p>";
       }
     }
     if(response == true){
       if(ticketId){
-        var statusElem = document.getElementById("{{ " + ticketId + " }}")
+        var statusElem = document.getElementById(ticketId)
         if(statusElem){
         statusElem.innerHTML = "<p class='ticket-label declined'>Abgelehnt</p>"
         }
@@ -87,7 +87,7 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
     }
     else{
       if(ticketId){
-        var statusElem = document.getElementById("{{ " + ticketId + " }}")
+        var statusElem = document.getElementById(ticketId)
         if(statusElem){
         statusElem.innerHTML = "<p class='ticket-label declined'>Abgelehnt</p>"
         }
