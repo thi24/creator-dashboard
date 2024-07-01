@@ -41,7 +41,7 @@
                 storno.ticket?.price,
                 storno.booking?.customer?.stripeId,
                 false,
-                storno.id
+                storno.id,
                 storno.booking?.customer?.email)" class="textCenter">Ablehnen</p>
           </div>
         </div>
