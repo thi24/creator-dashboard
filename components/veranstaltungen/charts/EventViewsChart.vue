@@ -140,7 +140,7 @@ async function getChartData() {
       updateData();
     }
   } catch (error) {
-    chartError.value = true;
+    chartError.value = false;
   }
 }
 
