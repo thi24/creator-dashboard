@@ -6,8 +6,8 @@
     </div>
 
     <div class="select-time-div">
-      <input v-model="dateFrom" type="date" @input="updateTimeFrame()"/>
-      <input v-model="dateTo" type="date" @input="updateTimeFrame()"/>
+      <input v-model="dateFrom" type="date" @change="updateTimeFrame()"/>
+      <input v-model="dateTo" type="date" @change="updateTimeFrame()"/>
     </div>
   </div>
   <div class="chartDiv" ref="chartdiv">
