@@ -28,10 +28,11 @@
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
                 storno.ticket?.price,
-                storno.booking?.customer?.stripeId,
+                storno.booking?.customer?.id,
                 true,
                 storno.id,
-                storno.booking?.customer?.email)" class="textCenter">Akzeptieren</p>
+                storno.booking?.customer?.email,
+                storno.booking?.customer?.stripeId)" class="textCenter">Akzeptieren</p>
           </div>
           <div v-if="storno.status?.toString() === 'PENDING'" class="decline__BT">
             <p @click="
@@ -39,10 +40,11 @@
                 storno.ticket?.bookingItem?.ticketType?.event?.id,
                 storno.ticket?.id,
                 storno.ticket?.price,
-                storno.booking?.customer?.stripeId,
+                storno.booking?.customer?.id,
                 false,
                 storno.id,
-                storno.booking?.customer?.email)" class="textCenter">Ablehnen</p>
+                storno.booking?.customer?.email,
+                storno.booking?.customer?.stripeId)" class="textCenter">Ablehnen</p>
           </div>
         </div>
       </div>
@@ -61,7 +63,7 @@ defineProps<{
   storno: Storno
 }>()
 
-function startStornoResponse(eventId?: string, ticketId?: string, price?: number, kundenId?: string, response?: boolean, stornoId?: string, email?: string) {
+function startStornoResponse(eventId?: string, ticketId?: string, price?: number, kundenId?: string, response?: boolean, stornoId?: string, email?: string, stripeId?: string) {
 
   var innerBT_HTML = "";
   if (stornoId) {
@@ -124,7 +126,8 @@ function startStornoResponse(eventId?: string, ticketId?: string, price?: number
       kundenId,
       response,
       stornoId,
-      email)
+      email,
+      stripeId)
 }
 
 </script>
