@@ -188,6 +188,7 @@ function createChartJson() {
 
     for (let i = 0; i < incomingDataFormatViews.length; i++) {
       let dateformat = new Date(incomingDataFormatViews[i].occurringDate).toLocaleDateString();
+      console.log(dateformat);
       data.push({
             "date": dateformat.slice(0, dateformat.lastIndexOf("/")),
             "views": incomingDataFormatViews[i].value,

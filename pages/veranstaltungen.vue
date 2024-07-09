@@ -25,26 +25,6 @@ onMounted(() => {
   }, () => {
   });
 })
-
-function getEvents(): Event[] {
-  const results: Event[] = [];
-  const event = new Event();
-  event.id = '383f700f-5449-4e40-b509-bee0b5d139d6';
-  event.eventName = "Hippi Parade Smoke Weed 420";
-  event.description = "Bekiffen Sie sich grenzenlos. Aber lassen Sie sich nicht vom SEK (Söder Einsatzkomando) erwischen.";
-  results.push(event);
-  const event2 = new Event();
-  event2.id = '383f700f-5449-4e40-b509-bee0b5d139d6';
-  event2.eventName = "Ü80 Seniorenparty";
-  event2.description = "Verbringen Sie einen entspannten Abend mit Horst und Gertlinde. Inklusive Bingo und Kreuzworträtsel.";
-  results.push(event2);
-  const event3 = new Event();
-  event3.id = '383f700f-5449-4e40-b509-bee0b5d139d6';
-  event3.eventName = "Tomatenschlacht in Seoul";
-  event3.description = "Beschmeißen Sie sich mit Tomaten und Tomatenpampe.";
-  results.push(event3);
-  return results;
-}
 </script>
 
 <style scoped>
